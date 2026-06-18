@@ -1,0 +1,23 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
+export const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
+export const NODE_ENV = process.env.NODE_ENV || 'development';
+export const APP_URL = process.env.APP_URL || 'http://localhost:5000';
+export const SALT_ROUND = 12;
+
+export const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
+export const JWT_DURATION = process.env.JWT_DURATION || '30d';
+export const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'default_refresh';
+export const JWT_REFRESH_DURATION = process.env.JWT_REFRESH_DURATION || '180d';
+
+export const STORAGE_PROVIDER = process.env.STORAGE_PROVIDER || 'local';
+export const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID || '';
+export const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY || '';
+export const AWS_REGION = process.env.AWS_REGION || 'eu-west-2';
+export const S3_BUCKET_NAME = process.env.S3_BUCKET_NAME || '';
+
+export const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID || '';
+export const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN || '';
+export const VERIFICATION_SID = process.env.VERIFICATION_SID || '';
+export const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER || '';
