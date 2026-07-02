@@ -7,8 +7,6 @@ import bcrypt from "bcrypt";
 import prisma from "../services/prisma.service.js";
 import { SALT_ROUND } from "../config/env.js";
 
-const otpCache = new Map();
-
 /**
  * Génère un code OTP aléatoire à 6 chiffres
  */
@@ -18,8 +16,6 @@ function generateNumericOtp() {
 
 /**
  * Vérifie l'existence d'un numéro de téléphone dans la table Users
- * @param {string} phoneNumber
- * @returns {Promise<{exists: boolean, user: Object|null, errorStatus: string|null, errorMessage: string|null}>}
  */
 async function __checkPhoneNumber(phoneNumber: string) {
   if (!phoneNumber) {
@@ -59,17 +55,13 @@ async function __checkPhoneNumber(phoneNumber: string) {
 }
 
 /**
- * Valide si le rôle d'un utilisateur correspond aux rôles autorisés pour un flux
- * @param {Object} user - L'objet utilisateur issu de la base
- * @param {Array<string>} allowedRoles - Tableau des rôles permis (ex: ['ADMIN', 'AGENT', 'IT'])
- * @returns {{isValid: boolean, errorMessage: string|null}}
+ * Valide si le rôle d'un utilisateur correspond aux rôles autorisés
  */
 function __validateRole(user: any, allowedRoles: Array<string>) {
   if (!user || !allowedRoles.includes(user.role)) {
     return {
       isValid: false,
-      errorMessage:
-        "Accès interdit. Vos privilèges ne vous permettent pas d'accéder à cet espace.",
+      errorMessage: "Accès interdit. Vos privilèges ne vous permettent pas d'accéder à cet espace.",
     };
   }
   return { isValid: true, errorMessage: null };
@@ -77,56 +69,50 @@ function __validateRole(user: any, allowedRoles: Array<string>) {
 
 export const authController = {
   /**
-   * USER - Route de checking d'existence
+   * USER - Route de checking d'existence (Fonction Pure)
    */
   checkUserNumber: async (req: Request, res: Response) => {
     try {
       const { phoneNumber } = req.body;
       const check = await __checkPhoneNumber(phoneNumber);
 
+      // Cas 1 : Le numéro n'existe pas
       if (check.errorStatus === "NOT_FOUND") {
         return res.status(200).json({
-          status: "NOT_FOUND",
+          success: true,
+          code: "NOT_FOUND",
           message: "Numéro disponible pour inscription.",
+          data: null
         });
       }
 
+      // Cas 2 : Le numéro est banni ou données invalides
       if (check.errorStatus) {
         return res.status(check.errorStatus === "BANNED" ? 403 : 400).json({
-          status: check.errorStatus,
+          success: false,
+          code: check.errorStatus,
           message: check.errorMessage,
+          data: null
         });
       }
 
-      const roleValidation = __validateRole(check.user, ["USER"]);
-      if (!roleValidation.isValid) {
-        return res
-          .status(403)
-          .json({ success: false, message: roleValidation.errorMessage });
-      }
-
-      if (!check?.user?.isCompleted) {
-        return res.status(200).json({
-          status: "ONBOARDING_INCOMPLETE",
-          message: "Onboarding en cours pour cet utilisateur.",
-          data: {
-            onboardingStep: check.user?.onboardingStep || "GENERAL_INFO",
-            user: {
-              id: check?.user?.id,
-              fullname: check?.user?.fullname,
-              phoneNumber: check?.user?.phoneNumber,
-            },
-          },
-        });
-      }
-
+      // Cas 3 : Le compte existe (complet ou incomplet). On retourne l'utilisateur brut.
       return res.status(200).json({
-        status: "EXISTS",
-        message:
-          "Compte utilisateur valide et complet. Prêt pour la connexion.",
+        success: true,
+        code: "EXISTS",
+        message: "Numéro de téléphone existant en base de données.",
+        data: {
+          user: {
+            id: check?.user?.id,
+            phoneNumber: check.user?.phoneNumber,
+            onboardingStep: check.user?.onboardingStep,
+            isCompleted: check.user?.isCompleted,
+            role: check.user?.role
+          }
+        }
       });
     } catch (error: any) {
-      return res.status(500).json({ success: false, message: error.message });
+      return res.status(500).json({ success: false, code: "SERVER_ERROR", message: error.message, data: null });
     }
   },
 
@@ -138,124 +124,141 @@ export const authController = {
     if (!phoneNumber || !passCode) {
       return res.status(400).json({
         success: false,
+        code: "INVALID_DATA",
         message: "Le numéro de téléphone et le code PIN sont obligatoires.",
+        data: null
       });
     }
 
     try {
       const check = await __checkPhoneNumber(phoneNumber);
       if (!check.exists || check.errorStatus) {
-        return res.status(404).json({
+        return res.status(444).json({
           success: false,
+          code: "NOT_FOUND",
           message: check.errorMessage || "Compte introuvable.",
+          data: null
+        });
+      }
+      
+      const roleValidation = __validateRole(check.user, ["USER"]);
+      if (!roleValidation.isValid) {
+        return res.status(403).json({ 
+          success: false,
+          code: "UNAUTHORIZED_ACTION", 
+          message: roleValidation.errorMessage,
+          data: null
         });
       }
 
-      const roleValidation = __validateRole(check.user, ["USER"]);
-      if (!roleValidation.isValid) {
-        return res
-          .status(403)
-          .json({ success: false, message: roleValidation.errorMessage });
+      // Vérification du code PIN
+      const isPinCorrect = await bcrypt.compare(passCode, check.user?.passCode as string);
+      if (!isPinCorrect) {
+        return res.status(401).json({
+          success: false,
+          code: "BAD_CREDENTIALS",
+          message: "Code PIN incorrect.",
+          data: null
+        });
       }
 
-      if (check.user && !check.user.isCompleted) {
-        const accessToken = generateToken(check.user.id, check.user.role);
+      const payload = { userId: check.user!.id, type: check.user!.role };
+      const accessToken = generateToken(payload.userId, payload.type);
+      const refreshToken = generateRefreshToken(payload.userId, payload.type);
+
+      // Cas : Onboarding incomplet mais authentification réussie
+      if (!check?.user?.isCompleted) {
         return res.status(200).json({
           success: true,
           code: "ONBOARDING_INCOMPLETE",
           message: "Veuillez finaliser les étapes de votre profil.",
           data: {
-            onboardingStep: check.user.onboardingStep || "GENERAL_INFO",
             accessToken,
-            user: {
-              id: check.user.id,
-              phoneNumber: check.user.phoneNumber,
-              fullname: check.user.fullname,
-              role: check.user.role,
-            },
+            refreshToken,
+            onboardingStep: check?.user?.onboardingStep || "GENERAL_INFO",
+            user: check.user,
           },
         });
       }
 
-      // Vérification de la conformité du code PIN
-      const isPinCorrect = await bcrypt.compare(
-        passCode,
-        check.user?.passCode as string,
-      );
-      if (!isPinCorrect) {
-        return res
-          .status(401)
-          .json({ success: false, message: "Code PIN incorrect." });
-      }
-
-      // Génération de la session
-      const payload = { userId: check.user!.id, type: check.user!.role };
+      // Cas : Connexion complète nominale
       return res.status(200).json({
         success: true,
         code: "LOGIN_SUCCESS",
         message: "Authentification réussie.",
         data: {
-          accessToken: generateToken(payload.userId, payload.type),
-          refreshToken: generateRefreshToken(payload.userId, payload.type),
-          user: {
-            id: check.user!.id,
-            phoneNumber: check.user!.phoneNumber,
-            fullname: check.user!.fullname,
-            role: check.user!.role,
-          },
+          accessToken,
+          refreshToken,
+          onboardingStep: "COMPLETED",
+          user: check.user,
         },
       });
     } catch (error: any) {
-      return res.status(500).json({ success: false, message: error.message });
+      return res.status(500).json({ success: false, code: "SERVER_ERROR", message: error.message, data: null });
     }
   },
 
   /**
-   * Envoie d'OTP
+   * Envoi d'OTP pour inscription
    */
   sendRegisterOtp: async (req: Request, res: Response) => {
     const { phoneNumber } = req.body;
+    if (!phoneNumber) {
+      return res.status(400).json({
+        success: false,
+        code: "INVALID_DATA",
+        message: "Le numéro de téléphone est obligatoire.",
+        data: null
+      });
+    }
+
     try {
       const check = await __checkPhoneNumber(phoneNumber);
       if (check.exists) {
         return res.status(400).json({
           success: false,
+          code: "ALREADY_EXISTS",
           message: "Ce numéro de téléphone est déjà associé à un compte.",
+          data: null
         });
       }
 
       const otpCode = generateNumericOtp();
       const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
 
-      // SÉCURITÉ CONCURRENCE : Enregistrement atomique en Base de Données (upsert évite les doublons de clés)
       await prisma.otpVerification.upsert({
         where: { phoneNumber },
-        update: { code: otpCode, expiresAt },
-        create: { phoneNumber, code: otpCode, expiresAt }
+        update: { codeHash: otpCode, expiresAt },
+        create: { phoneNumber, codeHash: otpCode, expiresAt },
       });
 
       await twilioService.sendCustomSms(
         phoneNumber,
         `Votre code de vérification pour votre inscription est : ${otpCode}.`,
       );
+
       return res.status(200).json({
         success: true,
+        code: "OTP_SENT",
         message: "Code de validation envoyé avec succès.",
+        data: null
       });
     } catch (error: any) {
-      return res.status(500).json({ success: false, message: error.message });
+      return res.status(500).json({ success: false, code: "SERVER_ERROR", message: error.message, data: null });
     }
   },
 
   /**
-   * USER - Validation OTP et Création de compte
+   * USER - Validation OTP et Création initiale de compte
    */
   verifyRegisterAndCreate: async (req: Request, res: Response) => {
     const { phoneNumber, code } = req.body;
     if (!phoneNumber || !code) {
       return res.status(400).json({
         success: false,
+        code: "INVALID_DATA",
         message: "Le numéro de téléphone et le code OTP sont obligatoires.",
+        data: null
       });
     }
 
@@ -264,18 +267,28 @@ export const authController = {
       const isMockValid = isDev && code === "001089";
 
       if (!isMockValid) {
-        // Lecture sécurisée multi-utilisateurs depuis la base de données
-        const otpRecord = await prisma.otpVerification.findUnique({ where: { phoneNumber } });
+        const otpRecord = await prisma.otpVerification.findUnique({
+          where: { phoneNumber },
+        });
 
         if (!otpRecord || new Date() > otpRecord.expiresAt) {
-          return res.status(400).json({ success: false, message: "Le code OTP a expiré ou n'existe pas." });
+          return res.status(400).json({
+            success: false,
+            code: "OTP_EXPIRED",
+            message: "Le code OTP a expiré ou n'existe pas.",
+            data: null
+          });
         }
-        if (otpRecord.code !== code) {
-          return res.status(400).json({ success: false, message: "Code OTP invalide." });
+        if (otpRecord.codeHash !== code) {
+          return res.status(400).json({ 
+            success: false, 
+            code: "INVALID_OTP",
+            message: "Code OTP invalide.",
+            data: null
+          });
         }
       }
 
-      // Nettoyage immédiat de l'OTP consommé
       await prisma.otpVerification.deleteMany({ where: { phoneNumber } });
 
       const salt = await bcrypt.genSalt(SALT_ROUND);
@@ -292,20 +305,17 @@ export const authController = {
       const payload = { userId: newUser.id, type: newUser.role };
       return res.status(201).json({
         success: true,
+        code: "REGISTER_SUCCESS",
         message: "Numéro vérifié. Compte initialisé.",
         data: {
           accessToken: generateToken(payload.userId, payload.type),
           refreshToken: generateRefreshToken(payload.userId, payload.type),
           onboardingStep: newUser.onboardingStep,
-          user: {
-            id: newUser.id,
-            phoneNumber: newUser.phoneNumber,
-            role: newUser.role,
-          },
+          user: newUser,
         },
       });
     } catch (error: any) {
-      return res.status(500).json({ success: false, message: error.message });
+      return res.status(500).json({ success: false, code: "SERVER_ERROR", message: error.message, data: null });
     }
   },
 
@@ -319,30 +329,31 @@ export const authController = {
 
       if (!check.exists || check.errorStatus) {
         return res.status(check.errorStatus === "BANNED" ? 403 : 444).json({
-          status: "NOT_FOUND",
+          success: false,
+          code: check.errorStatus || "NOT_FOUND",
           message: check.errorMessage || "Accès refusé.",
+          data: null
         });
       }
 
-      const roleValidation = __validateRole(check.user, [
-        "ADMIN",
-        "AGENT",
-        "IT",
-      ]);
+      const roleValidation = __validateRole(check.user, ["ADMIN", "AGENT", "IT"]);
       if (!roleValidation.isValid) {
         return res.status(403).json({
-          status: "UNAUTHORIZED",
+          success: false,
+          code: "UNAUTHORIZED_ROLE",
           message: roleValidation.errorMessage,
+          data: null
         });
       }
 
       return res.status(200).json({
-        status: "EXISTS",
+        success: true,
+        code: "STAFF_EXISTS",
         message: "Compte Staff identifié et valide.",
         data: { role: check?.user?.role },
       });
     } catch (error: any) {
-      return res.status(500).json({ success: false, message: error.message });
+      return res.status(500).json({ success: false, code: "SERVER_ERROR", message: error.message, data: null });
     }
   },
 
@@ -351,7 +362,9 @@ export const authController = {
     if (!phoneNumber || !passCode) {
       return res.status(400).json({
         success: false,
+        code: "INVALID_DATA",
         message: "Le numéro et le code PIN d'administration sont requis.",
+        data: null
       });
     }
 
@@ -360,34 +373,36 @@ export const authController = {
       if (!check.exists || check.errorStatus) {
         return res.status(403).json({
           success: false,
+          code: "FORBIDDEN",
           message: check.errorMessage || "Accès refusé.",
+          data: null
         });
       }
 
-      const roleValidation = __validateRole(check.user, [
-        "ADMIN",
-        "AGENT",
-        "IT",
-      ]);
+      const roleValidation = __validateRole(check.user, ["ADMIN", "AGENT", "IT"]);
       if (!roleValidation.isValid) {
-        return res
-          .status(403)
-          .json({ success: false, message: roleValidation.errorMessage });
+        return res.status(403).json({ 
+          success: false, 
+          code: "UNAUTHORIZED_ROLE",
+          message: roleValidation.errorMessage,
+          data: null
+        });
       }
 
-      const isPinCorrect = await bcrypt.compare(
-        passCode,
-        check.user!.passCode as string,
-      );
+      const isPinCorrect = await bcrypt.compare(passCode, check.user!.passCode as string);
       if (!isPinCorrect) {
-        return res
-          .status(401)
-          .json({ success: false, message: "Code PIN administratif erroné." });
+        return res.status(401).json({ 
+          success: false, 
+          code: "BAD_CREDENTIALS",
+          message: "Code PIN administratif erroné.",
+          data: null
+        });
       }
 
       const payload = { userId: check.user!.id, type: check.user!.role };
       return res.status(200).json({
         success: true,
+        code: "LOGIN_SUCCESS",
         message: `Authentification réussie. Espace ${check.user?.role}.`,
         data: {
           accessToken: generateToken(payload.userId, payload.type),
@@ -401,21 +416,23 @@ export const authController = {
         },
       });
     } catch (error: any) {
-      return res.status(500).json({ success: false, message: error.message });
+      return res.status(500).json({ success: false, code: "SERVER_ERROR", message: error.message, data: null });
     }
   },
 
   // ==========================================
   // SECTION PARTNER (COMPANIES / B2B)
   // ==========================================
-
   checkPartnerNumber: async (req: Request, res: Response) => {
     const { phoneNumber } = req.body;
-    if (!phoneNumber)
+    if (!phoneNumber) {
       return res.status(400).json({
         success: false,
+        code: "INVALID_DATA",
         message: "Le numéro de l'entreprise est obligatoire.",
+        data: null
       });
+    }
 
     try {
       const searchCompany = await companiesService.getMany(
@@ -426,28 +443,34 @@ export const authController = {
 
       if (!company) {
         return res.status(200).json({
-          status: "NOT_FOUND",
+          success: true,
+          code: "NOT_FOUND",
           message: "Numéro disponible pour enregistrer une entreprise.",
+          data: null
         });
       }
 
       return res.status(200).json({
-        status: "EXISTS",
+        success: true,
+        code: "EXISTS",
         message: "Compte entreprise existant.",
         data: { id: company.id, username: company.username },
       });
     } catch (error: any) {
-      return res.status(500).json({ success: false, message: error.message });
+      return res.status(500).json({ success: false, code: "SERVER_ERROR", message: error.message, data: null });
     }
   },
 
   loginPartner: async (req: Request, res: Response) => {
     const { phoneNumber } = req.body;
-    if (!phoneNumber)
+    if (!phoneNumber) {
       return res.status(400).json({
         success: false,
+        code: "INVALID_DATA",
         message: "Le numéro de téléphone de l'entreprise est obligatoire.",
+        data: null
       });
+    }
 
     try {
       const searchResult = await companiesService.getMany(
@@ -456,15 +479,19 @@ export const authController = {
       );
       const company = searchResult.result[0];
 
-      if (!company)
+      if (!company) {
         return res.status(404).json({
           success: false,
+          code: "NOT_FOUND",
           message: "Aucun établissement partenaire trouvé avec ce numéro.",
+          data: null
         });
+      }
 
       const payload = { userId: company.id, type: "PARTNER" };
       return res.status(200).json({
         success: true,
+        code: "LOGIN_SUCCESS",
         message: "Connexion Espace Entreprise réussie.",
         data: {
           accessToken: generateToken(payload.userId, payload.type),
@@ -473,28 +500,21 @@ export const authController = {
             id: company.id,
             username: company.username,
             phoneNumber: company.phoneNumber,
-            solde: company.solde,
+            solde: company.balance,
           },
         },
       });
     } catch (error: any) {
-      return res.status(500).json({ success: false, message: error.message });
+      return res.status(500).json({ success: false, code: "SERVER_ERROR", message: error.message, data: null });
     }
   },
 
   logout: async (req: Request, res: Response) => {
-    const { refreshToken } = req.body;
-    if (!refreshToken) {
-      return res.status(200).json({ success: true, message: "Déconnexion réussie (Session locale nettoyée)." });
-    }
-
-    try {
-      return res.status(200).json({
-        success: true,
-        message: "Déconnexion effectuée avec succès. Session invalidée."
-      });
-    } catch (error: any) {
-      return res.status(500).json({ success: false, message: error.message });
-    }
+    return res.status(200).json({
+      success: true,
+      code: "LOGOUT_SUCCESS",
+      message: "Déconnexion effectuée avec succès. Session invalidée.",
+      data: null
+    });
   },
 };

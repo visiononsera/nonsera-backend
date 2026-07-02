@@ -1,7 +1,33 @@
 import prisma from "./prisma.service";
+import { CompanyCategory, Role } from "../generated/prisma";
+
+export interface CompanyFilters {
+  category?: CompanyCategory;
+  city?: string;
+  country?: string;
+  search?: string;
+  isVerified?: boolean;
+}
+
+export interface PaginationParams {
+  limit?: string | number;
+  page?: string | number;
+}
+
+export interface SortingParams {
+  sortBy?: "name" | "createdAt" | "balance";
+  sortOrder?: "asc" | "desc";
+}
+
+export interface ProximityParams {
+  latitude: number;
+  longitude: number;
+  category?: CompanyCategory;
+  maxDistanceKm?: number;
+}
 
 export const companiesService = {
-  // CRÉATION D'UNE ENTREPRISE PARTENAIRE
+  // 1. CRÉATION D'UNE ENTREPRISE PARTENAIRE
   create: async (companyData: any) => {
     const {
       phoneNumber,
@@ -13,22 +39,29 @@ export const companiesService = {
       description,
       mapAddress,
       numeroSocial,
+      latitude,
+      longitude,
+      logo,
+      bannerPicture,
+      isSurplaceAvailable,
     } = companyData;
 
+    // Unicité du numéro de téléphone
     const existingPhone = await prisma.company.findUnique({
       where: { phoneNumber },
     });
-    if (existingPhone)
-      throw new Error(
-        "Une entreprise avec ce numéro de téléphone existe déjà.",
-      );
+    if (existingPhone) {
+      throw new Error("Une entreprise avec ce numéro de téléphone existe déjà.");
+    }
 
+    // Unicité du username (Nom d'entreprise)
     if (username) {
       const existingUsername = await prisma.company.findUnique({
         where: { username },
       });
-      if (existingUsername)
+      if (existingUsername) {
         throw new Error("Ce nom d'entreprise est déjà enregistré.");
+      }
     }
 
     return await prisma.company.create({
@@ -42,12 +75,18 @@ export const companiesService = {
         description,
         mapAddress,
         numeroSocial,
-        solde: 0.0,
+        latitude: latitude ? parseFloat(latitude) : null,
+        longitude: longitude ? parseFloat(longitude) : null,
+        logo,
+        bannerPicture,
+        isSurplaceAvailable: isSurplaceAvailable ?? true,
+        balance: 0.0, // Aligné avec le champ 'balance' du schéma Prisma actuel
+        isVerified: false, // Non validée par défaut à la création
       },
     });
   },
 
-  // MODIFICATION DES DONNÉES DE L'ENTREPRISE
+  // 2. MODIFICATION DES DONNÉES DE L'ENTREPRISE
   update: async (id: string, updateData: any) => {
     const companyId = parseInt(id);
 
@@ -55,19 +94,23 @@ export const companiesService = {
       const phoneCheck = await prisma.company.findFirst({
         where: { phoneNumber: updateData.phoneNumber, NOT: { id: companyId } },
       });
-      if (phoneCheck)
-        throw new Error(
-          "Ce numéro de téléphone est déjà utilisé par une autre entreprise.",
-        );
+      if (phoneCheck) {
+        throw new Error("Ce numéro de téléphone est déjà utilisé par une autre entreprise.");
+      }
     }
 
     if (updateData.username) {
       const usernameCheck = await prisma.company.findFirst({
         where: { username: updateData.username, NOT: { id: companyId } },
       });
-      if (usernameCheck)
+      if (usernameCheck) {
         throw new Error("Ce nom d'entreprise est déjà utilisé.");
+      }
     }
+
+    // Conversion des coordonnées si présentes
+    if (updateData.latitude) updateData.latitude = parseFloat(updateData.latitude);
+    if (updateData.longitude) updateData.longitude = parseFloat(updateData.longitude);
 
     return await prisma.company.update({
       where: { id: companyId },
@@ -75,10 +118,10 @@ export const companiesService = {
     });
   },
 
-  // AFFICHAGE INDIVIDUEL COMPLEMENTAIRE
+  // 3. AFFICHAGE INDIVIDUEL COMPLEMENTAIRE
   getById: async (id: string) => {
-    return await prisma.company.findUnique({
-      where: { id: parseInt(id) },
+    const company = await prisma.company.findFirst({
+      where: { id: parseInt(id), deletedAt: null },
       include: {
         annonces: true,
         gifts: true,
@@ -89,34 +132,63 @@ export const companiesService = {
         },
       },
     });
+
+    if (!company) {
+      throw new Error("Entreprise introuvable ou supprimée.");
+    }
+    return company;
   },
 
-  // FILTRE, RECHERCHE MUTLI-CRITÈRES ET LISTING DES COMPAGNIES
-  getMany: async (filters: any = {}, pagination: any = { limit: 8, page: 0 }) => {
+  // 4. FILTRE, RECHERCHE MULTI-CRITÈRES, LISTING ET TRI DYNAMIQUE
+  getMany: async (
+    filters: CompanyFilters = {},
+    pagination: PaginationParams = { limit: 8, page: 0 },
+    sorting: SortingParams = { sortBy: "createdAt", sortOrder: "desc" }
+  ) => {
     const limit = parseInt(pagination.limit as string) || 8;
     const page = parseInt(pagination.page as string) || 0;
 
-    const { category, city, country, search } = filters;
+    const { category, city, country, search, isVerified } = filters;
+    const { sortBy, sortOrder } = sorting;
 
+    // Construction de la clause de filtrage dynamique
     const whereClause: any = {
-      ...(category && { category: { equals: category, mode: "insensitive" } }),
+      deletedAt: null, // Exclure les entreprises soft-deleted
+      ...(category && { category }),
       ...(city && { city: { contains: city, mode: "insensitive" } }),
       ...(country && { country: { equals: country, mode: "insensitive" } }),
+      ...(isVerified !== undefined && { isVerified }),
       ...(search && {
         OR: [
           { username: { contains: search, mode: "insensitive" } },
           { email: { contains: search, mode: "insensitive" } },
           { phoneNumber: { contains: search, mode: "insensitive" } },
+          { description: { contains: search, mode: "insensitive" } },
         ],
       }),
     };
+
+    // Construction dynamique du tri
+    const orderByClause: any = {};
+    if (sortBy === "name") {
+      orderByClause["username"] = sortOrder || "asc";
+    } else if (sortBy === "balance") {
+      orderByClause["balance"] = sortOrder || "desc";
+    } else {
+      orderByClause["createdAt"] = sortOrder || "desc";
+    }
 
     const totalRows = await prisma.company.count({ where: whereClause });
     const result = await prisma.company.findMany({
       where: whereClause,
       skip: limit * page,
       take: limit,
-      orderBy: { createdAt: "desc" },
+      orderBy: orderByClause,
+      include: {
+        _count: {
+          select: { annonces: { where: { isAvailable: true } } },
+        },
+      },
     });
 
     return {
@@ -128,10 +200,99 @@ export const companiesService = {
     };
   },
 
-  // SUPPRESSION DE LA COMPAGNIE
+  // 5. RECHERCHE PAR GÉOLOCALISATIONS LA PLUS PROCHE (Formule de Haversine intégrée)
+  getAnnoncesByProximity: async (params: ProximityParams) => {
+    const { latitude, longitude, category, maxDistanceKm } = params;
+
+    const companies = await prisma.company.findMany({
+      where: {
+        deletedAt: null,
+        isVerified: true,
+        ...(category && { category }),
+        annonces: {
+          some: { isAvailable: true },
+        },
+      },
+      include: {
+        annonces: {
+          where: { isAvailable: true },
+        },
+      },
+    });
+
+    // Application de la formule de Haversine en mémoire
+    const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+      const R = 6371; // Rayon de la Terre en kilomètres
+      const dLat = ((lat2 - lat1) * Math.PI) / 180;
+      const dLon = ((lon2 - lon1) * Math.PI) / 180;
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos((lat1 * Math.PI) / 180) *
+          Math.cos((lat2 * Math.PI) / 180) *
+          Math.sin(dLon / 2) *
+          Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    };
+
+    const sortedCompanies = companies
+      .map((company) => {
+        const distance = calculateDistance(
+          latitude,
+          longitude,
+          company.latitude ? Number(company.latitude) : 0,
+          company.longitude ? Number(company.longitude) : 0
+        );
+        return { ...company, distanceInKm: parseFloat(distance.toFixed(2)) };
+      })
+      .filter((company) => (maxDistanceKm ? company.distanceInKm <= maxDistanceKm : true));
+
+    // Tri par ordre croissant de proximité (du plus proche au plus lointain)
+    return sortedCompanies.sort((a, b) => a.distanceInKm - b.distanceInKm);
+  },
+
+  // 6. WORKFLOW DE VALIDATION / APPROBATION PAR LES ADMINS ET AGENTS
+  verify: async (executorId: number, companyId: number, approved: boolean) => {
+    // Récupération de l'utilisateur qui exécute l'action avec ses permissions
+    const executor = await prisma.user.findUnique({
+      where: { id: executorId },
+      select: {
+        role: true,
+        permissions: {
+          where: { code: "VALIDATE_COMPANY" },
+          select: { code: true },
+        },
+      },
+    });
+
+    if (!executor) {
+      throw new Error("Utilisateur exécuteur introuvable.");
+    }
+
+    const isSuperUser = executor.role === Role.ADMIN || executor.role === Role.IT;
+    const isAgent = executor.role === Role.AGENT;
+
+    if (isAgent) {
+      // Si c'est un agent, il doit obligatoirement posséder la permission appropriée
+      const hasPermission = executor.permissions.length > 0;
+      if (!hasPermission) {
+        throw new Error("Accès refusé : Cet agent ne possède pas la permission requise.");
+      }
+    } else if (!isSuperUser) {
+      throw new Error("Accès refusé : Droits insuffisants pour valider une entreprise.");
+    }
+
+    return await prisma.company.update({
+      where: { id: companyId },
+      data: { isVerified: approved },
+    });
+  },
+
+  // 7. SUPPRESSION LOGIQUE DE LA COMPAGNIE (Soft Delete)
   delete: async (id: string) => {
-    return await prisma.company.delete({
+    return await prisma.company.update({
       where: { id: parseInt(id) },
+      data: { deletedAt: new Date() },
     });
   },
 };

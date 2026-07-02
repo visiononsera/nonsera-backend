@@ -6,7 +6,9 @@ import { setupSocketIO } from './services/socket.service';
 import logger from './utils/logger';
 
 // Chargement des tâches d'arrière-plan automatisées (Cron)
-import './cron/starsCron';
+import './jobs/stars.cron';
+import './jobs/podium.cron';
+import './jobs/bonus_expire.cron';
 
 const server = http.createServer(app);
 
@@ -25,9 +27,10 @@ setupSocketIO(io);
 declare global {
   var io: Server;
 }
+
 globalThis.io = io;
 
-server.listen(PORT, () => {
+server.listen(PORT, '192.168.17.151', () => {
   logger.info(`[${NODE_ENV}] Serveur unifié à l'écoute sur le port : ${PORT}`);
-  logger.info(`Swagger UI disponible sur http://localhost:${PORT}/api-docs`);
+  logger.info(`Swagger UI disponible sur http:// 192.168.17.151:${PORT}/api-docs`);
 });

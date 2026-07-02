@@ -2,3 +2,334 @@
 {"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-13 19:45:19"}
 {"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-14 18:51:26"}
 {"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-14 18:51:26"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 04:11:51"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 04:11:51"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 04:21:08"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 04:21:08"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 04:21:17"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 04:21:17"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 04:52:46"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 04:52:46"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 05:11:47"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 05:11:47"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 05:14:10"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 05:14:10"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 05:16:28"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 05:16:28"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 05:55:02"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 05:55:02"}
+{"level":"error","message":"Unexpected token '\"', \"\"{\\n \\\"pho\"... is not valid JSON","timestamp":"2026-06-18 05:55:31"}
+{"level":"error","message":"Unexpected token 'n', \"null\" is not valid JSON","timestamp":"2026-06-18 05:56:00"}
+{"level":"error","message":"Unexpected token '\"', \"\"phoneNumb\"... is not valid JSON","timestamp":"2026-06-18 05:56:27"}
+{"level":"error","message":"Unexpected token '\"', \"\"phoneNumb\"... is not valid JSON","timestamp":"2026-06-18 05:56:40"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:03:31"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:03:31"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:03:47"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:03:47"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:08:02"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:08:02"}
+{"level":"error","message":"Unexpected token '\"', \"\"phoneNumb\"... is not valid JSON","timestamp":"2026-06-18 06:08:37"}
+{"level":"error","message":"Unexpected token 'n', \"null\" is not valid JSON","timestamp":"2026-06-18 06:08:45"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:09:32"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:09:32"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:10:24"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:10:24"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:10:44"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:10:44"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:11:05"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:11:05"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:12:06"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:12:06"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:12:45"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:12:45"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:13:34"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:13:34"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:22:21"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:22:21"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:22:24"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:22:24"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:22:47"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:22:47"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:23:18"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:23:18"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:23:45"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:23:45"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:24:02"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:24:02"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:27:25"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:27:25"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:28:48"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:28:48"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:31:27"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:31:27"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:31:48"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:31:48"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:32:50"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:32:50"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:33:17"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:33:17"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:33:53"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:33:53"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:34:09"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:34:09"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:34:36"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:34:36"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:35:09"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:35:09"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:35:19"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:35:19"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:38:02"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:38:02"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:38:26"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:38:26"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:40:51"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:40:51"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:41:15"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:41:15"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:42:01"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:42:01"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:48:34"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:48:34"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:48:51"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:48:51"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-18 06:49:07"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-18 06:49:07"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 03:33:25"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 03:33:25"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 03:47:58"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 03:47:58"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 03:48:22"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 03:48:22"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 03:50:11"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 03:50:11"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 03:50:27"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 03:50:27"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 04:02:26"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 04:02:26"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 04:04:42"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 04:04:43"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 04:04:56"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 04:04:56"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 04:05:48"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 04:05:48"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 04:08:45"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 04:08:45"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 04:09:15"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 04:09:15"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 04:12:53"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 04:12:53"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 04:22:19"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 04:22:19"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 04:25:48"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 04:25:48"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 04:26:43"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 04:26:43"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 04:26:55"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 04:26:55"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 04:27:18"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 04:27:18"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 04:28:13"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 04:28:13"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 04:28:34"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 04:28:34"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 04:33:31"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 04:33:31"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 05:13:22"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 05:13:22"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 05:14:27"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 05:14:27"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 05:15:57"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 05:15:57"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 05:16:25"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 05:16:25"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 05:18:48"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 05:18:48"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 05:52:27"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 05:52:27"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 05:52:53"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 05:52:53"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 05:54:55"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 05:54:55"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 05:56:05"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 05:56:05"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 05:56:57"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 05:56:57"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 05:57:30"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 05:57:30"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 05:58:34"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 05:58:34"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 05:58:56"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 05:58:56"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 05:59:15"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 05:59:15"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 06:05:04"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 06:05:04"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 06:05:34"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 06:05:35"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 06:05:54"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 06:05:54"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 06:06:19"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 06:06:19"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-19 06:06:53"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-19 06:06:53"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-21 19:06:00"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-21 19:06:00"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-25 04:23:07"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-25 04:23:07"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-25 12:03:17"}
+{"level":"info","message":"Swagger UI disponible sur http://localhost:8080/api-docs","timestamp":"2026-06-25 12:03:17"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-25 12:38:21"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-25 12:38:21"}
+{"level":"info","message":"Client connecté. Socket ID: 6IH4J0HxeMyrw7SRAAAB","timestamp":"2026-06-25 12:47:28"}
+{"level":"info","message":"Client connecté. Socket ID: WqtoH0-5cIfr5R0rAAAD","timestamp":"2026-06-25 12:51:14"}
+{"level":"info","message":"Client connecté. Socket ID: PpNtwq3p_4A4_AcOAAAF","timestamp":"2026-06-25 13:07:03"}
+{"level":"info","message":"Client connecté. Socket ID: JAJ36RuVJ4YdmIUXAAAH","timestamp":"2026-06-25 13:07:14"}
+{"level":"info","message":"Client connecté. Socket ID: M1vR_q_tjPYnKp2xAAAJ","timestamp":"2026-06-25 13:07:43"}
+{"level":"info","message":"Client connecté. Socket ID: ZrcD1tcQBvKz1m5yAAAL","timestamp":"2026-06-25 13:40:26"}
+{"level":"info","message":"Client connecté. Socket ID: wgkod5LFKIkbfVCDAAAN","timestamp":"2026-06-25 13:42:36"}
+{"level":"info","message":"Client connecté. Socket ID: UHND-4nqkxMlzu7UAAAP","timestamp":"2026-06-25 13:43:16"}
+{"level":"info","message":"Client connecté. Socket ID: RVJs5X4cLW3-Sj4JAAAR","timestamp":"2026-06-25 13:45:32"}
+{"level":"info","message":"Client connecté. Socket ID: bv4esuS38QRQw-CkAAAT","timestamp":"2026-06-25 13:56:58"}
+{"level":"info","message":"Client connecté. Socket ID: sDkyqOR9dn5LM9j3AAAV","timestamp":"2026-06-25 14:10:08"}
+{"level":"info","message":"Client connecté. Socket ID: flpsJl3aMiyz7SgWAAAX","timestamp":"2026-06-25 14:12:38"}
+{"level":"info","message":"Client connecté. Socket ID: BppVyafD8VGReKJ5AAAZ","timestamp":"2026-06-25 14:23:30"}
+{"level":"info","message":"Client connecté. Socket ID: M2AYg5o5a0WYq4jgAAAb","timestamp":"2026-06-25 14:25:17"}
+{"level":"info","message":"Client connecté. Socket ID: znTsDSUJJ67mJJqXAAAd","timestamp":"2026-06-25 14:25:56"}
+{"level":"info","message":"Client connecté. Socket ID: -uHwIh1NNc-KWlKcAAAf","timestamp":"2026-06-25 14:47:29"}
+{"level":"info","message":"Client connecté. Socket ID: bNGDkJjYFl8ytn3CAAAh","timestamp":"2026-06-25 14:59:13"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 12:20:21"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 12:20:21"}
+{"level":"info","message":"Client connecté. Socket ID: 7BEhlihTG4Ph0XBdAAAB","timestamp":"2026-06-26 12:24:48"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 12:28:52"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 12:28:52"}
+{"level":"info","message":"Client connecté. Socket ID: 6C-1MUrOFrJUnY3XAAAB","timestamp":"2026-06-26 12:28:55"}
+{"level":"info","message":"Client connecté. Socket ID: FSBGVJJqSzy9HYBJAAAD","timestamp":"2026-06-26 12:31:27"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 12:33:56"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 12:33:56"}
+{"level":"info","message":"Client connecté. Socket ID: kDU1XBJrTs6n4eSKAAAB","timestamp":"2026-06-26 12:33:58"}
+{"level":"info","message":"Client connecté. Socket ID: S8XoF2gks2Yvcm-gAAAD","timestamp":"2026-06-26 12:34:31"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 12:36:38"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 12:36:38"}
+{"level":"info","message":"Client connecté. Socket ID: Y2tdAyOAbQQbinQnAAAB","timestamp":"2026-06-26 12:36:38"}
+{"level":"info","message":"Client connecté. Socket ID: 1Wg1QJVjOoMymwL6AAAD","timestamp":"2026-06-26 12:37:10"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 12:37:53"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 12:37:53"}
+{"level":"info","message":"Client connecté. Socket ID: 2Q7pL4fAE8fk24goAAAB","timestamp":"2026-06-26 12:37:55"}
+{"level":"info","message":"Client connecté. Socket ID: 8gwCHoPgHL9bm65gAAAD","timestamp":"2026-06-26 12:39:00"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 12:40:13"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 12:40:13"}
+{"level":"info","message":"Client connecté. Socket ID: F7CZeLBGA9Cu1SYCAAAB","timestamp":"2026-06-26 12:40:19"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 12:40:56"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 12:40:56"}
+{"level":"info","message":"Client connecté. Socket ID: TFOp2BGcCmdfFOPiAAAB","timestamp":"2026-06-26 12:40:56"}
+{"level":"info","message":"Client connecté. Socket ID: pf8jBDIZW55S3oH9AAAD","timestamp":"2026-06-26 12:41:29"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 12:42:36"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 12:42:36"}
+{"level":"info","message":"Client connecté. Socket ID: 0XY9mfbMnYy3jV2UAAAB","timestamp":"2026-06-26 12:42:40"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 12:44:27"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 12:44:27"}
+{"level":"info","message":"Client connecté. Socket ID: Pu8mBlg-ZPIBGJnZAAAB","timestamp":"2026-06-26 12:44:43"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 12:48:22"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 12:48:22"}
+{"level":"info","message":"Client connecté. Socket ID: tdOK35zR0wRArp-SAAAB","timestamp":"2026-06-26 12:48:26"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 12:49:15"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 12:49:15"}
+{"level":"info","message":"Client connecté. Socket ID: Zin4fRCc5qXM3fOrAAAB","timestamp":"2026-06-26 12:49:17"}
+{"level":"info","message":"Client connecté. Socket ID: 7SqmDlbkszzIBfp8AAAD","timestamp":"2026-06-26 12:55:30"}
+{"level":"info","message":"Client connecté. Socket ID: _uV4UujE_tX-b3oSAAAF","timestamp":"2026-06-26 12:56:44"}
+{"level":"info","message":"Client connecté. Socket ID: an4hv8diPMdZEjNWAAAH","timestamp":"2026-06-26 13:18:44"}
+{"level":"info","message":"Client connecté. Socket ID: YUB2RFoucU9U51osAAAJ","timestamp":"2026-06-26 13:28:03"}
+{"level":"info","message":"Client connecté. Socket ID: Uhe1rWlWJ1SOEbzKAAAL","timestamp":"2026-06-26 13:28:43"}
+{"level":"info","message":"Client connecté. Socket ID: IAq4gnPNgGayvGwGAAAN","timestamp":"2026-06-26 13:29:16"}
+{"level":"info","message":"Client connecté. Socket ID: vggLHfOuyZ34bvQPAAAP","timestamp":"2026-06-26 13:29:47"}
+{"level":"info","message":"Client connecté. Socket ID: v8_BZ7ldPTli9c5zAAAR","timestamp":"2026-06-26 13:31:47"}
+{"level":"info","message":"Client connecté. Socket ID: caUFmm2-Duy0HaqCAAAT","timestamp":"2026-06-26 13:37:41"}
+{"level":"info","message":"Client connecté. Socket ID: GYUzqwXb941Wew8SAAAV","timestamp":"2026-06-26 13:38:12"}
+{"level":"info","message":"Client connecté. Socket ID: yTRa37YMiseRoxgHAAAX","timestamp":"2026-06-26 13:39:44"}
+{"level":"info","message":"Client connecté. Socket ID: y44mbxXth79bOjHsAAAZ","timestamp":"2026-06-26 14:37:24"}
+{"level":"info","message":"Client connecté. Socket ID: gLO17G44ViodT3cHAAAb","timestamp":"2026-06-26 14:43:15"}
+{"level":"info","message":"Client connecté. Socket ID: u08PJZl_pEAlMj44AAAd","timestamp":"2026-06-26 14:43:33"}
+{"level":"info","message":"Client connecté. Socket ID: XePBWgBUeypbTlW1AAAf","timestamp":"2026-06-26 14:44:27"}
+{"level":"info","message":"Client connecté. Socket ID: 2QIYiKTsOEIW6lO4AAAh","timestamp":"2026-06-26 14:59:09"}
+{"level":"info","message":"Client connecté. Socket ID: pmXpiLPsUTiwQv_9AAAj","timestamp":"2026-06-26 14:59:30"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 15:13:43"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 15:13:43"}
+{"level":"info","message":"Client connecté. Socket ID: qnYzYlgI3yMaktXWAAAB","timestamp":"2026-06-26 15:13:45"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 15:14:46"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 15:14:46"}
+{"level":"info","message":"Client connecté. Socket ID: 0VN7ShJMPSg5ZXtdAAAB","timestamp":"2026-06-26 15:14:46"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 15:15:34"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 15:15:35"}
+{"level":"info","message":"Client connecté. Socket ID: bFo4V1oPr0pbgC6kAAAB","timestamp":"2026-06-26 15:15:39"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 15:16:43"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 15:16:43"}
+{"level":"info","message":"Client connecté. Socket ID: H-iibIGFFshE59zGAAAB","timestamp":"2026-06-26 15:16:47"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 15:21:24"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 15:21:24"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 15:21:38"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 15:21:38"}
+{"level":"info","message":"Client connecté. Socket ID: 3cgJcUM2WXPk-NnIAAAB","timestamp":"2026-06-26 15:21:38"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 15:26:13"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 15:26:13"}
+{"level":"info","message":"Client connecté. Socket ID: M7o69AZK-l7VygCFAAAB","timestamp":"2026-06-26 15:26:19"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 16:06:27"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 16:06:27"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 16:07:08"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 16:07:08"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 16:07:59"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 16:07:59"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 16:09:24"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 16:09:24"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 16:10:03"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 16:10:03"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 16:11:07"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 16:11:07"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 16:12:06"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 16:12:06"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 16:13:56"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 16:13:56"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 16:15:25"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 16:15:25"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 16:18:02"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 16:18:02"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 16:26:52"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 16:26:52"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 16:56:48"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 16:56:48"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 16:57:02"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 16:57:02"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 17:06:45"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 17:06:45"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 17:08:06"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 17:08:07"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 17:08:47"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 17:08:47"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 17:10:17"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 17:10:17"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 17:11:24"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 17:11:24"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 17:11:39"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 17:11:39"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-06-26 17:15:38"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-06-26 17:15:38"}
+{"level":"info","message":"Client connecté. Socket ID: mcd33AIcWRWR0rXUAAAB","timestamp":"2026-06-26 17:18:17"}
+{"level":"info","message":"Client connecté. Socket ID: JtSXSE5d9sNusqGRAAAD","timestamp":"2026-06-26 17:18:27"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-01 01:55:35"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-01 01:55:35"}
+{"level":"info","message":"Client connecté. Socket ID: BcOobpJkf_SWrcPlAAAB","timestamp":"2026-07-01 01:56:47"}
+{"level":"info","message":"Client connecté. Socket ID: wqGZH9ai33bwLhxxAAAD","timestamp":"2026-07-01 01:57:51"}
+{"level":"info","message":"Client connecté. Socket ID: K_-iCh4Z7ca1-RZJAAAF","timestamp":"2026-07-01 01:58:17"}
+{"level":"info","message":"Client connecté. Socket ID: MuWD0_ZAMo1epQJ2AAAH","timestamp":"2026-07-01 02:00:07"}
+{"level":"info","message":"Client connecté. Socket ID: yCcZ0Hahr1kCZNyZAAAJ","timestamp":"2026-07-01 02:01:16"}
+{"level":"info","message":"Client connecté. Socket ID: NBl5dF0Xwtx7iyHoAAAL","timestamp":"2026-07-01 02:01:52"}
+{"level":"info","message":"Client connecté. Socket ID: dxnaVwYYvJipuAMNAAAN","timestamp":"2026-07-01 02:03:13"}
+{"level":"info","message":"Client connecté. Socket ID: 8uz84X_srbgJohGcAAAP","timestamp":"2026-07-01 02:06:03"}
+{"level":"info","message":"Client connecté. Socket ID: d1qFZA67ubytIO6nAAAR","timestamp":"2026-07-01 02:06:54"}
+{"level":"info","message":"Client connecté. Socket ID: wS1CnrfdLOPkk-0nAAAT","timestamp":"2026-07-01 02:10:53"}
+{"level":"info","message":"Client connecté. Socket ID: 00XXmQ0kPKA8LscLAAAV","timestamp":"2026-07-01 02:11:18"}
+{"level":"info","message":"Client connecté. Socket ID: 5uhbmTHKnV5rOGz1AAAX","timestamp":"2026-07-01 02:55:38"}
+{"level":"info","message":"Client connecté. Socket ID: K1OGsuwBQfS8xgdeAAAZ","timestamp":"2026-07-01 03:03:28"}
+{"level":"info","message":"Client connecté. Socket ID: vLy4WSfsdqmygP8PAAAb","timestamp":"2026-07-01 03:04:05"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-01 04:12:07"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-01 04:12:07"}
+{"level":"info","message":"Client connecté. Socket ID: w71PsVQMkiakVxwJAAAB","timestamp":"2026-07-01 04:12:14"}

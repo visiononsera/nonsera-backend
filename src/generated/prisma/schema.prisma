@@ -518,15 +518,15 @@ model Annonce {
   ambiance            AmbianceType? @default(SALLE_PRINCIPALE)
   hasAnimation        Boolean       @default(false)
   isDeliveryAvailable Boolean       @default(false)
-  isRomantique        Boolean       @default(false) // "Option romantique (si disponible)" pour Hôtel/Transport/Activités
-  equipements         Json? // "Équipement inclus" pour les Hôtels (ex: Wifi, Piscine, AC)
+  isRomantique        Boolean       @default(false) // NOUVEAU : "Option romantique (si disponible)" pour Hôtel/Transport/Activités
+  equipements         Json? // NOUVEAU : "Équipement inclus" pour les Hôtels (ex: Wifi, Piscine, AC)
 
   // Spécifique Transport
-  vehicleType VehicleType? // Filtre sous-catégories en survol (Moto, Berline...)
-  nbPlaces    Int? // Nombre de places disponibles
+  vehicleType VehicleType? // NOUVEAU : Filtre sous-catégories en survol (Moto, Berline...)
+  nbPlaces    Int? // NOUVEAU : Nombre de places disponibles
 
   // Spécifique Activités
-  activityType ActivityType? // Sous-catégorie d'activité
+  activityType ActivityType? // NOUVEAU : Sous-catégorie d'activité
 
   companyId Int?
   company   Company? @relation(fields: [companyId], references: [id], onDelete: Cascade)
@@ -806,7 +806,6 @@ model Subscription {
 
 model Company {
   id            Int             @id @default(autoincrement())
-  name          String?
   phoneNumber   String          @unique
   username      String?         @unique
   email         String?         @unique
@@ -821,8 +820,6 @@ model Company {
   mapAddress    String?
   numeroSocial  String?
   balance       Decimal         @default(0) @db.Decimal(18, 2)
-
-  links Json?
 
   isVerified          Boolean @default(false)
   isSurplaceAvailable Boolean @default(true)

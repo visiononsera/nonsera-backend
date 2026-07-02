@@ -11,78 +11,104 @@ export const usersController = {
   // ==========================================
 
   /**
-   * Met à jour le profil étape par étape durant le parcours d'Onboarding
+   * Met à jour le profil étape par étape durant le parcours d'Onboarding ou en mode classique
    */
   updateOnboardingProfile: async (req: Request, res: Response) => {
     try {
       const userId = req.user.id;
-      const { fullname, username, currentStep, nextStep } = req.body;
 
-      const updateData: any = {};
-      if (fullname) updateData.fullname = fullname;
+      // Récupération dynamique de la photo : Priorité au fichier traité par le middleware Multer (S3)
+      const multerFile = (req as any).file;
+      const profilePhoto = multerFile
+        ? (multerFile as any).location
+        : req.body.profilePhoto;
 
-      if (username) {
-        const existingUsername = await prisma.user.findUnique({
-          where: { username },
+      const {
+        fullname,
+        email,
+        birthday,
+        gender,
+        pin,
+        code,
+        religion,
+        passions,
+        height,
+        nextStep,
+      } = req.body;
+
+      // 1. Traitement des informations et application des contraintes via le service général
+      const updatedUser = await usersService.updateOnboardingData(userId, {
+        fullname,
+        profilePhoto,
+        email,
+        birthday,
+        gender,
+        pin: pin || code,
+        religion,
+        passions,
+        height,
+        nextStep, // Applique la valeur transmise (ex: "CALL_VALIDATION")
+      });
+
+      // 2. Vérification séquentielle basée sur la valeur retournée par la BDD
+      if (updatedUser.onboardingStep === "CALL_VALIDATION") {
+        const finalUpdate = await prisma.user.update({
+          where: { id: userId },
+          data: {
+            isCompleted: false, // Reste false tant que l'agent n'a pas validé physiquement
+            onboardingStep: "AWAITING_VIDEO_CALL",
+          },
         });
-        if (existingUsername && existingUsername.id !== userId) {
-          return res
-            .status(400)
-            .json({
-              success: false,
-              message: "Ce nom d'utilisateur est déjà pris.",
-            });
-        }
-        updateData.username = username;
-      }
 
-      if (nextStep) {
-        updateData.onboardingStep = nextStep;
-      }
-
-      // VÉRIFICATION DE LA COMPLÉTION DE L'ONBOARDING
-      const isFinalStep = currentStep === "FINAL_STEP";
-      if (isFinalStep) {
-        updateData.isCompleted = false; // Reste à false tant que l'AGENT n'a pas validé l'appel
-        updateData.onboardingStep = "AWAITING_VIDEO_CALL";
-      }
-
-      // Mise à jour de l'utilisateur
-      const updatedUser = await usersService.update(userId, updateData);
-
-      // AUTOMATION BACKEND-DRIVEN : Déclenchement automatique de la session vidéo
-      if (isFinalStep) {
+        // Initialisation immédiate de la room de flux WebRTC/Twilio
         const videoSession = await videoValidationService.initializeSession(
           userId,
           true,
         );
 
-        return res.status(201).json({
+        return res.status(200).json({
           success: true,
           code: "ONBOARDING_COMPLETED_AWAITING_CALL",
           message:
-            "Informations enregistrées. Session d'appel vidéo initialisée par le système.",
+            "Informations enregistrées. En attente de la vérification par un agent.",
           data: {
-            onboardingStep: updatedUser.onboardingStep,
-            roomId: videoSession.roomId, // Renvoyé directement au client mobile pour s'y connecter
+            onboardingStep: finalUpdate.onboardingStep,
+            roomId: videoSession.roomId, // Token partagé avec l'application Expo mobile
+            user: {
+              id: finalUpdate.id,
+              fullname: finalUpdate.fullname,
+              profilePhoto: finalUpdate.profilePhoto,
+            },
           },
         });
       }
 
-      // Étape d'onboarding intermédiaire standard
+      // Réponse de succès standard pour les étapes d'onboarding intermédiaires
       return res.status(200).json({
         success: true,
         message: "Étape d'onboarding enregistrée.",
         data: {
           isCompleted: updatedUser.isCompleted,
           onboardingStep: updatedUser.onboardingStep,
-          user: { id: updatedUser.id, fullname: updatedUser.fullname },
+          user: {
+            id: updatedUser.id,
+            fullname: updatedUser.fullname,
+            username: updatedUser.username,
+            profilePhoto: updatedUser.profilePhoto,
+            firstOtherPhoto: updatedUser.firstOtherPhoto,
+            secondOtherPhoto: updatedUser.secondOtherPhoto,
+          },
         },
       });
     } catch (error: any) {
-      return res.status(500).json({ success: false, message: error.message });
+      return res.status(400).json({
+        success: false,
+        message:
+          error.message || "Une erreur est survenue lors de la mise à jour.",
+      });
     }
   },
+
   /**
    * Récupère le profil complet de l'utilisateur connecté avec ses droits associés
    */
@@ -90,8 +116,7 @@ export const usersController = {
     try {
       const userId = req.user.id;
       const user = await prisma.user.findUnique({
-        where: { id: userId },
-        include: { permissions: { select: { code: true, name: true } } },
+        where: { id: userId }
       });
 
       if (!user) {
@@ -106,18 +131,55 @@ export const usersController = {
     }
   },
 
+  /**
+   * Désactive temporairement le compte de l'utilisateur (Option de mise en veille)
+   */
+  deactivateAccount: async (req: Request, res: Response) => {
+    try {
+      const userId = req.user.id;
+      await usersService.deactivateAccount(userId);
+
+      return res.status(200).json({
+        success: true,
+        message:
+          "Votre compte a été suspendu temporairement avec succès. Vous avez été déconnecté.",
+      });
+    } catch (error: any) {
+      return res.status(500).json({ success: false, message: error.message });
+    }
+  },
+
+  /**
+   * Suppression définitive du compte (Exigence de conformité Google Play Store)
+   */
+  deleteAccount: async (req: Request, res: Response) => {
+    try {
+      const userId = req.user.id;
+
+      await usersService.deleteAccountCompletely(userId);
+
+      return res.status(200).json({
+        success: true,
+        code: "ACCOUNT_DELETED_SUCCESS",
+        message:
+          "Conformité Google : Votre compte et l'ensemble de vos données personnelles ont été supprimés définitivement.",
+      });
+    } catch (error: any) {
+      return res.status(500).json({ success: false, message: error.message });
+    }
+  },
+
   // ==========================================
   // SECTION 2 : GESTION DYNAMIQUE DES PERMISSIONS (ADMIN & IT)
   // ==========================================
 
   /**
    * Assigne ou révoque des permissions à un USER ou un AGENT
-   * Droit absolu réservé à l'ADMIN et à l'IT
    */
   assignPermissionsToUser: async (req: Request, res: Response) => {
     try {
-      const requesterRole = req.user.role; // Le rôle de l'opérateur (ADMIN ou IT)
-      const { targetUserId, permissionIds } = req.body; // permissionIds: ex: [2, 5, 11]
+      const requesterRole = req.user.role;
+      const { targetUserId, permissionIds } = req.body;
 
       if (!targetUserId || !Array.isArray(permissionIds)) {
         return res.status(400).json({
@@ -127,7 +189,6 @@ export const usersController = {
         });
       }
 
-      // Extraction de la cible pour valider la hiérarchie de sécurité
       const targetUser = await prisma.user.findUnique({
         where: { id: parseInt(targetUserId) },
       });
@@ -138,7 +199,6 @@ export const usersController = {
         });
       }
 
-      // Barrière de sécurité : Un ADMIN ne peut pas modifier un ingénieur IT
       if (targetUser.role === "IT" && requesterRole === "ADMIN") {
         return res.status(403).json({
           success: false,
@@ -147,7 +207,6 @@ export const usersController = {
         });
       }
 
-      // Synchronisation atomique Many-to-Many via Prisma Connect/Set
       await prisma.user.update({
         where: { id: parseInt(targetUserId) },
         data: {
@@ -225,7 +284,6 @@ export const usersController = {
         });
       }
 
-      // Interdiction pour un ADMIN de créer un niveau supérieur (IT)
       if (role === "IT" && requesterRole === "ADMIN") {
         return res.status(403).json({
           success: false,
@@ -234,7 +292,6 @@ export const usersController = {
         });
       }
 
-      // Validation de conflit d'unicité sur le numéro
       const existingUser = await prisma.user.findUnique({
         where: { phoneNumber },
       });
@@ -248,7 +305,6 @@ export const usersController = {
       const salt = await bcrypt.genSalt(SALT_ROUND);
       const hashedPin = await bcrypt.hash(passCode, salt);
 
-      // Création du compte via le service
       const newStaff = await usersService.create({
         phoneNumber,
         fullname,
@@ -269,6 +325,215 @@ export const usersController = {
       });
     } catch (error: any) {
       return res.status(500).json({ success: false, message: error.message });
+    }
+  },
+
+  // ==========================================
+  // SECTION 4 : OPÉRATIONS FINANCIÈRES & PORTEFEUILLE (WALLET)
+  // ==========================================
+
+  /**
+   * Recharge la balance (coins) de l'utilisateur connecté pour lui ouvrir l'accès aux achats in-app
+   */
+  reloadWalletCoins: async (req: Request, res: Response) => {
+    try {
+      const userId = req.user.id;
+      const { amount, reference } = req.body;
+
+      if (!amount) {
+        return res.status(400).json({
+          success: false,
+          message: "Le montant du rechargement (amount) est requis.",
+        });
+      }
+
+      const updatedUser = await usersService.creditUserCoins(
+        userId,
+        parseFloat(amount),
+        reference,
+      );
+
+      return res.status(200).json({
+        success: true,
+        message: "Votre solde de coins a été mis à jour avec succès.",
+        data: {
+          userId: updatedUser.id,
+          newBalance: updatedUser.coins,
+        },
+      });
+    } catch (error: any) {
+      return res.status(400).json({
+        success: false,
+        message:
+          error.message ||
+          "Impossible de recharger le portefeuille de crédits.",
+      });
+    }
+  },
+
+  /**
+   * Action de l'administration sur une demande d'onboarding en attente (Validation, Rejet ou Bannissement)
+   * Protégé par un middleware d'autorisation restreint aux rôles AGENT, ADMIN ou IT
+   */
+  reviewPendingAccount: async (req: Request, res: Response) => {
+    try {
+      const { targetUserId, action, reason } = req.body;
+
+      if (!targetUserId || !action) {
+        return res.status(400).json({
+          success: false,
+          message:
+            "L'identifiant de la cible (targetUserId) et l'action ('APPROVE' | 'REJECT' | 'BAN') sont requis.",
+        });
+      }
+
+      const targetId = parseInt(targetUserId, 10);
+      const targetUser = await prisma.user.findUnique({
+        where: { id: targetId },
+      });
+
+      if (!targetUser) {
+        return res
+          .status(404)
+          .json({ success: false, message: "Utilisateur cible introuvable." });
+      }
+
+      let finalUser;
+
+      // CAS A : APPROBATION PHYSIQUE DE L'AGENT
+      if (action === "APPROVE") {
+        finalUser = await prisma.user.update({
+          where: { id: targetId },
+          data: {
+            isCompleted: true,
+            onboardingStep: "COMPLETED",
+          },
+        });
+
+        // Propagation Temps Réel vers la room Socket de l'utilisateur concerné
+        globalThis.io.to(`user_${targetId}`).emit("admin:account:approved", {
+          user: {
+            id: finalUser.id,
+            onboardingStep: finalUser.onboardingStep,
+            isCompleted: finalUser.isCompleted,
+          },
+        });
+      }
+
+      // CAS B : REJET DES DONNÉES / PHOTOS NON CONFORMES
+      else if (action === "REJECT") {
+        finalUser = await prisma.user.update({
+          where: { id: targetId },
+          data: {
+            isCompleted: false,
+            onboardingStep: "PROFILE_DETAILS", // Renvoi vers la correction des détails
+          },
+        });
+
+        globalThis.io.to(`user_${targetId}`).emit("admin:account:rejected", {
+          reason:
+            reason ||
+            "Vos informations ou votre photo n'ont pas été validées par notre équipe.",
+        });
+      }
+
+      // CAS C : BANNING IMMÉDIAT
+      else if (action === "BAN") {
+        finalUser = await prisma.user.update({
+          where: { id: targetId },
+          data: {
+            isBanned: true,
+          },
+        });
+
+        globalThis.io.to(`user_${targetId}`).emit("admin:account:banned");
+      } else {
+        return res
+          .status(400)
+          .json({ success: false, message: "Action demandée inconnue." });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: `L'action [${action}] sur le compte de ${targetUser.fullname} a été traitée et synchronisée en temps réel.`,
+      });
+    } catch (error: any) {
+      return res.status(500).json({ success: false, message: error.message });
+    }
+  },
+
+  // ==========================================
+  // SECTION 5 : SYNC BACKEND-DRIVEN / ACTIONS AGENT-ADMIN (TEMPS RÉEL)
+  // ==========================================
+
+  /**
+   * Récupère la liste paginée des utilisateurs en attente de validation par un agent
+   * Sécurisé : Accessible uniquement par le STAFF (AGENT, ADMIN, IT)
+   */
+  getPendingOnboardings: async (req: Request, res: Response) => {
+    try {
+      // Optionnel : Récupération des paramètres de pagination depuis la query string
+      const page = parseInt(req.query.page as string, 10) || 1;
+      const limit = parseInt(req.query.limit as string, 10) || 20;
+      const skip = (page - 1) * limit;
+
+      // 1. Requête Prisma pour cibler uniquement les comptes en attente d'appel
+      const [pendingUsers, total] = await prisma.$transaction([
+        prisma.user.findMany({
+          where: {
+            onboardingStep: "AWAITING_VIDEO_CALL",
+            isCompleted: false,
+            isBanned: false,
+            deletedAt: null, // Ignore les comptes supprimés logiquement
+          },
+          select: {
+            id: true,
+            fullname: true,
+            username: true,
+            phoneNumber: true,
+            email: true,
+            profilePhoto: true,
+            birthday: true,
+            gender: true,
+            religion: true,
+            passion: true,
+            preferences: true,
+            createdAt: true,
+          },
+          orderBy: {
+            createdAt: "asc", // Premier arrivé, premier servi (file d'attente logique)
+          },
+          skip,
+          take: limit,
+        }),
+        prisma.user.count({
+          where: {
+            onboardingStep: "AWAITING_VIDEO_CALL",
+            isCompleted: false,
+            isBanned: false,
+            deletedAt: null,
+          },
+        }),
+      ]);
+
+      return res.status(200).json({
+        success: true,
+        message: "Liste des demandes d'inscription en attente récupérée.",
+        meta: {
+          totalCount: total,
+          currentPage: page,
+          totalPages: Math.ceil(total / limit),
+          hasNextPage: page * limit < total,
+        },
+        data: pendingUsers,
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        success: false,
+        message:
+          error.message ||
+          "Une erreur est survenue lors de la récupération des demandes.",
+      });
     }
   },
 };
