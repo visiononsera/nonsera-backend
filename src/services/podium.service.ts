@@ -1,9 +1,13 @@
 import prisma from "./prisma.service";
+import { MatchService } from "./match.service";
 
 const SPECTATORS_PER_PODIUM = 100;
 
 export class PodiumService {
   
+  /**
+   * 1. GENERATION INITIALE DES ROUNDS
+   */
   static async generateCountryRounds(country: string, spectatorGender: 'MALE' | 'FEMALE') {
     const starGender = spectatorGender === 'MALE' ? 'FEMALE' : 'MALE';
     const futureTime = new Date(Date.now() + 5 * 60 * 1000);
@@ -16,7 +20,9 @@ export class PodiumService {
     if (spectators.length === 0) return;
 
     const totalPodiumsNeeded = Math.ceil(spectators.length / SPECTATORS_PER_PODIUM);
-    const starIds = await this.recruitStars(country, starGender, totalPodiumsNeeded);
+    
+    // Récupération des stars disponibles (Exclusion des personnes déjà en couple ou sur un podium)
+    const starIds = await this.recruitStars(country, starGender, totalPodiumsNeeded, []);
     if (starIds.length === 0) return;
 
     const actualPodiumsCount = Math.min(totalPodiumsNeeded, starIds.length);
@@ -59,11 +65,32 @@ export class PodiumService {
     }
   }
 
-  private static async recruitStars(country: string, gender: 'MALE' | 'FEMALE', countNeeded: number): Promise<number[]> {
+  /**
+   * 2. RECRUTEMENT DES STARS AVEC EXCLUSION DES GENS EN COUPLE
+   */
+  private static async recruitStars(
+    country: string, 
+    gender: 'MALE' | 'FEMALE', 
+    countNeeded: number,
+    excludedUserIds: number[]
+  ): Promise<number[]> {
     const electedStarIds: number[] = [];
+    
+    // Étape critique : On va chercher tous les IDs des utilisateurs en couple actifs pour les exclure d'office
+    const couples = await prisma.match.findMany({
+      where: { status: 'ACTIVE', isConfirmed: true },
+      select: { fromId: true, toId: true }
+    });
+    
+    const inlineCoupleIds = couples.flatMap(c => [c.fromId, c.toId]);
+    const baseExclusions = Array.from(new Set([...excludedUserIds, ...inlineCoupleIds]));
 
+    // Niveau 1 : Portefeuille de points
     const level1Stars = await prisma.starpointWallet.findMany({
-      where: { user: { country, gender, isOnline: true }, points: { gt: 0 } },
+      where: { 
+        user: { country, gender, isOnline: true, id: { notIn: baseExclusions } }, 
+        points: { gt: 0 } 
+      },
       orderBy: { points: 'desc' },
       take: countNeeded,
       select: { userId: true }
@@ -78,9 +105,12 @@ export class PodiumService {
       if (electedStarIds.length === countNeeded) return electedStarIds;
     }
 
+    // Niveau 2 : Score DM
     const remainingCount = countNeeded - electedStarIds.length;
+    const combinedExclusions = [...baseExclusions, ...electedStarIds];
+    
     const level2Stars = await prisma.user.findMany({
-      where: { country, gender, isOnline: true, id: { notIn: electedStarIds } },
+      where: { country, gender, isOnline: true, id: { notIn: combinedExclusions } },
       orderBy: { dmScore: 'desc' },
       take: remainingCount,
       select: { id: true }
@@ -91,9 +121,11 @@ export class PodiumService {
       if (electedStarIds.length === countNeeded) return electedStarIds;
     }
 
+    // Niveau 3 : Fallback par occurrence
     if (electedStarIds.length < countNeeded) {
+      const finalExclusions = [...baseExclusions, ...electedStarIds];
       const fallbackStars = await prisma.user.findMany({
-        where: { country, gender, isOnline: true, id: { notIn: electedStarIds } },
+        where: { country, gender, isOnline: true, id: { notIn: finalExclusions } },
         orderBy: { podiumOccurenceCount: 'asc' },
         take: countNeeded - electedStarIds.length,
         select: { id: true }
@@ -105,117 +137,101 @@ export class PodiumService {
   }
 
   /**
-   * INTERRUPTION DANIELLE OPTIMISÉE
+   * 3. ACTION : LA STAR ACCEPTE LE CADEAU (DÉLÉGATION AU MATCHSERVICE)
    */
-  static async handleDanielleInterruption(podiumStarId: number, matchSenderId: number) {
+  static async acceptDanielleGift(podiumStarId: number, matchSenderId: number, giftId: number) {
+    // A. VERROU CONCURRENTIEL DIRECT SUR LE PODIUM
+    const updateResult = await prisma.podiumStar.updateMany({
+      where: { id: podiumStarId, isActive: true },
+      data: { isActive: false }
+    });
+
+    if (updateResult.count === 0) {
+      throw new Error("Désolé, cette Star a déjà accepté un autre cadeau ou le round est terminé.");
+    }
+
+    // B. Récupération des métadonnées du round
     const currentRound = await prisma.podiumStar.findUnique({
       where: { id: podiumStarId },
       include: { spectators: true }
     });
 
-    if (!currentRound || !currentRound.isActive) return;
+    if (!currentRound) throw new Error("Podium introuvable.");
 
-    const starId = currentRound.userId;
+    const starId = currentRound.userId; // Le récepteur du cadeau (La Star sur le podium)
     const country = currentRound.country;
 
-    await prisma.podiumStar.update({
-      where: { id: podiumStarId },
-      data: { isActive: false }
-    });
-
-    // Correction Erreur 1 & 2 : Retrait de skipDuplicates sur la transaction create si non supporté ou typé en `never`
-    const participantOneId = Math.min(matchSenderId, starId);
-    const participantTwoId = Math.max(matchSenderId, starId);
-
-    // On utilise des blocs try/catch internes ou des structures classiques sans skipDuplicates si la clé est unique
     try {
-      await prisma.$transaction([
-        prisma.match.create({
-          data: { fromId: matchSenderId, toId: starId, isConfirmed: true, type: 'BOOST' }
-        }),
-        prisma.chatRoom.create({
-          data: { participantOneId, participantTwoId, lastMessage: "Match Flash Danielle !" }
-        })
-      ]);
-    } catch (e) {
-      console.log("[DANIELLE] Le match ou le salon existait déjà, poursuite du flux.");
+      // C. DÉLÉGATION AU MATCHSERVICE (Gère le Débit Portefeuille + Vérifs Couples + Création Match BOOST & Chat)
+      await MatchService.acceptDirectGift(starId, matchSenderId, giftId, 'BOOST');
+      
+    } catch (error: any) {
+      // En cas de solde insuffisant ou problème transactionnel, on réactive le round
+      await prisma.podiumStar.update({ where: { id: podiumStarId }, data: { isActive: true } });
+      throw new Error(`Échec de la validation : ${error.message}`);
     }
 
-    io.to(`user_${matchSenderId}`).to(`user_${starId}`).emit('danielle:mode_changed', {
-      mode: 'MESSAGE',
-      chatTargetId: starId
-    });
-
+    // D. NOTIFICATION AUX SPECTATEURS DU PODIUM TERMINÉ
     io.to(`podium_star_${podiumStarId}`).emit('podium:terminated', {
-      reason: 'DANIELLE_TRIGGERED'
+      reason: 'STAR_ACCEPTED_MATCH'
     });
 
+    // E. PROCESSUS DE PASSATION / SPECTATEURS ORPHELINS
     const orphanSpectatorIds = currentRound.spectators.map(s => s.userId);
     if (orphanSpectatorIds.length === 0) return;
 
-    await prisma.podiumSpectator.deleteMany({
-      where: { podiumStarId }
-    });
+    // Suppression des spectateurs du salon actuel
+    await prisma.podiumSpectator.deleteMany({ where: { podiumStarId } });
 
-    // Correction Erreur 3 : Typage et validation stricte pour exactOptionalPropertyTypes
-    const firstOrphanId = orphanSpectatorIds[0];
-    if (firstOrphanId === undefined) return;
-
+    const firstOrphanId = orphanSpectatorIds[0]!;
     const sampleUser = await prisma.user.findUnique({ 
       where: { id: firstOrphanId }, 
       select: { gender: true } 
     });
-    
     if (!sampleUser?.gender) return;
     const starGender = sampleUser.gender === 'MALE' ? 'FEMALE' : 'MALE';
 
-    const newPodiumsCount = Math.ceil(orphanSpectatorIds.length / SPECTATORS_PER_PODIUM);
-    const newStarIds = await this.recruitStars(country, starGender, newPodiumsCount);
-    if (newStarIds.length === 0) return;
-
-    const actualNewPodiumsCount = Math.min(newPodiumsCount, newStarIds.length);
-    const futureTime = new Date(Date.now() + 5 * 60 * 1000);
-
-    const flashParentPodium = await prisma.podium.create({
-      data: { country, status: 'ACTIVE', category: 'COUNTRY' }
+    // F. RÉSOLUTION ET RECRUTEMENT DE LA STAR DE REMPLACEMENT
+    const currentlyActiveStars = await prisma.podiumStar.findMany({
+      where: { isActive: true },
+      select: { userId: true }
     });
-
-    // Correction Erreur 4 & 5 : Déclaration explicite du type de tableau pour éviter le type 'any[]' implicite
-    const newSubRounds: { id: number; spot: number; timeDue: Date; userId: number; country: string }[] = [];
     
-    for (let i = 0; i < actualNewPodiumsCount; i++) {
-      const starIdToAssign = newStarIds[i];
-      if (starIdToAssign === undefined) continue;
+    const busyUserIds = currentlyActiveStars.map(ps => ps.userId);
+    const finalExclusionList = [...busyUserIds, starId];
 
-      const subRound = await prisma.podiumStar.create({
-        data: {
-          podiumId: flashParentPodium.id,
-          userId: starIdToAssign,
-          spot: i + 1,
-          timeDue: futureTime,
-          country
-        }
-      });
-      newSubRounds.push(subRound);
-    }
+    // Recrutement de la star suivante
+    const newStarIds = await this.recruitStars(country, starGender, 1, finalExclusionList);
+    if (newStarIds.length === 0) return; // Personne de dispo
 
-    const newSpectatorData = orphanSpectatorIds.map((userId, index) => {
-      const assignedRound = newSubRounds[index % actualNewPodiumsCount]!;
-      return { podiumStarId: assignedRound.id, userId };
+    const replacementStarId = newStarIds[0]!;
+
+    // Attribution du nouveau sous-round avec le temps restant
+    const nextRound = await prisma.podiumStar.create({
+      data: {
+        podiumId: currentRound.podiumId,
+        userId: replacementStarId,
+        spot: currentRound.spot,
+        timeDue: currentRound.timeDue,
+        country
+      }
     });
+
+    const replacementSpectators = orphanSpectatorIds.map(userId => ({
+      podiumStarId: nextRound.id,
+      userId
+    }));
 
     await prisma.podiumSpectator.createMany({
-      data: newSpectatorData,
+      data: replacementSpectators,
       skipDuplicates: true
     });
 
-    for (const round of newSubRounds) {
-      io.to(`podium_star_${round.id}`).emit('podium:started', {
-        roundId: round.id,
-        spot: round.spot,
-        timeDue: round.timeDue,
-        starId: round.userId
-      });
-    }
+    io.to(`podium_star_${nextRound.id}`).emit('podium:started', {
+      roundId: nextRound.id,
+      spot: nextRound.spot,
+      timeDue: nextRound.timeDue,
+      starId: nextRound.userId
+    });
   }
 }

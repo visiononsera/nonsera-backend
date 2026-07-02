@@ -222,6 +222,14 @@ export const Role: {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
+export const MatchStatus: {
+  ACTIVE: 'ACTIVE',
+  BROKEN: 'BROKEN'
+};
+
+export type MatchStatus = (typeof MatchStatus)[keyof typeof MatchStatus]
+
+
 export const MatchType: {
   BOOST: 'BOOST',
   NORMAL: 'NORMAL'
@@ -440,6 +448,10 @@ export const Gender: typeof $Enums.Gender
 export type Role = $Enums.Role
 
 export const Role: typeof $Enums.Role
+
+export type MatchStatus = $Enums.MatchStatus
+
+export const MatchStatus: typeof $Enums.MatchStatus
 
 export type MatchType = $Enums.MatchType
 
@@ -13352,12 +13364,14 @@ export namespace Prisma {
     id: number | null
     fromId: number | null
     toId: number | null
+    giftId: number | null
   }
 
   export type MatchSumAggregateOutputType = {
     id: number | null
     fromId: number | null
     toId: number | null
+    giftId: number | null
   }
 
   export type MatchMinAggregateOutputType = {
@@ -13366,7 +13380,10 @@ export namespace Prisma {
     toId: number | null
     isConfirmed: boolean | null
     type: $Enums.MatchType | null
+    status: $Enums.MatchStatus | null
+    giftId: number | null
     createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type MatchMaxAggregateOutputType = {
@@ -13375,7 +13392,10 @@ export namespace Prisma {
     toId: number | null
     isConfirmed: boolean | null
     type: $Enums.MatchType | null
+    status: $Enums.MatchStatus | null
+    giftId: number | null
     createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type MatchCountAggregateOutputType = {
@@ -13384,7 +13404,10 @@ export namespace Prisma {
     toId: number
     isConfirmed: number
     type: number
+    status: number
+    giftId: number
     createdAt: number
+    updatedAt: number
     _all: number
   }
 
@@ -13393,12 +13416,14 @@ export namespace Prisma {
     id?: true
     fromId?: true
     toId?: true
+    giftId?: true
   }
 
   export type MatchSumAggregateInputType = {
     id?: true
     fromId?: true
     toId?: true
+    giftId?: true
   }
 
   export type MatchMinAggregateInputType = {
@@ -13407,7 +13432,10 @@ export namespace Prisma {
     toId?: true
     isConfirmed?: true
     type?: true
+    status?: true
+    giftId?: true
     createdAt?: true
+    updatedAt?: true
   }
 
   export type MatchMaxAggregateInputType = {
@@ -13416,7 +13444,10 @@ export namespace Prisma {
     toId?: true
     isConfirmed?: true
     type?: true
+    status?: true
+    giftId?: true
     createdAt?: true
+    updatedAt?: true
   }
 
   export type MatchCountAggregateInputType = {
@@ -13425,7 +13456,10 @@ export namespace Prisma {
     toId?: true
     isConfirmed?: true
     type?: true
+    status?: true
+    giftId?: true
     createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -13521,7 +13555,10 @@ export namespace Prisma {
     toId: number
     isConfirmed: boolean
     type: $Enums.MatchType
+    status: $Enums.MatchStatus
+    giftId: number | null
     createdAt: Date
+    updatedAt: Date
     _count: MatchCountAggregateOutputType | null
     _avg: MatchAvgAggregateOutputType | null
     _sum: MatchSumAggregateOutputType | null
@@ -13549,7 +13586,10 @@ export namespace Prisma {
     toId?: boolean
     isConfirmed?: boolean
     type?: boolean
+    status?: boolean
+    giftId?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     from?: boolean | UserDefaultArgs<ExtArgs>
     to?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["match"]>
@@ -13560,7 +13600,10 @@ export namespace Prisma {
     toId?: boolean
     isConfirmed?: boolean
     type?: boolean
+    status?: boolean
+    giftId?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     from?: boolean | UserDefaultArgs<ExtArgs>
     to?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["match"]>
@@ -13571,7 +13614,10 @@ export namespace Prisma {
     toId?: boolean
     isConfirmed?: boolean
     type?: boolean
+    status?: boolean
+    giftId?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     from?: boolean | UserDefaultArgs<ExtArgs>
     to?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["match"]>
@@ -13582,10 +13628,13 @@ export namespace Prisma {
     toId?: boolean
     isConfirmed?: boolean
     type?: boolean
+    status?: boolean
+    giftId?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type MatchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fromId" | "toId" | "isConfirmed" | "type" | "createdAt", ExtArgs["result"]["match"]>
+  export type MatchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fromId" | "toId" | "isConfirmed" | "type" | "status" | "giftId" | "createdAt" | "updatedAt", ExtArgs["result"]["match"]>
   export type MatchInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     from?: boolean | UserDefaultArgs<ExtArgs>
     to?: boolean | UserDefaultArgs<ExtArgs>
@@ -13611,7 +13660,10 @@ export namespace Prisma {
       toId: number
       isConfirmed: boolean
       type: $Enums.MatchType
+      status: $Enums.MatchStatus
+      giftId: number | null
       createdAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["match"]>
     composites: {}
   }
@@ -14042,7 +14094,10 @@ export namespace Prisma {
     readonly toId: FieldRef<"Match", 'Int'>
     readonly isConfirmed: FieldRef<"Match", 'Boolean'>
     readonly type: FieldRef<"Match", 'MatchType'>
+    readonly status: FieldRef<"Match", 'MatchStatus'>
+    readonly giftId: FieldRef<"Match", 'Int'>
     readonly createdAt: FieldRef<"Match", 'DateTime'>
+    readonly updatedAt: FieldRef<"Match", 'DateTime'>
   }
     
 
@@ -38796,6 +38851,7 @@ export namespace Prisma {
 
   export type CompanyMinAggregateOutputType = {
     id: number | null
+    name: string | null
     phoneNumber: string | null
     username: string | null
     email: string | null
@@ -38819,6 +38875,7 @@ export namespace Prisma {
 
   export type CompanyMaxAggregateOutputType = {
     id: number | null
+    name: string | null
     phoneNumber: string | null
     username: string | null
     email: string | null
@@ -38842,6 +38899,7 @@ export namespace Prisma {
 
   export type CompanyCountAggregateOutputType = {
     id: number
+    name: number
     phoneNumber: number
     username: number
     email: number
@@ -38856,6 +38914,7 @@ export namespace Prisma {
     mapAddress: number
     numeroSocial: number
     balance: number
+    links: number
     isVerified: number
     isSurplaceAvailable: number
     createdAt: number
@@ -38881,6 +38940,7 @@ export namespace Prisma {
 
   export type CompanyMinAggregateInputType = {
     id?: true
+    name?: true
     phoneNumber?: true
     username?: true
     email?: true
@@ -38904,6 +38964,7 @@ export namespace Prisma {
 
   export type CompanyMaxAggregateInputType = {
     id?: true
+    name?: true
     phoneNumber?: true
     username?: true
     email?: true
@@ -38927,6 +38988,7 @@ export namespace Prisma {
 
   export type CompanyCountAggregateInputType = {
     id?: true
+    name?: true
     phoneNumber?: true
     username?: true
     email?: true
@@ -38941,6 +39003,7 @@ export namespace Prisma {
     mapAddress?: true
     numeroSocial?: true
     balance?: true
+    links?: true
     isVerified?: true
     isSurplaceAvailable?: true
     createdAt?: true
@@ -39037,6 +39100,7 @@ export namespace Prisma {
 
   export type CompanyGroupByOutputType = {
     id: number
+    name: string | null
     phoneNumber: string
     username: string | null
     email: string | null
@@ -39051,6 +39115,7 @@ export namespace Prisma {
     mapAddress: string | null
     numeroSocial: string | null
     balance: Decimal
+    links: JsonValue | null
     isVerified: boolean
     isSurplaceAvailable: boolean
     createdAt: Date
@@ -39079,6 +39144,7 @@ export namespace Prisma {
 
   export type CompanySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    name?: boolean
     phoneNumber?: boolean
     username?: boolean
     email?: boolean
@@ -39093,6 +39159,7 @@ export namespace Prisma {
     mapAddress?: boolean
     numeroSocial?: boolean
     balance?: boolean
+    links?: boolean
     isVerified?: boolean
     isSurplaceAvailable?: boolean
     createdAt?: boolean
@@ -39108,6 +39175,7 @@ export namespace Prisma {
 
   export type CompanySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    name?: boolean
     phoneNumber?: boolean
     username?: boolean
     email?: boolean
@@ -39122,6 +39190,7 @@ export namespace Prisma {
     mapAddress?: boolean
     numeroSocial?: boolean
     balance?: boolean
+    links?: boolean
     isVerified?: boolean
     isSurplaceAvailable?: boolean
     createdAt?: boolean
@@ -39131,6 +39200,7 @@ export namespace Prisma {
 
   export type CompanySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    name?: boolean
     phoneNumber?: boolean
     username?: boolean
     email?: boolean
@@ -39145,6 +39215,7 @@ export namespace Prisma {
     mapAddress?: boolean
     numeroSocial?: boolean
     balance?: boolean
+    links?: boolean
     isVerified?: boolean
     isSurplaceAvailable?: boolean
     createdAt?: boolean
@@ -39154,6 +39225,7 @@ export namespace Prisma {
 
   export type CompanySelectScalar = {
     id?: boolean
+    name?: boolean
     phoneNumber?: boolean
     username?: boolean
     email?: boolean
@@ -39168,6 +39240,7 @@ export namespace Prisma {
     mapAddress?: boolean
     numeroSocial?: boolean
     balance?: boolean
+    links?: boolean
     isVerified?: boolean
     isSurplaceAvailable?: boolean
     createdAt?: boolean
@@ -39175,7 +39248,7 @@ export namespace Prisma {
     deletedAt?: boolean
   }
 
-  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "phoneNumber" | "username" | "email" | "category" | "logo" | "bannerPicture" | "description" | "country" | "city" | "latitude" | "longitude" | "mapAddress" | "numeroSocial" | "balance" | "isVerified" | "isSurplaceAvailable" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["company"]>
+  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "phoneNumber" | "username" | "email" | "category" | "logo" | "bannerPicture" | "description" | "country" | "city" | "latitude" | "longitude" | "mapAddress" | "numeroSocial" | "balance" | "links" | "isVerified" | "isSurplaceAvailable" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["company"]>
   export type CompanyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     subscriptions?: boolean | Company$subscriptionsArgs<ExtArgs>
     annonces?: boolean | Company$annoncesArgs<ExtArgs>
@@ -39198,6 +39271,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      name: string | null
       phoneNumber: string
       username: string | null
       email: string | null
@@ -39212,6 +39286,7 @@ export namespace Prisma {
       mapAddress: string | null
       numeroSocial: string | null
       balance: Prisma.Decimal
+      links: Prisma.JsonValue | null
       isVerified: boolean
       isSurplaceAvailable: boolean
       createdAt: Date
@@ -39646,6 +39721,7 @@ export namespace Prisma {
    */
   interface CompanyFieldRefs {
     readonly id: FieldRef<"Company", 'Int'>
+    readonly name: FieldRef<"Company", 'String'>
     readonly phoneNumber: FieldRef<"Company", 'String'>
     readonly username: FieldRef<"Company", 'String'>
     readonly email: FieldRef<"Company", 'String'>
@@ -39660,6 +39736,7 @@ export namespace Prisma {
     readonly mapAddress: FieldRef<"Company", 'String'>
     readonly numeroSocial: FieldRef<"Company", 'String'>
     readonly balance: FieldRef<"Company", 'Decimal'>
+    readonly links: FieldRef<"Company", 'Json'>
     readonly isVerified: FieldRef<"Company", 'Boolean'>
     readonly isSurplaceAvailable: FieldRef<"Company", 'Boolean'>
     readonly createdAt: FieldRef<"Company", 'DateTime'>
@@ -49379,7 +49456,10 @@ export namespace Prisma {
     toId: 'toId',
     isConfirmed: 'isConfirmed',
     type: 'type',
-    createdAt: 'createdAt'
+    status: 'status',
+    giftId: 'giftId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type MatchScalarFieldEnum = (typeof MatchScalarFieldEnum)[keyof typeof MatchScalarFieldEnum]
@@ -49676,6 +49756,7 @@ export namespace Prisma {
 
   export const CompanyScalarFieldEnum: {
     id: 'id',
+    name: 'name',
     phoneNumber: 'phoneNumber',
     username: 'username',
     email: 'email',
@@ -49690,6 +49771,7 @@ export namespace Prisma {
     mapAddress: 'mapAddress',
     numeroSocial: 'numeroSocial',
     balance: 'balance',
+    links: 'links',
     isVerified: 'isVerified',
     isSurplaceAvailable: 'isSurplaceAvailable',
     createdAt: 'createdAt',
@@ -49981,6 +50063,20 @@ export namespace Prisma {
    * Reference to a field of type 'MatchType[]'
    */
   export type ListEnumMatchTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MatchType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'MatchStatus'
+   */
+  export type EnumMatchStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MatchStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'MatchStatus[]'
+   */
+  export type ListEnumMatchStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MatchStatus[]'>
     
 
 
@@ -50953,7 +51049,10 @@ export namespace Prisma {
     toId?: IntFilter<"Match"> | number
     isConfirmed?: BoolFilter<"Match"> | boolean
     type?: EnumMatchTypeFilter<"Match"> | $Enums.MatchType
+    status?: EnumMatchStatusFilter<"Match"> | $Enums.MatchStatus
+    giftId?: IntNullableFilter<"Match"> | number | null
     createdAt?: DateTimeFilter<"Match"> | Date | string
+    updatedAt?: DateTimeFilter<"Match"> | Date | string
     from?: XOR<UserScalarRelationFilter, UserWhereInput>
     to?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -50964,14 +51063,16 @@ export namespace Prisma {
     toId?: SortOrder
     isConfirmed?: SortOrder
     type?: SortOrder
+    status?: SortOrder
+    giftId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
     from?: UserOrderByWithRelationInput
     to?: UserOrderByWithRelationInput
   }
 
   export type MatchWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    fromId_toId?: MatchFromIdToIdCompoundUniqueInput
     AND?: MatchWhereInput | MatchWhereInput[]
     OR?: MatchWhereInput[]
     NOT?: MatchWhereInput | MatchWhereInput[]
@@ -50979,10 +51080,13 @@ export namespace Prisma {
     toId?: IntFilter<"Match"> | number
     isConfirmed?: BoolFilter<"Match"> | boolean
     type?: EnumMatchTypeFilter<"Match"> | $Enums.MatchType
+    status?: EnumMatchStatusFilter<"Match"> | $Enums.MatchStatus
+    giftId?: IntNullableFilter<"Match"> | number | null
     createdAt?: DateTimeFilter<"Match"> | Date | string
+    updatedAt?: DateTimeFilter<"Match"> | Date | string
     from?: XOR<UserScalarRelationFilter, UserWhereInput>
     to?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "fromId_toId">
+  }, "id">
 
   export type MatchOrderByWithAggregationInput = {
     id?: SortOrder
@@ -50990,7 +51094,10 @@ export namespace Prisma {
     toId?: SortOrder
     isConfirmed?: SortOrder
     type?: SortOrder
+    status?: SortOrder
+    giftId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: MatchCountOrderByAggregateInput
     _avg?: MatchAvgOrderByAggregateInput
     _max?: MatchMaxOrderByAggregateInput
@@ -51007,7 +51114,10 @@ export namespace Prisma {
     toId?: IntWithAggregatesFilter<"Match"> | number
     isConfirmed?: BoolWithAggregatesFilter<"Match"> | boolean
     type?: EnumMatchTypeWithAggregatesFilter<"Match"> | $Enums.MatchType
+    status?: EnumMatchStatusWithAggregatesFilter<"Match"> | $Enums.MatchStatus
+    giftId?: IntNullableWithAggregatesFilter<"Match"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Match"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Match"> | Date | string
   }
 
   export type ChatRoomWhereInput = {
@@ -52563,6 +52673,7 @@ export namespace Prisma {
     OR?: CompanyWhereInput[]
     NOT?: CompanyWhereInput | CompanyWhereInput[]
     id?: IntFilter<"Company"> | number
+    name?: StringNullableFilter<"Company"> | string | null
     phoneNumber?: StringFilter<"Company"> | string
     username?: StringNullableFilter<"Company"> | string | null
     email?: StringNullableFilter<"Company"> | string | null
@@ -52577,6 +52688,7 @@ export namespace Prisma {
     mapAddress?: StringNullableFilter<"Company"> | string | null
     numeroSocial?: StringNullableFilter<"Company"> | string | null
     balance?: DecimalFilter<"Company"> | Decimal | DecimalJsLike | number | string
+    links?: JsonNullableFilter<"Company">
     isVerified?: BoolFilter<"Company"> | boolean
     isSurplaceAvailable?: BoolFilter<"Company"> | boolean
     createdAt?: DateTimeFilter<"Company"> | Date | string
@@ -52591,6 +52703,7 @@ export namespace Prisma {
 
   export type CompanyOrderByWithRelationInput = {
     id?: SortOrder
+    name?: SortOrderInput | SortOrder
     phoneNumber?: SortOrder
     username?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
@@ -52605,6 +52718,7 @@ export namespace Prisma {
     mapAddress?: SortOrderInput | SortOrder
     numeroSocial?: SortOrderInput | SortOrder
     balance?: SortOrder
+    links?: SortOrderInput | SortOrder
     isVerified?: SortOrder
     isSurplaceAvailable?: SortOrder
     createdAt?: SortOrder
@@ -52625,6 +52739,7 @@ export namespace Prisma {
     AND?: CompanyWhereInput | CompanyWhereInput[]
     OR?: CompanyWhereInput[]
     NOT?: CompanyWhereInput | CompanyWhereInput[]
+    name?: StringNullableFilter<"Company"> | string | null
     category?: EnumCompanyCategoryFilter<"Company"> | $Enums.CompanyCategory
     logo?: StringNullableFilter<"Company"> | string | null
     bannerPicture?: StringNullableFilter<"Company"> | string | null
@@ -52636,6 +52751,7 @@ export namespace Prisma {
     mapAddress?: StringNullableFilter<"Company"> | string | null
     numeroSocial?: StringNullableFilter<"Company"> | string | null
     balance?: DecimalFilter<"Company"> | Decimal | DecimalJsLike | number | string
+    links?: JsonNullableFilter<"Company">
     isVerified?: BoolFilter<"Company"> | boolean
     isSurplaceAvailable?: BoolFilter<"Company"> | boolean
     createdAt?: DateTimeFilter<"Company"> | Date | string
@@ -52650,6 +52766,7 @@ export namespace Prisma {
 
   export type CompanyOrderByWithAggregationInput = {
     id?: SortOrder
+    name?: SortOrderInput | SortOrder
     phoneNumber?: SortOrder
     username?: SortOrderInput | SortOrder
     email?: SortOrderInput | SortOrder
@@ -52664,6 +52781,7 @@ export namespace Prisma {
     mapAddress?: SortOrderInput | SortOrder
     numeroSocial?: SortOrderInput | SortOrder
     balance?: SortOrder
+    links?: SortOrderInput | SortOrder
     isVerified?: SortOrder
     isSurplaceAvailable?: SortOrder
     createdAt?: SortOrder
@@ -52681,6 +52799,7 @@ export namespace Prisma {
     OR?: CompanyScalarWhereWithAggregatesInput[]
     NOT?: CompanyScalarWhereWithAggregatesInput | CompanyScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Company"> | number
+    name?: StringNullableWithAggregatesFilter<"Company"> | string | null
     phoneNumber?: StringWithAggregatesFilter<"Company"> | string
     username?: StringNullableWithAggregatesFilter<"Company"> | string | null
     email?: StringNullableWithAggregatesFilter<"Company"> | string | null
@@ -52695,6 +52814,7 @@ export namespace Prisma {
     mapAddress?: StringNullableWithAggregatesFilter<"Company"> | string | null
     numeroSocial?: StringNullableWithAggregatesFilter<"Company"> | string | null
     balance?: DecimalWithAggregatesFilter<"Company"> | Decimal | DecimalJsLike | number | string
+    links?: JsonNullableWithAggregatesFilter<"Company">
     isVerified?: BoolWithAggregatesFilter<"Company"> | boolean
     isSurplaceAvailable?: BoolWithAggregatesFilter<"Company"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Company"> | Date | string
@@ -54070,7 +54190,10 @@ export namespace Prisma {
   export type MatchCreateInput = {
     isConfirmed?: boolean
     type?: $Enums.MatchType
+    status?: $Enums.MatchStatus
+    giftId?: number | null
     createdAt?: Date | string
+    updatedAt?: Date | string
     from: UserCreateNestedOneWithoutSentMatchesInput
     to: UserCreateNestedOneWithoutReceivedMatchesInput
   }
@@ -54081,13 +54204,19 @@ export namespace Prisma {
     toId: number
     isConfirmed?: boolean
     type?: $Enums.MatchType
+    status?: $Enums.MatchStatus
+    giftId?: number | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type MatchUpdateInput = {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     from?: UserUpdateOneRequiredWithoutSentMatchesNestedInput
     to?: UserUpdateOneRequiredWithoutReceivedMatchesNestedInput
   }
@@ -54098,7 +54227,10 @@ export namespace Prisma {
     toId?: IntFieldUpdateOperationsInput | number
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MatchCreateManyInput = {
@@ -54107,13 +54239,19 @@ export namespace Prisma {
     toId: number
     isConfirmed?: boolean
     type?: $Enums.MatchType
+    status?: $Enums.MatchStatus
+    giftId?: number | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type MatchUpdateManyMutationInput = {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MatchUncheckedUpdateManyInput = {
@@ -54122,7 +54260,10 @@ export namespace Prisma {
     toId?: IntFieldUpdateOperationsInput | number
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ChatRoomCreateInput = {
@@ -55660,6 +55801,7 @@ export namespace Prisma {
   }
 
   export type CompanyCreateInput = {
+    name?: string | null
     phoneNumber: string
     username?: string | null
     email?: string | null
@@ -55674,6 +55816,7 @@ export namespace Prisma {
     mapAddress?: string | null
     numeroSocial?: string | null
     balance?: Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
     createdAt?: Date | string
@@ -55688,6 +55831,7 @@ export namespace Prisma {
 
   export type CompanyUncheckedCreateInput = {
     id?: number
+    name?: string | null
     phoneNumber: string
     username?: string | null
     email?: string | null
@@ -55702,6 +55846,7 @@ export namespace Prisma {
     mapAddress?: string | null
     numeroSocial?: string | null
     balance?: Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
     createdAt?: Date | string
@@ -55715,6 +55860,7 @@ export namespace Prisma {
   }
 
   export type CompanyUpdateInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55729,6 +55875,7 @@ export namespace Prisma {
     mapAddress?: NullableStringFieldUpdateOperationsInput | string | null
     numeroSocial?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55743,6 +55890,7 @@ export namespace Prisma {
 
   export type CompanyUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55757,6 +55905,7 @@ export namespace Prisma {
     mapAddress?: NullableStringFieldUpdateOperationsInput | string | null
     numeroSocial?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55771,6 +55920,7 @@ export namespace Prisma {
 
   export type CompanyCreateManyInput = {
     id?: number
+    name?: string | null
     phoneNumber: string
     username?: string | null
     email?: string | null
@@ -55785,6 +55935,7 @@ export namespace Prisma {
     mapAddress?: string | null
     numeroSocial?: string | null
     balance?: Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
     createdAt?: Date | string
@@ -55793,6 +55944,7 @@ export namespace Prisma {
   }
 
   export type CompanyUpdateManyMutationInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55807,6 +55959,7 @@ export namespace Prisma {
     mapAddress?: NullableStringFieldUpdateOperationsInput | string | null
     numeroSocial?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55816,6 +55969,7 @@ export namespace Prisma {
 
   export type CompanyUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55830,6 +55984,7 @@ export namespace Prisma {
     mapAddress?: NullableStringFieldUpdateOperationsInput | string | null
     numeroSocial?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57358,9 +57513,11 @@ export namespace Prisma {
     not?: NestedEnumMatchTypeFilter<$PrismaModel> | $Enums.MatchType
   }
 
-  export type MatchFromIdToIdCompoundUniqueInput = {
-    fromId: number
-    toId: number
+  export type EnumMatchStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.MatchStatus | EnumMatchStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.MatchStatus[] | ListEnumMatchStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MatchStatus[] | ListEnumMatchStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumMatchStatusFilter<$PrismaModel> | $Enums.MatchStatus
   }
 
   export type MatchCountOrderByAggregateInput = {
@@ -57369,13 +57526,17 @@ export namespace Prisma {
     toId?: SortOrder
     isConfirmed?: SortOrder
     type?: SortOrder
+    status?: SortOrder
+    giftId?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type MatchAvgOrderByAggregateInput = {
     id?: SortOrder
     fromId?: SortOrder
     toId?: SortOrder
+    giftId?: SortOrder
   }
 
   export type MatchMaxOrderByAggregateInput = {
@@ -57384,7 +57545,10 @@ export namespace Prisma {
     toId?: SortOrder
     isConfirmed?: SortOrder
     type?: SortOrder
+    status?: SortOrder
+    giftId?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type MatchMinOrderByAggregateInput = {
@@ -57393,13 +57557,17 @@ export namespace Prisma {
     toId?: SortOrder
     isConfirmed?: SortOrder
     type?: SortOrder
+    status?: SortOrder
+    giftId?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type MatchSumOrderByAggregateInput = {
     id?: SortOrder
     fromId?: SortOrder
     toId?: SortOrder
+    giftId?: SortOrder
   }
 
   export type EnumMatchTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -57410,6 +57578,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumMatchTypeFilter<$PrismaModel>
     _max?: NestedEnumMatchTypeFilter<$PrismaModel>
+  }
+
+  export type EnumMatchStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MatchStatus | EnumMatchStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.MatchStatus[] | ListEnumMatchStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MatchStatus[] | ListEnumMatchStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumMatchStatusWithAggregatesFilter<$PrismaModel> | $Enums.MatchStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMatchStatusFilter<$PrismaModel>
+    _max?: NestedEnumMatchStatusFilter<$PrismaModel>
   }
 
   export type EnumChatLastMessageStatusFilter<$PrismaModel = never> = {
@@ -58648,6 +58826,7 @@ export namespace Prisma {
 
   export type CompanyCountOrderByAggregateInput = {
     id?: SortOrder
+    name?: SortOrder
     phoneNumber?: SortOrder
     username?: SortOrder
     email?: SortOrder
@@ -58662,6 +58841,7 @@ export namespace Prisma {
     mapAddress?: SortOrder
     numeroSocial?: SortOrder
     balance?: SortOrder
+    links?: SortOrder
     isVerified?: SortOrder
     isSurplaceAvailable?: SortOrder
     createdAt?: SortOrder
@@ -58678,6 +58858,7 @@ export namespace Prisma {
 
   export type CompanyMaxOrderByAggregateInput = {
     id?: SortOrder
+    name?: SortOrder
     phoneNumber?: SortOrder
     username?: SortOrder
     email?: SortOrder
@@ -58701,6 +58882,7 @@ export namespace Prisma {
 
   export type CompanyMinOrderByAggregateInput = {
     id?: SortOrder
+    name?: SortOrder
     phoneNumber?: SortOrder
     username?: SortOrder
     email?: SortOrder
@@ -60816,6 +60998,10 @@ export namespace Prisma {
     set?: $Enums.MatchType
   }
 
+  export type EnumMatchStatusFieldUpdateOperationsInput = {
+    set?: $Enums.MatchStatus
+  }
+
   export type UserUpdateOneRequiredWithoutSentMatchesNestedInput = {
     create?: XOR<UserCreateWithoutSentMatchesInput, UserUncheckedCreateWithoutSentMatchesInput>
     connectOrCreate?: UserCreateOrConnectWithoutSentMatchesInput
@@ -62470,6 +62656,13 @@ export namespace Prisma {
     not?: NestedEnumMatchTypeFilter<$PrismaModel> | $Enums.MatchType
   }
 
+  export type NestedEnumMatchStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.MatchStatus | EnumMatchStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.MatchStatus[] | ListEnumMatchStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MatchStatus[] | ListEnumMatchStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumMatchStatusFilter<$PrismaModel> | $Enums.MatchStatus
+  }
+
   export type NestedEnumMatchTypeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.MatchType | EnumMatchTypeFieldRefInput<$PrismaModel>
     in?: $Enums.MatchType[] | ListEnumMatchTypeFieldRefInput<$PrismaModel>
@@ -62478,6 +62671,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumMatchTypeFilter<$PrismaModel>
     _max?: NestedEnumMatchTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumMatchStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MatchStatus | EnumMatchStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.MatchStatus[] | ListEnumMatchStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MatchStatus[] | ListEnumMatchStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumMatchStatusWithAggregatesFilter<$PrismaModel> | $Enums.MatchStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMatchStatusFilter<$PrismaModel>
+    _max?: NestedEnumMatchStatusFilter<$PrismaModel>
   }
 
   export type NestedEnumChatLastMessageStatusFilter<$PrismaModel = never> = {
@@ -63351,7 +63554,10 @@ export namespace Prisma {
   export type MatchCreateWithoutFromInput = {
     isConfirmed?: boolean
     type?: $Enums.MatchType
+    status?: $Enums.MatchStatus
+    giftId?: number | null
     createdAt?: Date | string
+    updatedAt?: Date | string
     to: UserCreateNestedOneWithoutReceivedMatchesInput
   }
 
@@ -63360,7 +63566,10 @@ export namespace Prisma {
     toId: number
     isConfirmed?: boolean
     type?: $Enums.MatchType
+    status?: $Enums.MatchStatus
+    giftId?: number | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type MatchCreateOrConnectWithoutFromInput = {
@@ -63376,7 +63585,10 @@ export namespace Prisma {
   export type MatchCreateWithoutToInput = {
     isConfirmed?: boolean
     type?: $Enums.MatchType
+    status?: $Enums.MatchStatus
+    giftId?: number | null
     createdAt?: Date | string
+    updatedAt?: Date | string
     from: UserCreateNestedOneWithoutSentMatchesInput
   }
 
@@ -63385,7 +63597,10 @@ export namespace Prisma {
     fromId: number
     isConfirmed?: boolean
     type?: $Enums.MatchType
+    status?: $Enums.MatchStatus
+    giftId?: number | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type MatchCreateOrConnectWithoutToInput = {
@@ -64729,7 +64944,10 @@ export namespace Prisma {
     toId?: IntFilter<"Match"> | number
     isConfirmed?: BoolFilter<"Match"> | boolean
     type?: EnumMatchTypeFilter<"Match"> | $Enums.MatchType
+    status?: EnumMatchStatusFilter<"Match"> | $Enums.MatchStatus
+    giftId?: IntNullableFilter<"Match"> | number | null
     createdAt?: DateTimeFilter<"Match"> | Date | string
+    updatedAt?: DateTimeFilter<"Match"> | Date | string
   }
 
   export type MatchUpsertWithWhereUniqueWithoutToInput = {
@@ -69217,6 +69435,7 @@ export namespace Prisma {
   }
 
   export type CompanyCreateWithoutGiftsInput = {
+    name?: string | null
     phoneNumber: string
     username?: string | null
     email?: string | null
@@ -69231,6 +69450,7 @@ export namespace Prisma {
     mapAddress?: string | null
     numeroSocial?: string | null
     balance?: Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
     createdAt?: Date | string
@@ -69244,6 +69464,7 @@ export namespace Prisma {
 
   export type CompanyUncheckedCreateWithoutGiftsInput = {
     id?: number
+    name?: string | null
     phoneNumber: string
     username?: string | null
     email?: string | null
@@ -69258,6 +69479,7 @@ export namespace Prisma {
     mapAddress?: string | null
     numeroSocial?: string | null
     balance?: Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
     createdAt?: Date | string
@@ -69461,6 +69683,7 @@ export namespace Prisma {
   }
 
   export type CompanyUpdateWithoutGiftsInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -69475,6 +69698,7 @@ export namespace Prisma {
     mapAddress?: NullableStringFieldUpdateOperationsInput | string | null
     numeroSocial?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -69488,6 +69712,7 @@ export namespace Prisma {
 
   export type CompanyUncheckedUpdateWithoutGiftsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -69502,6 +69727,7 @@ export namespace Prisma {
     mapAddress?: NullableStringFieldUpdateOperationsInput | string | null
     numeroSocial?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -69530,6 +69756,7 @@ export namespace Prisma {
   }
 
   export type CompanyCreateWithoutAnnoncesInput = {
+    name?: string | null
     phoneNumber: string
     username?: string | null
     email?: string | null
@@ -69544,6 +69771,7 @@ export namespace Prisma {
     mapAddress?: string | null
     numeroSocial?: string | null
     balance?: Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
     createdAt?: Date | string
@@ -69557,6 +69785,7 @@ export namespace Prisma {
 
   export type CompanyUncheckedCreateWithoutAnnoncesInput = {
     id?: number
+    name?: string | null
     phoneNumber: string
     username?: string | null
     email?: string | null
@@ -69571,6 +69800,7 @@ export namespace Prisma {
     mapAddress?: string | null
     numeroSocial?: string | null
     balance?: Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
     createdAt?: Date | string
@@ -70082,6 +70312,7 @@ export namespace Prisma {
   }
 
   export type CompanyUpdateWithoutAnnoncesInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70096,6 +70327,7 @@ export namespace Prisma {
     mapAddress?: NullableStringFieldUpdateOperationsInput | string | null
     numeroSocial?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -70109,6 +70341,7 @@ export namespace Prisma {
 
   export type CompanyUncheckedUpdateWithoutAnnoncesInput = {
     id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -70123,6 +70356,7 @@ export namespace Prisma {
     mapAddress?: NullableStringFieldUpdateOperationsInput | string | null
     numeroSocial?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -76668,6 +76902,7 @@ export namespace Prisma {
   }
 
   export type CompanyCreateWithoutUserCompaniesInput = {
+    name?: string | null
     phoneNumber: string
     username?: string | null
     email?: string | null
@@ -76682,6 +76917,7 @@ export namespace Prisma {
     mapAddress?: string | null
     numeroSocial?: string | null
     balance?: Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
     createdAt?: Date | string
@@ -76695,6 +76931,7 @@ export namespace Prisma {
 
   export type CompanyUncheckedCreateWithoutUserCompaniesInput = {
     id?: number
+    name?: string | null
     phoneNumber: string
     username?: string | null
     email?: string | null
@@ -76709,6 +76946,7 @@ export namespace Prisma {
     mapAddress?: string | null
     numeroSocial?: string | null
     balance?: Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
     createdAt?: Date | string
@@ -76913,6 +77151,7 @@ export namespace Prisma {
   }
 
   export type CompanyUpdateWithoutUserCompaniesInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -76927,6 +77166,7 @@ export namespace Prisma {
     mapAddress?: NullableStringFieldUpdateOperationsInput | string | null
     numeroSocial?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -76940,6 +77180,7 @@ export namespace Prisma {
 
   export type CompanyUncheckedUpdateWithoutUserCompaniesInput = {
     id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -76954,6 +77195,7 @@ export namespace Prisma {
     mapAddress?: NullableStringFieldUpdateOperationsInput | string | null
     numeroSocial?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -76966,6 +77208,7 @@ export namespace Prisma {
   }
 
   export type CompanyCreateWithoutSubscriptionsInput = {
+    name?: string | null
     phoneNumber: string
     username?: string | null
     email?: string | null
@@ -76980,6 +77223,7 @@ export namespace Prisma {
     mapAddress?: string | null
     numeroSocial?: string | null
     balance?: Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
     createdAt?: Date | string
@@ -76993,6 +77237,7 @@ export namespace Prisma {
 
   export type CompanyUncheckedCreateWithoutSubscriptionsInput = {
     id?: number
+    name?: string | null
     phoneNumber: string
     username?: string | null
     email?: string | null
@@ -77007,6 +77252,7 @@ export namespace Prisma {
     mapAddress?: string | null
     numeroSocial?: string | null
     balance?: Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
     createdAt?: Date | string
@@ -77059,6 +77305,7 @@ export namespace Prisma {
   }
 
   export type CompanyUpdateWithoutSubscriptionsInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -77073,6 +77320,7 @@ export namespace Prisma {
     mapAddress?: NullableStringFieldUpdateOperationsInput | string | null
     numeroSocial?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -77086,6 +77334,7 @@ export namespace Prisma {
 
   export type CompanyUncheckedUpdateWithoutSubscriptionsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -77100,6 +77349,7 @@ export namespace Prisma {
     mapAddress?: NullableStringFieldUpdateOperationsInput | string | null
     numeroSocial?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -77142,6 +77392,7 @@ export namespace Prisma {
   }
 
   export type CompanyCreateWithoutRetraitsInput = {
+    name?: string | null
     phoneNumber: string
     username?: string | null
     email?: string | null
@@ -77156,6 +77407,7 @@ export namespace Prisma {
     mapAddress?: string | null
     numeroSocial?: string | null
     balance?: Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
     createdAt?: Date | string
@@ -77169,6 +77421,7 @@ export namespace Prisma {
 
   export type CompanyUncheckedCreateWithoutRetraitsInput = {
     id?: number
+    name?: string | null
     phoneNumber: string
     username?: string | null
     email?: string | null
@@ -77183,6 +77436,7 @@ export namespace Prisma {
     mapAddress?: string | null
     numeroSocial?: string | null
     balance?: Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
     createdAt?: Date | string
@@ -77211,6 +77465,7 @@ export namespace Prisma {
   }
 
   export type CompanyUpdateWithoutRetraitsInput = {
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -77225,6 +77480,7 @@ export namespace Prisma {
     mapAddress?: NullableStringFieldUpdateOperationsInput | string | null
     numeroSocial?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -77238,6 +77494,7 @@ export namespace Prisma {
 
   export type CompanyUncheckedUpdateWithoutRetraitsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
     phoneNumber?: StringFieldUpdateOperationsInput | string
     username?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -77252,6 +77509,7 @@ export namespace Prisma {
     mapAddress?: NullableStringFieldUpdateOperationsInput | string | null
     numeroSocial?: NullableStringFieldUpdateOperationsInput | string | null
     balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -79420,7 +79678,10 @@ export namespace Prisma {
     toId: number
     isConfirmed?: boolean
     type?: $Enums.MatchType
+    status?: $Enums.MatchStatus
+    giftId?: number | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type MatchCreateManyToInput = {
@@ -79428,7 +79689,10 @@ export namespace Prisma {
     fromId: number
     isConfirmed?: boolean
     type?: $Enums.MatchType
+    status?: $Enums.MatchStatus
+    giftId?: number | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type NotificationCreateManyFromInput = {
@@ -80005,7 +80269,10 @@ export namespace Prisma {
   export type MatchUpdateWithoutFromInput = {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     to?: UserUpdateOneRequiredWithoutReceivedMatchesNestedInput
   }
 
@@ -80014,7 +80281,10 @@ export namespace Prisma {
     toId?: IntFieldUpdateOperationsInput | number
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MatchUncheckedUpdateManyWithoutFromInput = {
@@ -80022,13 +80292,19 @@ export namespace Prisma {
     toId?: IntFieldUpdateOperationsInput | number
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MatchUpdateWithoutToInput = {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     from?: UserUpdateOneRequiredWithoutSentMatchesNestedInput
   }
 
@@ -80037,7 +80313,10 @@ export namespace Prisma {
     fromId?: IntFieldUpdateOperationsInput | number
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MatchUncheckedUpdateManyWithoutToInput = {
@@ -80045,7 +80324,10 @@ export namespace Prisma {
     fromId?: IntFieldUpdateOperationsInput | number
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type NotificationUpdateWithoutFromInput = {

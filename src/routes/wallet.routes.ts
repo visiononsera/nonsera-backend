@@ -47,7 +47,7 @@ router.post("/wallet/test-sandbox-recharge", jwtMiddleware, loadContext, walletC
  */
 router.post("/wallet/webhook/kkiapay", walletController.handleKkiapayWebhook);
 
-router.post("/bonus/lock", jwtMiddleware, loadContext, walletController.lockBonus);
-router.post("/bonus/unlock", jwtMiddleware, loadContext, walletController.unlockBonus);
+router.post("/wallet/bonus/lock", jwtMiddleware, loadContext, walletController.lockBonus);
+router.post("/wallet/bonus/unlock", jwtMiddleware, loadContext, walletController.unlockBonus);
 
 export default router;

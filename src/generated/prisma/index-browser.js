@@ -225,7 +225,10 @@ exports.Prisma.MatchScalarFieldEnum = {
   toId: 'toId',
   isConfirmed: 'isConfirmed',
   type: 'type',
-  createdAt: 'createdAt'
+  status: 'status',
+  giftId: 'giftId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.ChatRoomScalarFieldEnum = {
@@ -456,6 +459,7 @@ exports.Prisma.SubscriptionScalarFieldEnum = {
 
 exports.Prisma.CompanyScalarFieldEnum = {
   id: 'id',
+  name: 'name',
   phoneNumber: 'phoneNumber',
   username: 'username',
   email: 'email',
@@ -470,6 +474,7 @@ exports.Prisma.CompanyScalarFieldEnum = {
   mapAddress: 'mapAddress',
   numeroSocial: 'numeroSocial',
   balance: 'balance',
+  links: 'links',
   isVerified: 'isVerified',
   isSurplaceAvailable: 'isSurplaceAvailable',
   createdAt: 'createdAt',
@@ -607,6 +612,11 @@ exports.VideoSessionStatus = exports.$Enums.VideoSessionStatus = {
 exports.MatchType = exports.$Enums.MatchType = {
   BOOST: 'BOOST',
   NORMAL: 'NORMAL'
+};
+
+exports.MatchStatus = exports.$Enums.MatchStatus = {
+  ACTIVE: 'ACTIVE',
+  BROKEN: 'BROKEN'
 };
 
 exports.ChatLastMessageStatus = exports.$Enums.ChatLastMessageStatus = {

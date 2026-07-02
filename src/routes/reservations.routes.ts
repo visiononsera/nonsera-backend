@@ -7,17 +7,17 @@ const router = Router();
 
 // Toutes les routes de réservation nécessitent généralement d'être connecté
 // Créer une réservation 
-router.post("/", jwtMiddleware, loadContext, reservationsController.create);
+router.post("/reservations/", jwtMiddleware, loadContext, reservationsController.create);
 // Annuler une réservation 
-router.post("/:id/cancel", jwtMiddleware, loadContext, reservationsController.cancel);
+router.post("/reservations/:id/cancel", jwtMiddleware, loadContext, reservationsController.cancel);
 // Accepter | Confirmer une réservation 
-router.patch("/:id/confirm", jwtMiddleware, loadContext,reservationsController.confirm);
+router.patch("/reservations/:id/confirm", jwtMiddleware, loadContext,reservationsController.confirm);
 // Démarrer la course 
-router.patch("/:id/start-trip", jwtMiddleware, loadContext, reservationsController.startTrip);
+router.patch("/reservations/:id/start-trip", jwtMiddleware, loadContext, reservationsController.startTrip);
 // Finaliser la course | Débloquer les fonds manuellement
-router.patch("/:id/complete", jwtMiddleware, loadContext, reservationsController.completeOrProcess);
+router.patch("/reservations/:id/complete", jwtMiddleware, loadContext, reservationsController.completeOrProcess);
 // Signaler un problème 
-router.post("/:id/dispute", jwtMiddleware, loadContext, reservationsController.openDispute);
+router.post("/reservations/:id/dispute", jwtMiddleware, loadContext, reservationsController.openDispute);
 
 
 // --- ROUTE ADMIN PRIVILÉGIÉE ---

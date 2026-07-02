@@ -5,7 +5,7 @@ import { jwtMiddleware } from "../middlewares/jwt.middleware";
 const router = Router();
 
 // ==========================================
-// FLUX UTILISATEURS STANDARD (MOBILE)
+// FLUX UTILISATEURS STANDARD
 // ==========================================
 router.post("/auth/check-user", authController.checkUserNumber);
 router.post("/auth/login-user", authController.loginUser);
@@ -25,7 +25,7 @@ router.post("/auth/check-partner", authController.checkPartnerNumber);
 router.post("/auth/login-partner", authController.loginPartner);
 
 // ==========================================
-// LOGOUT (SÉCURISÉ)
+// LOGOUT
 // ==========================================
 router.post("/auth/logout", jwtMiddleware, authController.logout);
 

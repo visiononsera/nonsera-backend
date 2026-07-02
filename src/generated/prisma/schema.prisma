@@ -27,6 +27,11 @@ enum Role {
   IT
 }
 
+enum MatchStatus {
+  ACTIVE
+  BROKEN
+}
+
 enum MatchType {
   BOOST
   NORMAL
@@ -400,16 +405,23 @@ model VideoSession {
 // ======================================================
 
 model Match {
-  id          Int       @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   fromId      Int
   toId        Int
-  from        User      @relation("MatchSender", fields: [fromId], references: [id])
-  to          User      @relation("MatchReceiver", fields: [toId], references: [id])
-  isConfirmed Boolean   @default(false)
-  type        MatchType @default(NORMAL)
-  createdAt   DateTime  @default(now())
+  from        User        @relation("MatchSender", fields: [fromId], references: [id])
+  to          User        @relation("MatchReceiver", fields: [toId], references: [id])
+  isConfirmed Boolean     @default(false)
+  type        MatchType   @default(NORMAL)
+  status      MatchStatus @default(ACTIVE) // Suivi de l'état de la relation (En couple / Rompu)
 
-  @@unique([fromId, toId])
+  // Optionnel : Permet de savoir quel cadeau a déclenché ce match
+  giftId Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([fromId, toId])
 }
 
 // ======================================================
@@ -518,15 +530,15 @@ model Annonce {
   ambiance            AmbianceType? @default(SALLE_PRINCIPALE)
   hasAnimation        Boolean       @default(false)
   isDeliveryAvailable Boolean       @default(false)
-  isRomantique        Boolean       @default(false) // NOUVEAU : "Option romantique (si disponible)" pour Hôtel/Transport/Activités
-  equipements         Json? // NOUVEAU : "Équipement inclus" pour les Hôtels (ex: Wifi, Piscine, AC)
+  isRomantique        Boolean       @default(false) // "Option romantique (si disponible)" pour Hôtel/Transport/Activités
+  equipements         Json? // "Équipement inclus" pour les Hôtels (ex: Wifi, Piscine, AC)
 
   // Spécifique Transport
-  vehicleType VehicleType? // NOUVEAU : Filtre sous-catégories en survol (Moto, Berline...)
-  nbPlaces    Int? // NOUVEAU : Nombre de places disponibles
+  vehicleType VehicleType? // Filtre sous-catégories en survol (Moto, Berline...)
+  nbPlaces    Int? // Nombre de places disponibles
 
   // Spécifique Activités
-  activityType ActivityType? // NOUVEAU : Sous-catégorie d'activité
+  activityType ActivityType? // Sous-catégorie d'activité
 
   companyId Int?
   company   Company? @relation(fields: [companyId], references: [id], onDelete: Cascade)
@@ -806,6 +818,7 @@ model Subscription {
 
 model Company {
   id            Int             @id @default(autoincrement())
+  name          String?
   phoneNumber   String          @unique
   username      String?         @unique
   email         String?         @unique
@@ -820,6 +833,8 @@ model Company {
   mapAddress    String?
   numeroSocial  String?
   balance       Decimal         @default(0) @db.Decimal(18, 2)
+
+  links Json?
 
   isVerified          Boolean @default(false)
   isSurplaceAvailable Boolean @default(true)

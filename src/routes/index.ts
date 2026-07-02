@@ -4,9 +4,10 @@ import userRoutes from "./users.routes";
 import videoRoutes from "./video.routes";
 import walletRoutes from "./wallet.routes";
 import searchRoutes from "./search.routes";
-import podiumRoutes from "./podium.routes";
-import companyRoutes from "./company.routes";
-import reservationRoutes from "./reservation.routes";
+import podiumRoutes from "./podiums.routes";
+import companyRoutes from "./companies.routes";
+import reservationRoutes from "./reservations.routes";
+import matchRoutes from "./match.routes";
 
 const apiRouter = Router();
 
@@ -18,5 +19,6 @@ apiRouter.use(searchRoutes);
 apiRouter.use(podiumRoutes);
 apiRouter.use(companyRoutes);
 apiRouter.use(reservationRoutes);
+apiRouter.use(matchRoutes);
 
 export default apiRouter;

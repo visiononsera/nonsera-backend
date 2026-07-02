@@ -7,24 +7,24 @@ const router = Router();
 
 // --- ROUTES PUBLIQUES ---
 // Récupérer les entreprises | annonces par proximité (Haversine)
-router.get("/proximity", companiesController.getByProximity);
+router.get("/companies/proximity", companiesController.getByProximity);
 // Lister les entreprises avec filtres, recherche, tri et pagination
-router.get("/", companiesController.getMany);
+router.get("/companies/", companiesController.getMany);
 // Récupérer une entreprise par son ID
-router.get("/:id", companiesController.getById);
+router.get("/companies/:id", companiesController.getById);
 
 
 // --- ROUTES PROTÉGÉES ---
 // Créer une nouvelle entreprise
-router.post("/", jwtMiddleware, loadContext, companiesController.create);
+router.post("/companies/", jwtMiddleware, loadContext, companiesController.create);
 // Mettre à jour une entreprise existante
-router.put("/:id", jwtMiddleware, loadContext, companiesController.update);
+router.put("/companies/:id", jwtMiddleware, loadContext, companiesController.update);
 // Suppression logique
-router.delete("/:id", jwtMiddleware, loadContext, companiesController.delete);
+router.delete("/companies/:id", jwtMiddleware, loadContext, companiesController.delete);
 
 
 // --- ROUTE ADMIN PRIVILÉGIÉE ---
 // Workflow d'approbation administrative
-router.patch("/:id/verify", jwtMiddleware, loadContext, companiesController.verify);
+router.patch("/companies/:id/verify", jwtMiddleware, loadContext, companiesController.verify);
 
 export default router;
