@@ -444,6 +444,7 @@ export const walletService = {
       if (config) currentCurrencySymbol = config.symbol;
     }
 
+    
     return {
       soldePrincipalGlobal,
       bonusDisponibleGlobal,

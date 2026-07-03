@@ -5,6 +5,7 @@ import { SALT_ROUND } from "../config/env.js";
 import bcrypt from "bcrypt";
 import { videoValidationService } from "../services/videoValidation.service.js";
 import { storageService } from "../services/storage/storage.factory.js";
+import { walletService } from "../services/wallet.service.js";
 
 export const usersController = {
   // ==========================================
@@ -136,6 +137,15 @@ export const usersController = {
           .status(404)
           .json({ success: false, message: "Profil introuvable." });
       }
+
+      // 2. Récupération dynamique et calculée du solde des coins & starpoints
+      const walletSummary = await walletService.getWalletSummary(userId);
+
+      // mettre à jour le solde coins 
+      await prisma.user.update({
+        where: { id: userId },
+        data: { coins: walletSummary.soldeTotalUtilisable }
+      });
 
       return res.status(200).json({ success: true, data: user });
     } catch (error: any) {

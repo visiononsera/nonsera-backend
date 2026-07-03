@@ -48,6 +48,8 @@ export class PodiumController {
         });
       }
 
+      console.log("Star pour le profile connecté : ", liveData)
+
       return res.status(200).json({
         success: true,
         roundId: liveData.roundId,
@@ -60,7 +62,7 @@ export class PodiumController {
       return res.status(500).json({ success: false, message: error.message });
     }
   }
-  
+
   /**
    * Étape 1 : Le spectateur clique sur le bouton Danielle et offre un cadeau
    * POST /podiums/danielle/send-gift

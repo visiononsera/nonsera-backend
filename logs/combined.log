@@ -362,3 +362,261 @@
 {"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 08:43:13"}
 {"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 08:45:10"}
 {"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 08:45:10"}
+{"level":"info","message":"Client connecté. Socket ID: HFHSOqWhI3-e1PRUAAAB","timestamp":"2026-07-03 09:06:57"}
+{"level":"info","message":"Client connecté. Socket ID: 3fwWJetDJRcqwhEMAAAD","timestamp":"2026-07-03 09:11:06"}
+{"level":"info","message":"Client connecté. Socket ID: RkFsEvn2RiM4uyY9AAAF","timestamp":"2026-07-03 09:12:37"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 09:27:40"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 09:27:40"}
+{"level":"info","message":"Client connecté. Socket ID: X2TZ9vT5SljEf1aNAAAB","timestamp":"2026-07-03 09:27:43"}
+{"level":"info","message":"Client connecté. Socket ID: qyqSz3vo06O9AMcfAAAD","timestamp":"2026-07-03 09:29:23"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 09:35:15"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 09:35:15"}
+{"level":"info","message":"Client connecté. Socket ID: oAv9S_PTE1azsPf5AAAB","timestamp":"2026-07-03 09:35:17"}
+{"level":"info","message":"Client connecté. Socket ID: GskbmAXnoXbr5ok5AAAD","timestamp":"2026-07-03 09:36:08"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 09:37:37"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 09:37:37"}
+{"level":"info","message":"Client connecté. Socket ID: SxulNyy9rJAAssqAAAAB","timestamp":"2026-07-03 09:37:38"}
+{"level":"info","message":"Client connecté. Socket ID: s35qhO2ms1aZSm4bAAAD","timestamp":"2026-07-03 09:38:20"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 09:40:38"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 09:40:38"}
+{"level":"info","message":"Client connecté. Socket ID: q1D4bEpsUPvP4MjvAAAB","timestamp":"2026-07-03 09:41:22"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 09:44:28"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 09:44:28"}
+{"level":"info","message":"Client connecté. Socket ID: h5wWhGryD4o4O8I6AAAB","timestamp":"2026-07-03 09:44:29"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 09:51:36"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 09:51:36"}
+{"level":"info","message":"Client connecté. Socket ID: RKrrTvB3QPiB-vjAAAAB","timestamp":"2026-07-03 09:51:40"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 09:52:56"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 09:52:56"}
+{"level":"info","message":"Client connecté. Socket ID: 4PFEqZ7Eeo2h9-6kAAAB","timestamp":"2026-07-03 09:53:01"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 09:53:24"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 09:53:24"}
+{"level":"info","message":"Client connecté. Socket ID: _REJOxhIo2QzRed7AAAB","timestamp":"2026-07-03 09:53:28"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 09:59:33"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 09:59:33"}
+{"level":"info","message":"Client connecté. Socket ID: xdED8S3pTkK3jupxAAAB","timestamp":"2026-07-03 10:00:06"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 10:02:39"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 10:02:39"}
+{"level":"info","message":"Client connecté. Socket ID: m8trUrke0MCiM5boAAAB","timestamp":"2026-07-03 10:02:45"}
+{"level":"info","message":"Utilisateur 7 authentifié sur le socket.","timestamp":"2026-07-03 10:06:03"}
+{"level":"info","message":"Socket m8trUrke0MCiM5boAAAB (User #7) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 10:06:04"}
+{"level":"info","message":"Utilisateur 7 déconnecté du socket.","timestamp":"2026-07-03 10:06:31"}
+{"level":"info","message":"Client connecté. Socket ID: 4NWhUM3sM_Yiw-FyAAAD","timestamp":"2026-07-03 10:07:05"}
+{"level":"info","message":"Utilisateur 7 authentifié sur le socket.","timestamp":"2026-07-03 10:07:06"}
+{"level":"info","message":"Socket 4NWhUM3sM_Yiw-FyAAAD (User #7) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 10:07:06"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 10:26:25"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 10:26:25"}
+{"level":"info","message":"Client connecté. Socket ID: 4Kwkik4jTS32TJ04AAAB","timestamp":"2026-07-03 10:26:31"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 10:26:46"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 10:26:46"}
+{"level":"info","message":"Client connecté. Socket ID: OUj2vkTKeFgEJJbeAAAB","timestamp":"2026-07-03 10:26:47"}
+{"level":"info","message":"Client connecté. Socket ID: jYmR112LAPa6FhNmAAAD","timestamp":"2026-07-03 10:31:15"}
+{"level":"info","message":"Utilisateur 7 authentifié sur le socket.","timestamp":"2026-07-03 10:31:15"}
+{"level":"info","message":"Socket jYmR112LAPa6FhNmAAAD (User #7) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 10:31:16"}
+{"level":"info","message":"Utilisateur 7 déconnecté du socket.","timestamp":"2026-07-03 10:32:56"}
+{"level":"info","message":"Client connecté. Socket ID: SbyXkSdei3CVFGF9AAAF","timestamp":"2026-07-03 10:33:42"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 11:04:35"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 11:04:35"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 11:05:10"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 11:05:10"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 11:06:59"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 11:06:59"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 11:22:21"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 11:22:21"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 11:23:22"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 11:23:22"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 11:27:00"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 11:27:00"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 11:27:15"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 11:27:15"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 11:27:40"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 11:27:40"}
+{"level":"info","message":"Client connecté. Socket ID: KNdMF7OZx-1mPG9OAAAB","timestamp":"2026-07-03 11:40:05"}
+{"level":"info","message":"Utilisateur 7 authentifié sur le socket.","timestamp":"2026-07-03 11:40:05"}
+{"level":"info","message":"Socket KNdMF7OZx-1mPG9OAAAB (User #7) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 11:40:05"}
+{"level":"info","message":"Utilisateur 7 déconnecté du socket.","timestamp":"2026-07-03 11:41:24"}
+{"level":"info","message":"Client connecté. Socket ID: NaIMiv8pXKVuxrTqAAAD","timestamp":"2026-07-03 11:45:52"}
+{"level":"info","message":"Utilisateur 7 authentifié sur le socket.","timestamp":"2026-07-03 11:45:52"}
+{"level":"info","message":"Socket NaIMiv8pXKVuxrTqAAAD (User #7) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 11:45:53"}
+{"level":"info","message":"Utilisateur 7 déconnecté du socket.","timestamp":"2026-07-03 11:46:11"}
+{"level":"info","message":"Client connecté. Socket ID: GeglkDxdSQ9pBxSTAAAF","timestamp":"2026-07-03 11:46:27"}
+{"level":"info","message":"Client connecté. Socket ID: _dws_8eMxBzzWCNYAAAH","timestamp":"2026-07-03 11:47:02"}
+{"level":"info","message":"Utilisateur 7 authentifié sur le socket.","timestamp":"2026-07-03 11:47:02"}
+{"level":"info","message":"Socket _dws_8eMxBzzWCNYAAAH (User #7) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 11:47:02"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 11:52:36"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 11:52:36"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 11:54:40"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 11:54:40"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 11:55:03"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 11:55:03"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 11:56:12"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 11:56:12"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 11:57:55"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 11:57:55"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 11:59:00"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 11:59:00"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 11:59:20"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 11:59:20"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 12:00:26"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 12:00:26"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 12:11:38"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 12:11:38"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 12:14:06"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 12:14:06"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 12:15:10"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 12:15:10"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 12:15:31"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 12:15:31"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 12:15:47"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 12:15:47"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 12:25:04"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 12:25:04"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 12:27:44"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 12:27:44"}
+{"level":"info","message":"Client connecté. Socket ID: yxuPtDdj85u8racgAAAB","timestamp":"2026-07-03 12:36:17"}
+{"level":"info","message":"Client connecté. Socket ID: 0UXMLNQqh2Kwz9N7AAAD","timestamp":"2026-07-03 12:37:46"}
+{"level":"info","message":"Client connecté. Socket ID: 2i5c6d7YG1mRRVsWAAAF","timestamp":"2026-07-03 12:38:45"}
+{"level":"info","message":"Utilisateur 7 authentifié sur le socket.","timestamp":"2026-07-03 12:38:45"}
+{"level":"info","message":"Socket 2i5c6d7YG1mRRVsWAAAF (User #7) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 12:38:46"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 12:39:50"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 12:39:50"}
+{"level":"info","message":"Client connecté. Socket ID: 3Omqy0dcUlKjnPouAAAB","timestamp":"2026-07-03 12:39:51"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 12:46:22"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 12:46:22"}
+{"level":"info","message":"Client connecté. Socket ID: lNuwMn9JHNcPLOrDAAAB","timestamp":"2026-07-03 12:57:53"}
+{"level":"info","message":"Utilisateur 7 authentifié sur le socket.","timestamp":"2026-07-03 12:57:53"}
+{"level":"info","message":"Socket lNuwMn9JHNcPLOrDAAAB (User #7) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 12:57:53"}
+{"level":"info","message":"Utilisateur 7 déconnecté du socket.","timestamp":"2026-07-03 12:58:04"}
+{"level":"info","message":"Client connecté. Socket ID: oUg9HgQDeJdHI2w8AAAD","timestamp":"2026-07-03 13:01:33"}
+{"level":"info","message":"Utilisateur 7 authentifié sur le socket.","timestamp":"2026-07-03 13:01:33"}
+{"level":"info","message":"Socket oUg9HgQDeJdHI2w8AAAD (User #7) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 13:01:33"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 13:03:29"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 13:03:29"}
+{"level":"info","message":"Client connecté. Socket ID: vkC3rZ_I31L61aKSAAAB","timestamp":"2026-07-03 13:04:11"}
+{"level":"info","message":"Utilisateur 7 authentifié sur le socket.","timestamp":"2026-07-03 13:04:12"}
+{"level":"info","message":"Socket vkC3rZ_I31L61aKSAAAB (User #7) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 13:04:12"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 13:05:19"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 13:05:19"}
+{"level":"info","message":"Client connecté. Socket ID: z-UQ44DD0b3ueh0qAAAB","timestamp":"2026-07-03 13:05:25"}
+{"level":"info","message":"Client connecté. Socket ID: huoynbNYAlpzOaLkAAAD","timestamp":"2026-07-03 13:06:11"}
+{"level":"info","message":"Utilisateur 7 authentifié sur le socket.","timestamp":"2026-07-03 13:06:12"}
+{"level":"info","message":"Socket huoynbNYAlpzOaLkAAAD (User #7) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 13:06:12"}
+{"level":"info","message":"Utilisateur 7 déconnecté du socket.","timestamp":"2026-07-03 13:09:54"}
+{"level":"info","message":"Client connecté. Socket ID: pi-AENeu1OTkFZmNAAAF","timestamp":"2026-07-03 13:10:17"}
+{"level":"info","message":"Utilisateur 7 authentifié sur le socket.","timestamp":"2026-07-03 13:10:17"}
+{"level":"info","message":"Socket pi-AENeu1OTkFZmNAAAF (User #7) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 13:10:18"}
+{"level":"info","message":"Utilisateur 7 déconnecté du socket.","timestamp":"2026-07-03 13:11:56"}
+{"level":"info","message":"Client connecté. Socket ID: kruVnclqhPt-YPjCAAAH","timestamp":"2026-07-03 13:12:25"}
+{"level":"info","message":"Utilisateur 6 authentifié sur le socket.","timestamp":"2026-07-03 13:12:25"}
+{"level":"info","message":"Socket kruVnclqhPt-YPjCAAAH (User #6) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 13:12:28"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 13:22:36"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 13:22:36"}
+{"level":"info","message":"Client connecté. Socket ID: IqtxmjYlV_XciwzEAAAB","timestamp":"2026-07-03 13:22:37"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 13:24:04"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 13:24:04"}
+{"level":"info","message":"Client connecté. Socket ID: X3whG-XJHdfDU7AWAAAB","timestamp":"2026-07-03 13:24:07"}
+{"level":"info","message":"Client connecté. Socket ID: bZhcW0hkjsNoxzmJAAAD","timestamp":"2026-07-03 13:24:55"}
+{"level":"info","message":"Utilisateur 6 authentifié sur le socket.","timestamp":"2026-07-03 13:24:55"}
+{"level":"info","message":"Socket bZhcW0hkjsNoxzmJAAAD (User #6) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 13:24:56"}
+{"level":"info","message":"Utilisateur 6 déconnecté du socket.","timestamp":"2026-07-03 13:25:02"}
+{"level":"info","message":"Client connecté. Socket ID: Kzx-dQTicaFX_NjKAAAF","timestamp":"2026-07-03 13:25:29"}
+{"level":"info","message":"Client connecté. Socket ID: q8TcitI0qUzY8iF2AAAH","timestamp":"2026-07-03 13:26:21"}
+{"level":"info","message":"Utilisateur 6 authentifié sur le socket.","timestamp":"2026-07-03 13:26:21"}
+{"level":"info","message":"Socket q8TcitI0qUzY8iF2AAAH (User #6) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 13:26:21"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 13:35:25"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 13:35:25"}
+{"level":"info","message":"Client connecté. Socket ID: u5eXrns3dfjtaf6-AAAB","timestamp":"2026-07-03 13:35:27"}
+{"level":"info","message":"Client connecté. Socket ID: 5kTWpiVWlut7XjDOAAAD","timestamp":"2026-07-03 13:36:14"}
+{"level":"info","message":"Utilisateur 6 authentifié sur le socket.","timestamp":"2026-07-03 13:36:15"}
+{"level":"info","message":"Socket 5kTWpiVWlut7XjDOAAAD (User #6) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 13:36:16"}
+{"level":"info","message":"Utilisateur 6 déconnecté du socket.","timestamp":"2026-07-03 13:41:36"}
+{"level":"info","message":"Client connecté. Socket ID: GDOPimd2gDKqEX50AAAF","timestamp":"2026-07-03 13:52:25"}
+{"level":"info","message":"Client connecté. Socket ID: 0tMi0EZ7DIgtKLU6AAAH","timestamp":"2026-07-03 13:52:53"}
+{"level":"info","message":"Utilisateur 16 authentifié sur le socket.","timestamp":"2026-07-03 13:52:53"}
+{"level":"info","message":"Socket 0tMi0EZ7DIgtKLU6AAAH (User #16) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 13:52:54"}
+{"level":"info","message":"Utilisateur 16 déconnecté du socket.","timestamp":"2026-07-03 13:55:43"}
+{"level":"info","message":"Client connecté. Socket ID: gsBpPJ7Yccme1Q4CAAAJ","timestamp":"2026-07-03 13:55:50"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 14:00:19"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 14:00:19"}
+{"level":"info","message":"Client connecté. Socket ID: yfkm4ATKJ7Y6TOq0AAAB","timestamp":"2026-07-03 14:01:58"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 14:11:01"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 14:11:01"}
+{"level":"info","message":"Client connecté. Socket ID: OUTVh0apXkoKgjF2AAAB","timestamp":"2026-07-03 14:11:05"}
+{"level":"info","message":"Client connecté. Socket ID: -iTvCnrvSndLzDz2AAAD","timestamp":"2026-07-03 14:15:20"}
+{"level":"info","message":"Utilisateur 16 authentifié sur le socket.","timestamp":"2026-07-03 14:15:20"}
+{"level":"info","message":"Socket -iTvCnrvSndLzDz2AAAD (User #16) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 14:15:21"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 14:15:59"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 14:15:59"}
+{"level":"info","message":"Client connecté. Socket ID: EPJBth5I4gWRchGpAAAB","timestamp":"2026-07-03 14:15:59"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 14:16:42"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 14:16:42"}
+{"level":"info","message":"Client connecté. Socket ID: 6gW_5Xcp5T82dU3ZAAAB","timestamp":"2026-07-03 14:17:09"}
+{"level":"info","message":"Utilisateur 16 authentifié sur le socket.","timestamp":"2026-07-03 14:17:09"}
+{"level":"info","message":"Socket 6gW_5Xcp5T82dU3ZAAAB (User #16) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 14:17:10"}
+{"level":"info","message":"Utilisateur 16 déconnecté du socket.","timestamp":"2026-07-03 14:29:18"}
+{"level":"info","message":"Client connecté. Socket ID: wSr2Nn9Hw4GmF1knAAAD","timestamp":"2026-07-03 14:29:40"}
+{"level":"info","message":"Utilisateur 16 authentifié sur le socket.","timestamp":"2026-07-03 14:29:40"}
+{"level":"info","message":"Socket wSr2Nn9Hw4GmF1knAAAD (User #16) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 14:29:48"}
+{"level":"info","message":"Utilisateur 16 déconnecté du socket.","timestamp":"2026-07-03 14:34:04"}
+{"level":"info","message":"Client connecté. Socket ID: Sfgc6CroX1P0Z9j2AAAF","timestamp":"2026-07-03 14:34:23"}
+{"level":"info","message":"Utilisateur 16 authentifié sur le socket.","timestamp":"2026-07-03 14:34:24"}
+{"level":"info","message":"Socket Sfgc6CroX1P0Z9j2AAAF (User #16) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 14:34:25"}
+{"level":"info","message":"Utilisateur 16 déconnecté du socket.","timestamp":"2026-07-03 14:38:49"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 14:46:31"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 14:46:31"}
+{"level":"info","message":"Client connecté. Socket ID: LyqfNU7YP4sYdQ7CAAAB","timestamp":"2026-07-03 14:46:42"}
+{"level":"info","message":"Utilisateur 16 authentifié sur le socket.","timestamp":"2026-07-03 14:46:43"}
+{"level":"info","message":"Socket LyqfNU7YP4sYdQ7CAAAB (User #16) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 14:46:43"}
+{"level":"info","message":"Utilisateur 16 déconnecté du socket.","timestamp":"2026-07-03 14:52:52"}
+{"level":"info","message":"Client connecté. Socket ID: CRPRurE2TYMQcMxxAAAD","timestamp":"2026-07-03 14:53:07"}
+{"level":"info","message":"Utilisateur 6 authentifié sur le socket.","timestamp":"2026-07-03 14:53:07"}
+{"level":"info","message":"Socket CRPRurE2TYMQcMxxAAAD (User #6) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 14:53:07"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 14:54:45"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 14:54:45"}
+{"level":"info","message":"Client connecté. Socket ID: UuRSYlFa6xQD-jOmAAAB","timestamp":"2026-07-03 14:54:47"}
+{"level":"info","message":"Client connecté. Socket ID: Bugzs9XwHs5-cB6DAAAD","timestamp":"2026-07-03 14:55:44"}
+{"level":"info","message":"Utilisateur 6 authentifié sur le socket.","timestamp":"2026-07-03 14:55:44"}
+{"level":"info","message":"Socket Bugzs9XwHs5-cB6DAAAD (User #6) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 14:55:45"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 14:56:25"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 14:56:25"}
+{"level":"info","message":"Client connecté. Socket ID: 0JqfxVM_iL6S5BzDAAAB","timestamp":"2026-07-03 14:56:31"}
+{"level":"info","message":"Client connecté. Socket ID: dahf5jbnKLhE2uSWAAAD","timestamp":"2026-07-03 15:06:37"}
+{"level":"info","message":"Utilisateur 6 authentifié sur le socket.","timestamp":"2026-07-03 15:06:37"}
+{"level":"info","message":"Socket dahf5jbnKLhE2uSWAAAD (User #6) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 15:06:37"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 15:08:11"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 15:08:11"}
+{"level":"info","message":"Client connecté. Socket ID: 2YihetoF8funz62bAAAB","timestamp":"2026-07-03 15:08:16"}
+{"level":"info","message":"Client connecté. Socket ID: AZfOaqjcr3S62MnuAAAD","timestamp":"2026-07-03 15:09:53"}
+{"level":"info","message":"Utilisateur 6 authentifié sur le socket.","timestamp":"2026-07-03 15:09:53"}
+{"level":"info","message":"Socket AZfOaqjcr3S62MnuAAAD (User #6) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 15:09:54"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 15:11:04"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 15:11:04"}
+{"level":"info","message":"Client connecté. Socket ID: jgCyJMmhSs2TFk_NAAAB","timestamp":"2026-07-03 15:11:06"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 15:24:51"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 15:24:51"}
+{"level":"info","message":"Client connecté. Socket ID: 8F3OZN6i95rRhg66AAAB","timestamp":"2026-07-03 15:24:58"}
+{"level":"info","message":"Client connecté. Socket ID: 1XWeL4bVHFb524o3AAAD","timestamp":"2026-07-03 15:25:54"}
+{"level":"info","message":"Client connecté. Socket ID: UtFdV4DYgvL3HGIEAAAF","timestamp":"2026-07-03 15:28:36"}
+{"level":"info","message":"Utilisateur 6 authentifié sur le socket.","timestamp":"2026-07-03 15:28:36"}
+{"level":"info","message":"Socket UtFdV4DYgvL3HGIEAAAF (User #6) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 15:28:38"}
+{"level":"info","message":"Utilisateur 6 déconnecté du socket.","timestamp":"2026-07-03 15:38:56"}
+{"level":"info","message":"Client connecté. Socket ID: cXfCHC5pTV-7YwiAAAAH","timestamp":"2026-07-03 15:38:57"}
+{"level":"info","message":"Utilisateur 6 authentifié sur le socket.","timestamp":"2026-07-03 15:38:57"}
+{"level":"info","message":"Socket cXfCHC5pTV-7YwiAAAAH (User #6) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 15:38:57"}
+{"level":"info","message":"Utilisateur 6 déconnecté du socket.","timestamp":"2026-07-03 15:48:12"}
+{"level":"info","message":"Client connecté. Socket ID: opMDRdhVNIu22Y2-AAAJ","timestamp":"2026-07-03 15:51:22"}
+{"level":"info","message":"Client connecté. Socket ID: tjx4MBNdodryqzFsAAAL","timestamp":"2026-07-03 16:14:44"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 16:16:44"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 16:16:44"}
+{"level":"info","message":"Client connecté. Socket ID: 4PLgMCdE7g3Dc66lAAAB","timestamp":"2026-07-03 16:40:09"}
+{"level":"info","message":"Utilisateur 7 authentifié sur le socket.","timestamp":"2026-07-03 16:40:10"}
+{"level":"info","message":"Socket 4PLgMCdE7g3Dc66lAAAB (User #7) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 16:40:11"}
+{"level":"info","message":"Utilisateur 7 déconnecté du socket.","timestamp":"2026-07-03 16:45:31"}
+{"level":"info","message":"Client connecté. Socket ID: jrn6TlA2_mS5ZFvIAAAD","timestamp":"2026-07-03 16:47:09"}
+{"level":"info","message":"Utilisateur 7 authentifié sur le socket.","timestamp":"2026-07-03 16:47:09"}
+{"level":"info","message":"Socket jrn6TlA2_mS5ZFvIAAAD (User #7) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 16:47:09"}
+{"level":"info","message":"Utilisateur 7 déconnecté du socket.","timestamp":"2026-07-03 16:50:18"}
+{"level":"info","message":"Client connecté. Socket ID: 9cmYmxxyI8bbz9X0AAAF","timestamp":"2026-07-03 16:50:44"}
+{"level":"info","message":"Utilisateur 7 authentifié sur le socket.","timestamp":"2026-07-03 16:50:44"}
+{"level":"info","message":"Socket 9cmYmxxyI8bbz9X0AAAF (User #7) a rejoint la room pays : country_BENIN","timestamp":"2026-07-03 16:50:44"}
+{"level":"info","message":"Utilisateur 7 déconnecté du socket.","timestamp":"2026-07-03 17:16:38"}

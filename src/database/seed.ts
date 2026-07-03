@@ -11,6 +11,48 @@ const prisma = new PrismaClient({ adapter });
 const BCRYPT_ROUNDS = 12;
 const DEFAULT_STAFF_PIN = process.env.SEED_STAFF_PIN || "111111";
 
+// BANQUE D'IMAGES REALISTES UNSPLASH (Portraits Afro)
+const STAFF_PHOTOS = {
+  ADMIN: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80",
+  IT: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=500&q=80",
+  KYC: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=500&q=80",
+  FINANCE: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=500&q=80",
+  SUPPORT: "https://images.unsplash.com/photo-1589156280159-27698a70f29e?auto=format&fit=crop&w=500&q=80"
+};
+
+const FEMALE_PHOTOS = [
+  "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1523824921871-d6f1a15151f1?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1614283233556-f35b0c801ef1?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=500&q=80"
+];
+
+const MALE_PHOTOS = [
+  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1489980508314-941910ded1f4?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1513956589380-bad6acb9b9d4?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1504257404162-dd3b96c311f1?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=500&q=80",
+  "https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&w=500&q=80"
+];
+
+const ENTERPRISE_BANKS_PHOTOS = [
+  "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80"
+];
+
 // ======================================================
 // HELPERS
 // ======================================================
@@ -62,6 +104,7 @@ const CURRENCY_CONFIGS_SEED = [
   { countryCode: "CI", countryName: "Cote d'Ivoire", currencyCode: "XOF", bonusRate: 0.15, isActive: true },
   { countryCode: "TG", countryName: "Togo", currencyCode: "XOF", bonusRate: 0.05, isActive: true }
 ];
+
 // ======================================================
 // MAIN
 // ======================================================
@@ -154,7 +197,7 @@ async function main() {
         city: "Cotonou",
         latitude: cotonouCoordinates.latitude,
         longitude: cotonouCoordinates.longitude,
-        profilePhoto: "https://avatar.iran.liara.run/public/33",
+        profilePhoto: STAFF_PHOTOS.ADMIN,
         onboardingStep: "COMPLETED",
         isCompleted: true,
         isPhoneVerified: true,
@@ -196,7 +239,7 @@ async function main() {
         city: "Cotonou",
         latitude: cotonouCoordinates.latitude,
         longitude: cotonouCoordinates.longitude,
-        profilePhoto: "https://avatar.iran.liara.run/public/11",
+        profilePhoto: STAFF_PHOTOS.IT,
         onboardingStep: "COMPLETED",
         isCompleted: true,
         isPhoneVerified: true,
@@ -229,7 +272,7 @@ async function main() {
         city: "Cotonou",
         latitude: cotonouCoordinates.latitude,
         longitude: cotonouCoordinates.longitude,
-        profilePhoto: "https://avatar.iran.liara.run/public/78",
+        profilePhoto: STAFF_PHOTOS.KYC,
         onboardingStep: "COMPLETED",
         isCompleted: true,
         isPhoneVerified: true,
@@ -261,7 +304,7 @@ async function main() {
         city: "Cotonou",
         latitude: cotonouCoordinates.latitude,
         longitude: cotonouCoordinates.longitude,
-        profilePhoto: "https://avatar.iran.liara.run/public/22",
+        profilePhoto: STAFF_PHOTOS.FINANCE,
         onboardingStep: "COMPLETED",
         isCompleted: true,
         isPhoneVerified: true,
@@ -292,7 +335,7 @@ async function main() {
         city: "Cotonou",
         latitude: cotonouCoordinates.latitude,
         longitude: cotonouCoordinates.longitude,
-        profilePhoto: "https://avatar.iran.liara.run/public/90",
+        profilePhoto: STAFF_PHOTOS.SUPPORT,
         onboardingStep: "COMPLETED",
         isCompleted: true,
         isPhoneVerified: true,
@@ -369,8 +412,11 @@ async function main() {
           const city = data.cities[cityIndex]!;
           const coords = data.coordinates[cityIndex]!;
 
-          const avatarId = gender === "MALE" ? 1 + i + cityIndex : 50 + i + cityIndex;
-          const profilePhoto = `https://avatar.iran.liara.run/public/${avatarId}`;
+          // Attribution d'une photo Unsplash déterministe et réaliste (Femmes Noires/Métisses & Hommes Noirs/Métisses)
+          const profilePhoto = gender === "MALE"
+            ? MALE_PHOTOS[i % MALE_PHOTOS.length]!
+            : FEMALE_PHOTOS[i % FEMALE_PHOTOS.length]!;          
+            
           const isCompletedStatus = onboardingStep === "COMPLETED";
 
           const user = await tx.user.upsert({
@@ -430,8 +476,34 @@ async function main() {
     }
   });
 
+  // Liste des pays opérationnels (ajoute ceux nécessaires pour ton application)
+  const countries = [
+    { code: 'BJ', name: 'Bénin' },
+    { code: 'TG', name: 'Togo' },
+    { code: 'CI', name: 'Côte d\'Ivoire' },
+    { code: 'SN', name: 'Sénégal' },
+    { code: 'BF', name: 'Burkina Faso' },
+    { code: 'NE', name: 'Niger' }
+  ];
+
+  for (const country of countries) {
+    // Utilisation d'un upsert pour éviter les erreurs de duplication si le seed est rejoué
+    const upsertedCountry = await prisma.country.upsert({
+      where: { code: country.code },
+      update: { name: country.name },
+      create: {
+        code: country.code,
+        name: country.name,
+      },
+    });
+    console.log(`✅ Pays configuré : ${upsertedCountry.name} (${upsertedCountry.code})`);
+  }
+
+  console.log('🏁 Seeding des pays terminé avec succès !');
+
+
   // ======================================================
-  // SEED PARTENAIRES : ENTREPRISES & ANNONCES (MIS À JOUR)
+  // SEED PARTENAIRES : ENTREPRISES & ANNONCES 
   // ======================================================
   console.log("🏢 Démarrage de l'injection massive des Entreprises et Annonces contextuelles...");
 
@@ -496,6 +568,8 @@ async function main() {
     const fakeEmail = `${cleanName}.${idx}@partner.nonsera.com`;
     const fakeUsername = `${cleanName}_${idx}`;
 
+    const enterpriseLogo = ENTERPRISE_BANKS_PHOTOS[idx % ENTERPRISE_BANKS_PHOTOS.length]!;
+
     try {
       await prisma.$transaction(async (tx) => {
         // 1. Création de l'entreprise (Company)
@@ -511,8 +585,8 @@ async function main() {
             country: raw.country,
             latitude: coords.latitude,
             longitude: coords.longitude,
-            logo: `https://avatar.iran.liara.run/public/enterprise_${idx}`,
-            bannerPicture: `https://picsum.photos/seed/banner_${cleanName}/1200/400`,
+            logo: enterpriseLogo,
+            bannerPicture: `https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80`,
             isVerified: true,
             isSurplaceAvailable: true,
             status: "ACTIVE",
@@ -539,7 +613,7 @@ async function main() {
             name: raw.announcement.title,               // Requis : String
             price: raw.priceEstimation,                // Requis : Decimal
             points: Math.floor(raw.priceEstimation * 0.001) || 1, // Points de fidélité générés (ex: 1pt par tranche de 1000)
-            image: `https://picsum.photos/seed/annonce_${cleanName}/800/600`, // Requis : String
+            image: enterpriseLogo, // Requis : String
             description: raw.announcement.desc,        // Optionnel : String
             category: raw.category,                     // Optionnel : String
             isAvailable: true,
