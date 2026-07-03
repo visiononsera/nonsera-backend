@@ -6,6 +6,12 @@ import { loadContext } from '../middlewares/auth.middleware';
 const router = Router();
 
 /**
+ * Nouvelle Route Récupérer la Star active du podium pour le spectateur connecté
+ * GET /podiums/current-star
+ */
+router.get('/podiums/current-star', jwtMiddleware, loadContext, PodiumController.getCurrentStarForSpectator);
+
+/**
  * Étape 1 : Le spectateur clique sur le bouton Danielle et envoie un cadeau
  * POST /podiums/danielle/send-gift
  */

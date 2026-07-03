@@ -477,6 +477,7 @@ exports.Prisma.CompanyScalarFieldEnum = {
   links: 'links',
   isVerified: 'isVerified',
   isSurplaceAvailable: 'isSurplaceAvailable',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'

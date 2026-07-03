@@ -7,7 +7,7 @@ cron.schedule('*/5 * * * *', async () => {
   console.log('[CRON] Déclenchement de la rotation automatique du Podium Engine...');
 
   try {
-    // 1. NETTOYAGE DES SPECTATEURS DES ROUNDS EXPIRÉS (Mis au bon endroit)
+    // 1. NETTOYAGE DES SPECTATEURS DES ROUNDS EXPIRÉS
     const purgeResult = await prisma.podiumSpectator.deleteMany({
       where: { podiumStar: { timeDue: { lt: new Date() } } }
     });

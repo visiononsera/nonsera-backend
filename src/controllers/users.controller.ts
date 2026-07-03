@@ -4,6 +4,7 @@ import { usersService } from "../services/users.service.js";
 import { SALT_ROUND } from "../config/env.js";
 import bcrypt from "bcrypt";
 import { videoValidationService } from "../services/videoValidation.service.js";
+import { storageService } from "../services/storage/storage.factory.js";
 
 export const usersController = {
   // ==========================================
@@ -17,11 +18,17 @@ export const usersController = {
     try {
       const userId = req.user.id;
 
-      // Récupération dynamique de la photo : Priorité au fichier traité par le middleware Multer (S3)
-      const multerFile = (req as any).file;
-      const profilePhoto = multerFile
-        ? (multerFile as any).location
-        : req.body.profilePhoto;
+      if (!userId) {
+        return res.status(401).json({ success: false, message: "Utilisateur non authentifié." });
+      }
+
+      // Récupération dynamique de la photo via notre Factory unifiée
+      const multerFile = req.file;
+      let profilePhoto = req.body.profilePhoto;
+
+      if (multerFile) {
+        profilePhoto = await storageService.uploadFile(multerFile);
+      }
 
       const {
         fullname,
@@ -33,10 +40,12 @@ export const usersController = {
         religion,
         passions,
         height,
+        biography,
+        vision,
         nextStep,
       } = req.body;
 
-      // 1. Traitement des informations et application des contraintes via le service général
+      // Traitement des informations et application des contraintes via le service général
       const updatedUser = await usersService.updateOnboardingData(userId, {
         fullname,
         profilePhoto,
@@ -47,10 +56,12 @@ export const usersController = {
         religion,
         passions,
         height,
-        nextStep, // Applique la valeur transmise (ex: "CALL_VALIDATION")
+        biography,
+        vision,
+        nextStep, 
       });
 
-      // 2. Vérification séquentielle basée sur la valeur retournée par la BDD
+      // Vérification séquentielle basée sur la valeur retournée par la BDD
       if (updatedUser.onboardingStep === "CALL_VALIDATION") {
         const finalUpdate = await prisma.user.update({
           where: { id: userId },
@@ -61,6 +72,7 @@ export const usersController = {
         });
 
         // Initialisation immédiate de la room de flux WebRTC/Twilio
+        // @ts-ignore 
         const videoSession = await videoValidationService.initializeSession(
           userId,
           true,
@@ -73,7 +85,7 @@ export const usersController = {
             "Informations enregistrées. En attente de la vérification par un agent.",
           data: {
             onboardingStep: finalUpdate.onboardingStep,
-            roomId: videoSession.roomId, // Token partagé avec l'application Expo mobile
+            roomId: videoSession.roomId,
             user: {
               id: finalUpdate.id,
               fullname: finalUpdate.fullname,
@@ -169,9 +181,9 @@ export const usersController = {
     }
   },
 
-  // ==========================================
-  // SECTION 2 : GESTION DYNAMIQUE DES PERMISSIONS (ADMIN & IT)
-  // ==========================================
+  // ====================================================
+  // SECTION 2 : GESTION DYNAMIQUE DES PERMISSIONS
+  // ====================================================
 
   /**
    * Assigne ou révoque des permissions à un USER ou un AGENT
@@ -331,45 +343,6 @@ export const usersController = {
   // ==========================================
   // SECTION 4 : OPÉRATIONS FINANCIÈRES & PORTEFEUILLE (WALLET)
   // ==========================================
-
-  /**
-   * Recharge la balance (coins) de l'utilisateur connecté pour lui ouvrir l'accès aux achats in-app
-   */
-  reloadWalletCoins: async (req: Request, res: Response) => {
-    try {
-      const userId = req.user.id;
-      const { amount, reference } = req.body;
-
-      if (!amount) {
-        return res.status(400).json({
-          success: false,
-          message: "Le montant du rechargement (amount) est requis.",
-        });
-      }
-
-      const updatedUser = await usersService.creditUserCoins(
-        userId,
-        parseFloat(amount),
-        reference,
-      );
-
-      return res.status(200).json({
-        success: true,
-        message: "Votre solde de coins a été mis à jour avec succès.",
-        data: {
-          userId: updatedUser.id,
-          newBalance: updatedUser.coins,
-        },
-      });
-    } catch (error: any) {
-      return res.status(400).json({
-        success: false,
-        message:
-          error.message ||
-          "Impossible de recharger le portefeuille de crédits.",
-      });
-    }
-  },
 
   /**
    * Action de l'administration sur une demande d'onboarding en attente (Validation, Rejet ou Bannissement)

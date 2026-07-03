@@ -136,13 +136,14 @@ export const usersService = {
 
   /**
    * Met à jour les données de l'utilisateur (Onboarding et Standard)
-   * Intègre la contrainte de cooldown de 2 jours et la permutation des photos (Max 3)
+   * Intègre la contrainte de cooldown de 2 jours, la permutation des photos (Max 3)
+   * et la sauvegarde de la biographie, vision, religion et passions.
    */
   updateOnboardingData: async (userId: number, inputData: any) => {
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) throw new Error("Utilisateur introuvable.");
 
-    // Bloquer les modifications si le compte est restreint
+    // Bloquer les modifications si le compte est restreint ou supprimé
     if (user.isBanned || user.deletedAt) {
       throw new Error("Action impossible. Ce compte n'est pas actif.");
     }
@@ -157,9 +158,9 @@ export const usersService = {
       );
     }
 
-    // 2. Logique de permutation des photos avec limite stricte à 3 images au total
+    // 2. Logique de permutation et contrôle de la photo de profil (Contrainte de 2 jours)
     if (inputData.profilePhoto) {
-      // Restriction temporelle des 2 jours : Ignorée si l'onboarding n'est pas encore complété
+      // Restriction temporelle de 2 jours : Active uniquement si le profil est complété
       if (user.isCompleted && user.lastPhotoUpdated) {
         const lastUpdate = new Date(user.lastPhotoUpdated);
         const nextAllowedUpdate = new Date(
@@ -173,10 +174,10 @@ export const usersService = {
         }
       }
 
-      // Algorithme de glissement de la file d'attente des photos (Max 3)
-      // L'ancienne Photo Principale (1) glisse vers l'Image 2 (firstOtherPhoto)
-      // L'ancienne Image 2 (firstOtherPhoto) glisse vers l'Image 3 (secondOtherPhoto)
-      // L'ancienne Image 3 (thirdOtherPhoto) est automatiquement évincée
+      // Algorithme de décalage de la file d'attente (Max 3 photos secondaires)
+      // L'ancienne Photo Principale devient l'Image 2 (firstOtherPhoto)
+      // L'ancienne Image 2 devient l'Image 3 (secondOtherPhoto)
+      // L'ancienne Image 3 (thirdOtherPhoto) est évincée du flux circulaire
       if (user.profilePhoto) {
         updatePayload.firstOtherPhoto = user.profilePhoto;
 
@@ -185,30 +186,31 @@ export const usersService = {
         }
       }
 
-      // La nouvelle image devient l'image principale (1)
+      // La nouvelle image devient l'image principale
       updatePayload.profilePhoto = inputData.profilePhoto;
       updatePayload.lastPhotoUpdated = new Date();
     }
 
-    // 3. Traitement des autres attributs
+    // 3. Traitement des attributs textuels de l'application (Nouveaux champs d'édition)
+    if (inputData.biography !== undefined)
+      updatePayload.biography = inputData.biography;
+    if (inputData.vision !== undefined) updatePayload.vision = inputData.vision;
+    if (inputData.religion !== undefined)
+      updatePayload.religion = inputData.religion;
+
+    // 4. Traitement des attributs standards et authentification
     if (inputData.email) updatePayload.email = inputData.email;
     if (inputData.birthday)
       updatePayload.birthday = new Date(inputData.birthday);
     if (inputData.gender) updatePayload.gender = inputData.gender;
 
     const incomingPin = inputData.pin || inputData.code || inputData.passCode;
-
     if (incomingPin) {
       const salt = await bcrypt.genSalt(SALT_ROUND);
       updatePayload.passCode = await bcrypt.hash(incomingPin, salt);
     }
-    
-    // 5. Nouvelles données issues de ProfileDetailsScreen
-    if (inputData.religion) {
-      updatePayload.religion = inputData.religion;
-    }
 
-    // Gestion du champ 'passion' (Prisma attend une String, le front envoie un Array ou un JSON stringifié)
+    // 5. Gestion du champ 'passion' (Prisma attend une String, convertit si Array reçu du Front)
     if (inputData.passions) {
       let passionsArray = inputData.passions;
       if (typeof inputData.passions === "string") {
@@ -218,16 +220,19 @@ export const usersService = {
           passionsArray = [inputData.passions];
         }
       }
-      // On sépare par des virgules pour stocker les passions dans le champ String du modèle
-      updatePayload.passion = Array.isArray(passionsArray) ? passionsArray.join(", ") : passionsArray;
+      // Séparation par virgule pour le stockage en String
+      updatePayload.passion = Array.isArray(passionsArray)
+        ? passionsArray.join(", ")
+        : passionsArray;
     }
 
-    // Gestion de la taille (height) et structuration dans le champ Json 'preferences'
+    // 6. Gestion de la taille (height) structurée dans le JSON 'preferences'
     if (inputData.height) {
       const heightCm = parseInt(inputData.height, 10);
       if (!isNaN(heightCm)) {
-        // Récupération des préférences existantes pour ne rien écraser
-        const existingPreferences = user.preferences ? (user.preferences as Record<string, any>) : {};
+        const existingPreferences = user.preferences
+          ? (user.preferences as Record<string, any>)
+          : {};
         updatePayload.preferences = {
           ...existingPreferences,
           height: heightCm,
@@ -235,43 +240,13 @@ export const usersService = {
       }
     }
 
+    // Navigation flow onboarding & meta-données de modification
     if (inputData.nextStep) updatePayload.onboardingStep = inputData.nextStep;
     updatePayload.lastProfileUpdated = new Date();
 
     return await prisma.user.update({
       where: { id: userId },
       data: updatePayload,
-    });
-  },
-
-  /**
-   * Recharge ou met à jour le solde (coins) de l'utilisateur
-   * Enveloppé dans une transaction Prisma sécurisée pour l'audit financier
-   */
-  creditUserCoins: async (
-    userId: number,
-    amount: number,
-    reference?: string,
-  ) => {
-    if (amount <= 0) {
-      throw new Error(
-        "Le montant du rechargement doit être strictement supérieur à 0.",
-      );
-    }
-
-    return await prisma.$transaction(async (tx) => {
-      const user = await tx.user.findUnique({ where: { id: userId } });
-      if (!user) throw new Error("Utilisateur introuvable.");
-
-      // Incrémentation atomique du solde de jetons
-      const updatedUser = await tx.user.update({
-        where: { id: userId },
-        data: {
-          coins: { increment: amount },
-        },
-      });
-
-      return updatedUser;
     });
   },
 

@@ -836,14 +836,14 @@ model Company {
 
   links Json?
 
-  isVerified          Boolean @default(false)
-  isSurplaceAvailable Boolean @default(true)
-
-  subscriptions CompanySubscription[]
-  annonces      Annonce[]
-  gifts         Gift[]
-  retraits      Retrait[]
-  userCompanies UserCompany[]
+  isVerified          Boolean               @default(false)
+  isSurplaceAvailable Boolean               @default(true)
+  status              String?
+  subscriptions       CompanySubscription[]
+  annonces            Annonce[]
+  gifts               Gift[]
+  retraits            Retrait[]
+  userCompanies       UserCompany[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

@@ -5,6 +5,6 @@ import { globalSearch } from "../controllers/search.controller.js";
 
 const router = Router();
 
-router.get('/', jwtMiddleware, loadContext, globalSearch);
+router.get('/search', jwtMiddleware, loadContext, globalSearch);
 
 export default router;

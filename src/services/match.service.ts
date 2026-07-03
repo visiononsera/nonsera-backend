@@ -2,12 +2,61 @@ import prisma from "./prisma.service";
 import { walletService } from "./wallet.service";
 
 export class MatchService {
+  /**
+   * RÉCUPÉRATION DU MATCH ACTIF
+   * Permet de savoir si l'utilisateur est en couple et renvoie les infos du partenaire ainsi que la ChatRoom.
+   */
+  static async getCurrentMatch(userId: number) {
+    // 1. Trouver le match actif incluant les profils des deux participants
+    const activeMatch = await prisma.match.findFirst({
+      where: {
+        status: "ACTIVE",
+        isConfirmed: true,
+        OR: [{ fromId: userId }, { toId: userId }],
+      },
+      include: {
+        from: true,
+        to: true,
+      },
+    });
+
+    if (!activeMatch) {
+      return null;
+    }
+
+    // 2. Identifier qui est le partenaire
+    const isFromUser = activeMatch.fromId === userId;
+    const partner = isFromUser ? activeMatch.to : activeMatch.from;
+
+    // 3. Récupérer la ChatRoom correspondante
+    const participantOneId = Math.min(activeMatch.fromId, activeMatch.toId);
+    const participantTwoId = Math.max(activeMatch.fromId, activeMatch.toId);
+
+    const chatRoom = await prisma.chatRoom.findFirst({
+      where: {
+        participantOneId,
+        participantTwoId,
+      },
+    });
+
+    return {
+      matchId: activeMatch.id,
+      type: activeMatch.type,
+      createdAt: activeMatch.createdAt,
+      partner,
+      chatRoomId: chatRoom ? chatRoom.id : null,
+    };
+  }
 
   /**
    * Étape 1 : Envoi d'un cadeau direct (Hors Podium)
    * VERIFICATION : Bloquer l'envoi si l'expéditeur ou le destinataire est déjà en couple.
    */
-  static async sendDirectGift(senderId: number, receiverId: number, giftId: number) {
+  static async sendDirectGift(
+    senderId: number,
+    receiverId: number,
+    giftId: number,
+  ) {
     if (senderId === receiverId) {
       throw new Error("Vous ne pouvez pas vous envoyer un cadeau à vous-même.");
     }
@@ -15,7 +64,9 @@ export class MatchService {
     // 1. Vérification stricte du statut célibataire des deux côtés
     const senderBusy = await this.isUserInCouple(senderId);
     if (senderBusy) {
-      throw new Error("Vous êtes déjà en couple. Vous ne pouvez pas envoyer de cadeau direct.");
+      throw new Error(
+        "Vous êtes déjà en couple. Vous ne pouvez pas envoyer de cadeau direct.",
+      );
     }
 
     const receiverBusy = await this.isUserInCouple(receiverId);
@@ -28,21 +79,26 @@ export class MatchService {
     if (!gift) throw new Error("Le cadeau spécifié n'existe pas.");
 
     // 3. Notification temps réel au destinataire
-    io.to(`user_${receiverId}`).emit('gift:received', {
+    io.to(`user_${receiverId}`).emit("gift:received", {
       senderId,
       giftId,
       giftName: gift.name,
       giftPrice: gift.price,
-      message: "Vous avez reçu une proposition et un cadeau direct !"
+      message: "Vous avez reçu une proposition et un cadeau direct !",
     });
 
     return { success: true };
   }
 
   /**
-   * Étape 2 : Le destinataire accepte le cadeau direct 
+   * Étape 2 : Le destinataire accepte le cadeau direct
    */
-  static async acceptDirectGift(receiverId: number, senderId: number, giftId: number, matchType: 'NORMAL' | 'BOOST' = 'NORMAL') {
+  static async acceptDirectGift(
+    receiverId: number,
+    senderId: number,
+    giftId: number,
+    matchType: "NORMAL" | "BOOST" = "NORMAL",
+  ) {
     return await prisma.$transaction(async (tx) => {
       const gift = await tx.gift.findUnique({ where: { id: giftId } });
       if (!gift) throw new Error("Cadeau introuvable.");
@@ -54,13 +110,17 @@ export class MatchService {
         senderId,
         giftPrice,
         `Achat Cadeau Direct (#${giftId}) accepté par l'utilisateur #${receiverId}`,
-        tx
+        tx,
       );
 
       // B. Double-check de sécurité concurrentielle
-      const isBusy = await this.isUserInCouple(senderId, tx) || await this.isUserInCouple(receiverId, tx);
+      const isBusy =
+        (await this.isUserInCouple(senderId, tx)) ||
+        (await this.isUserInCouple(receiverId, tx));
       if (isBusy) {
-        throw new Error("Action annulée : L'un des utilisateurs s'est mis en couple entre-temps.");
+        throw new Error(
+          "Action annulée : L'un des utilisateurs s'est mis en couple entre-temps.",
+        );
       }
 
       const participantOneId = Math.min(senderId, receiverId);
@@ -74,22 +134,22 @@ export class MatchService {
             toId: receiverId,
             isConfirmed: true,
             type: matchType,
-            status: 'ACTIVE',
-            giftId: giftId
-          }
+            status: "ACTIVE",
+            giftId: giftId,
+          },
         }),
         tx.chatRoom.create({
           data: {
             participantOneId,
             participantTwoId,
-            lastMessage: "Cadeau accepté ! Le salon privé est ouvert."
-          }
-        })
+            lastMessage: "Cadeau accepté ! Le salon privé est ouvert.",
+          },
+        }),
       ]);
 
-      io.to(`user_${senderId}`).to(`user_${receiverId}`).emit('match:created', {
+      io.to(`user_${senderId}`).to(`user_${receiverId}`).emit("match:created", {
         chatRoomId: chatRoom.id,
-        partnerId: receiverId
+        partnerId: receiverId,
       });
 
       return { match, chatRoom };
@@ -103,12 +163,12 @@ export class MatchService {
     return await prisma.$transaction(async (tx) => {
       const activeMatch = await tx.match.findFirst({
         where: {
-          status: 'ACTIVE',
+          status: "ACTIVE",
           OR: [
             { fromId: userId, toId: partnerId, isConfirmed: true },
-            { fromId: partnerId, toId: userId, isConfirmed: true }
-          ]
-        }
+            { fromId: partnerId, toId: userId, isConfirmed: true },
+          ],
+        },
       });
 
       if (!activeMatch) {
@@ -122,17 +182,17 @@ export class MatchService {
       await Promise.all([
         tx.match.update({
           where: { id: activeMatch.id },
-          data: { status: 'BROKEN' }
+          data: { status: "BROKEN" },
         }),
         tx.chatRoom.updateMany({
           where: { participantOneId, participantTwoId },
-          data: { lastMessage: "Match rompu. Discussion fermée." }
-        })
+          data: { lastMessage: "Match rompu. Discussion fermée." },
+        }),
       ]);
 
-      io.to(`user_${userId}`).to(`user_${partnerId}`).emit('match:broken', {
+      io.to(`user_${userId}`).to(`user_${partnerId}`).emit("match:broken", {
         matchId: activeMatch.id,
-        message: "La relation a pris fin. Vous êtes de nouveau célibataire."
+        message: "La relation a pris fin. Vous êtes de nouveau célibataire.",
       });
 
       return { success: true };
@@ -142,17 +202,17 @@ export class MatchService {
   /**
    * UTILITAIRE : Recherche si un utilisateur possède un match avec le statut 'ACTIVE'
    */
-  static async isUserInCouple(userId: number, txClient: any = null): Promise<boolean> {
+  static async isUserInCouple(
+    userId: number,
+    txClient: any = null,
+  ): Promise<boolean> {
     const tx = txClient || prisma;
     const activeMatch = await tx.match.findFirst({
       where: {
-        status: 'ACTIVE',
+        status: "ACTIVE",
         isConfirmed: true,
-        OR: [
-          { fromId: userId },
-          { toId: userId }
-        ]
-      }
+        OR: [{ fromId: userId }, { toId: userId }],
+      },
     });
     return !!activeMatch;
   }

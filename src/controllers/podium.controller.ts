@@ -28,6 +28,40 @@ export class PodiumController {
   }
 
   /**
+   * Récupérer la Star active du podium pour le spectateur connecté
+   * GET /podiums/current-star
+   */
+  static async getCurrentStarForSpectator(req: Request, res: Response) {
+    try {
+      const spectatorId = req.user?.id; // Injecté par loadContext
+      if (!spectatorId) {
+        return res.status(401).json({ success: false, message: "Non authentifié." });
+      }
+
+      const liveData = await PodiumService.getLiveStarForUser(spectatorId);
+      
+      if (!liveData) {
+        return res.status(200).json({ 
+          success: true, 
+          star: null, 
+          message: "Aucune Star disponible sur votre podium actuel." 
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        roundId: liveData.roundId,
+        timeDue: liveData.timeDue,
+        spot: liveData.spot,
+        star: liveData.star
+      });
+    } catch (error: any) {
+      console.error("[PodiumController.getCurrentStarForSpectator] Error:", error);
+      return res.status(500).json({ success: false, message: error.message });
+    }
+  }
+  
+  /**
    * Étape 1 : Le spectateur clique sur le bouton Danielle et offre un cadeau
    * POST /podiums/danielle/send-gift
    */

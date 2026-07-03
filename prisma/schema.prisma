@@ -413,12 +413,12 @@ model Match {
   isConfirmed Boolean     @default(false)
   type        MatchType   @default(NORMAL)
   status      MatchStatus @default(ACTIVE) // Suivi de l'état de la relation (En couple / Rompu)
-  
+
   // Optionnel : Permet de savoir quel cadeau a déclenché ce match
-  giftId      Int?
-  
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  giftId Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([status])
   @@index([fromId, toId])
@@ -836,14 +836,14 @@ model Company {
 
   links Json?
 
-  isVerified          Boolean @default(false)
-  isSurplaceAvailable Boolean @default(true)
-
-  subscriptions CompanySubscription[]
-  annonces      Annonce[]
-  gifts         Gift[]
-  retraits      Retrait[]
-  userCompanies UserCompany[]
+  isVerified          Boolean               @default(false)
+  isSurplaceAvailable Boolean               @default(true)
+  status              String?
+  subscriptions       CompanySubscription[]
+  annonces            Annonce[]
+  gifts               Gift[]
+  retraits            Retrait[]
+  userCompanies       UserCompany[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

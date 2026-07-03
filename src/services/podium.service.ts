@@ -6,7 +6,46 @@ const SPECTATORS_PER_PODIUM = 100;
 export class PodiumService {
   
   /**
-   * 1. GENERATION INITIALE DES ROUNDS
+   * RÉCUPÉRER LA STAR COURANTE POUR UN SPECTATEUR
+   */
+  static async getLiveStarForUser(userId: number) {
+    // Trouver à quel sous-round de podium le spectateur est actuellement assigné
+    const assignment = await prisma.podiumSpectator.findFirst({
+      where: { userId },
+      include: {
+        podiumStar: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                fullname: true,
+                age: true,
+                location: true,
+                religion: true,
+                passions: true,
+                bio: true,
+                image: true,
+              }
+            }
+          }
+        }
+      }
+    });
+
+    if (!assignment || !assignment.podiumStar.isActive) {
+      return null;
+    }
+
+    return {
+      roundId: assignment.podiumStar.id,
+      timeDue: assignment.podiumStar.timeDue,
+      spot: assignment.podiumStar.spot,
+      star: assignment.podiumStar.user
+    };
+  }
+
+  /**
+   * GENERATION INITIALE DES ROUNDS
    */
   static async generateCountryRounds(country: string, spectatorGender: 'MALE' | 'FEMALE') {
     const starGender = spectatorGender === 'MALE' ? 'FEMALE' : 'MALE';
@@ -33,15 +72,23 @@ export class PodiumService {
 
     const activeSubRounds: { id: number; spot: number; timeDue: Date; userId: number; country: string }[] = [];
     for (let i = 0; i < actualPodiumsCount; i++) {
+      const starId = starIds[i]!;
+
       const subRound = await prisma.podiumStar.create({
         data: {
           podiumId: parentPodium.id,
-          userId: starIds[i]!,
+          userId: starId,
           spot: i + 1,
           timeDue: futureTime,
           country
         }
       });
+
+      await prisma.user.update({
+        where: { id: starId },
+        data: { podiumOccurenceCount: { increment: 1 } }
+      });
+
       activeSubRounds.push(subRound);
     }
 
@@ -66,7 +113,7 @@ export class PodiumService {
   }
 
   /**
-   * 2. RECRUTEMENT DES STARS AVEC EXCLUSION DES GENS EN COUPLE
+   * RECRUTEMENT DES STARS AVEC EXCLUSION DES GENS EN COUPLE
    */
   private static async recruitStars(
     country: string, 
@@ -137,7 +184,7 @@ export class PodiumService {
   }
 
   /**
-   * 3. ACTION : LA STAR ACCEPTE LE CADEAU (DÉLÉGATION AU MATCHSERVICE)
+   * LA STAR ACCEPTE LE CADEAU (DÉLÉGATION AU MATCHSERVICE)
    */
   static async acceptDanielleGift(podiumStarId: number, matchSenderId: number, giftId: number) {
     // A. VERROU CONCURRENTIEL DIRECT SUR LE PODIUM
@@ -215,6 +262,11 @@ export class PodiumService {
         timeDue: currentRound.timeDue,
         country
       }
+    });
+
+    await prisma.user.update({
+      where: { id: replacementStarId },
+      data: { podiumOccurenceCount: { increment: 1 } }
     });
 
     const replacementSpectators = orphanSpectatorIds.map(userId => ({

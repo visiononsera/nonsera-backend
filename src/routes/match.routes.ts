@@ -5,6 +5,7 @@ import { MatchController } from '../controllers/match.controller';
 
 const router = Router();
 
+router.get('/match/:userId',  jwtMiddleware,  loadContext, MatchController.checkCoupleStatus);
 // Gestion des interactions par cadeaux directs
 router.post('/match/gifts/send',  jwtMiddleware,  loadContext, MatchController.sendDirectGift);
 router.post('/match/gifts/accept',  jwtMiddleware,  loadContext, MatchController.acceptDirectGift);

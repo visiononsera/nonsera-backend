@@ -38868,6 +38868,7 @@ export namespace Prisma {
     balance: Decimal | null
     isVerified: boolean | null
     isSurplaceAvailable: boolean | null
+    status: string | null
     createdAt: Date | null
     updatedAt: Date | null
     deletedAt: Date | null
@@ -38892,6 +38893,7 @@ export namespace Prisma {
     balance: Decimal | null
     isVerified: boolean | null
     isSurplaceAvailable: boolean | null
+    status: string | null
     createdAt: Date | null
     updatedAt: Date | null
     deletedAt: Date | null
@@ -38917,6 +38919,7 @@ export namespace Prisma {
     links: number
     isVerified: number
     isSurplaceAvailable: number
+    status: number
     createdAt: number
     updatedAt: number
     deletedAt: number
@@ -38957,6 +38960,7 @@ export namespace Prisma {
     balance?: true
     isVerified?: true
     isSurplaceAvailable?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
     deletedAt?: true
@@ -38981,6 +38985,7 @@ export namespace Prisma {
     balance?: true
     isVerified?: true
     isSurplaceAvailable?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
     deletedAt?: true
@@ -39006,6 +39011,7 @@ export namespace Prisma {
     links?: true
     isVerified?: true
     isSurplaceAvailable?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
     deletedAt?: true
@@ -39118,6 +39124,7 @@ export namespace Prisma {
     links: JsonValue | null
     isVerified: boolean
     isSurplaceAvailable: boolean
+    status: string | null
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
@@ -39162,6 +39169,7 @@ export namespace Prisma {
     links?: boolean
     isVerified?: boolean
     isSurplaceAvailable?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     deletedAt?: boolean
@@ -39193,6 +39201,7 @@ export namespace Prisma {
     links?: boolean
     isVerified?: boolean
     isSurplaceAvailable?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     deletedAt?: boolean
@@ -39218,6 +39227,7 @@ export namespace Prisma {
     links?: boolean
     isVerified?: boolean
     isSurplaceAvailable?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     deletedAt?: boolean
@@ -39243,12 +39253,13 @@ export namespace Prisma {
     links?: boolean
     isVerified?: boolean
     isSurplaceAvailable?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     deletedAt?: boolean
   }
 
-  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "phoneNumber" | "username" | "email" | "category" | "logo" | "bannerPicture" | "description" | "country" | "city" | "latitude" | "longitude" | "mapAddress" | "numeroSocial" | "balance" | "links" | "isVerified" | "isSurplaceAvailable" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["company"]>
+  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "phoneNumber" | "username" | "email" | "category" | "logo" | "bannerPicture" | "description" | "country" | "city" | "latitude" | "longitude" | "mapAddress" | "numeroSocial" | "balance" | "links" | "isVerified" | "isSurplaceAvailable" | "status" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["company"]>
   export type CompanyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     subscriptions?: boolean | Company$subscriptionsArgs<ExtArgs>
     annonces?: boolean | Company$annoncesArgs<ExtArgs>
@@ -39289,6 +39300,7 @@ export namespace Prisma {
       links: Prisma.JsonValue | null
       isVerified: boolean
       isSurplaceAvailable: boolean
+      status: string | null
       createdAt: Date
       updatedAt: Date
       deletedAt: Date | null
@@ -39739,6 +39751,7 @@ export namespace Prisma {
     readonly links: FieldRef<"Company", 'Json'>
     readonly isVerified: FieldRef<"Company", 'Boolean'>
     readonly isSurplaceAvailable: FieldRef<"Company", 'Boolean'>
+    readonly status: FieldRef<"Company", 'String'>
     readonly createdAt: FieldRef<"Company", 'DateTime'>
     readonly updatedAt: FieldRef<"Company", 'DateTime'>
     readonly deletedAt: FieldRef<"Company", 'DateTime'>
@@ -49774,6 +49787,7 @@ export namespace Prisma {
     links: 'links',
     isVerified: 'isVerified',
     isSurplaceAvailable: 'isSurplaceAvailable',
+    status: 'status',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     deletedAt: 'deletedAt'
@@ -52691,6 +52705,7 @@ export namespace Prisma {
     links?: JsonNullableFilter<"Company">
     isVerified?: BoolFilter<"Company"> | boolean
     isSurplaceAvailable?: BoolFilter<"Company"> | boolean
+    status?: StringNullableFilter<"Company"> | string | null
     createdAt?: DateTimeFilter<"Company"> | Date | string
     updatedAt?: DateTimeFilter<"Company"> | Date | string
     deletedAt?: DateTimeNullableFilter<"Company"> | Date | string | null
@@ -52721,6 +52736,7 @@ export namespace Prisma {
     links?: SortOrderInput | SortOrder
     isVerified?: SortOrder
     isSurplaceAvailable?: SortOrder
+    status?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
@@ -52754,6 +52770,7 @@ export namespace Prisma {
     links?: JsonNullableFilter<"Company">
     isVerified?: BoolFilter<"Company"> | boolean
     isSurplaceAvailable?: BoolFilter<"Company"> | boolean
+    status?: StringNullableFilter<"Company"> | string | null
     createdAt?: DateTimeFilter<"Company"> | Date | string
     updatedAt?: DateTimeFilter<"Company"> | Date | string
     deletedAt?: DateTimeNullableFilter<"Company"> | Date | string | null
@@ -52784,6 +52801,7 @@ export namespace Prisma {
     links?: SortOrderInput | SortOrder
     isVerified?: SortOrder
     isSurplaceAvailable?: SortOrder
+    status?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
@@ -52817,6 +52835,7 @@ export namespace Prisma {
     links?: JsonNullableWithAggregatesFilter<"Company">
     isVerified?: BoolWithAggregatesFilter<"Company"> | boolean
     isSurplaceAvailable?: BoolWithAggregatesFilter<"Company"> | boolean
+    status?: StringNullableWithAggregatesFilter<"Company"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Company"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Company"> | Date | string
     deletedAt?: DateTimeNullableWithAggregatesFilter<"Company"> | Date | string | null
@@ -55819,6 +55838,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
+    status?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
@@ -55849,6 +55869,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
+    status?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
@@ -55878,6 +55899,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -55908,6 +55930,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -55938,6 +55961,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
+    status?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
@@ -55962,6 +55986,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -55987,6 +56012,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -58844,6 +58870,7 @@ export namespace Prisma {
     links?: SortOrder
     isVerified?: SortOrder
     isSurplaceAvailable?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrder
@@ -58875,6 +58902,7 @@ export namespace Prisma {
     balance?: SortOrder
     isVerified?: SortOrder
     isSurplaceAvailable?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrder
@@ -58899,6 +58927,7 @@ export namespace Prisma {
     balance?: SortOrder
     isVerified?: SortOrder
     isSurplaceAvailable?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrder
@@ -69453,6 +69482,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
+    status?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
@@ -69482,6 +69512,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
+    status?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
@@ -69701,6 +69732,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -69730,6 +69762,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -69774,6 +69807,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
+    status?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
@@ -69803,6 +69837,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
+    status?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
@@ -70330,6 +70365,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -70359,6 +70395,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -76920,6 +76957,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
+    status?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
@@ -76949,6 +76987,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
+    status?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
@@ -77169,6 +77208,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -77198,6 +77238,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -77226,6 +77267,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
+    status?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
@@ -77255,6 +77297,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
+    status?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
@@ -77323,6 +77366,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -77352,6 +77396,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -77410,6 +77455,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
+    status?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
@@ -77439,6 +77485,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: boolean
     isSurplaceAvailable?: boolean
+    status?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
@@ -77483,6 +77530,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -77512,6 +77560,7 @@ export namespace Prisma {
     links?: NullableJsonNullValueInput | InputJsonValue
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     isSurplaceAvailable?: BoolFieldUpdateOperationsInput | boolean
+    status?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
