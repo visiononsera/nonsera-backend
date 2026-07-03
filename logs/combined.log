@@ -360,3 +360,5 @@
 {"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 08:41:31"}
 {"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 08:43:13"}
 {"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 08:43:13"}
+{"level":"info","message":"[development] Serveur unifié à l'écoute sur le port : 8080","timestamp":"2026-07-03 08:45:10"}
+{"level":"info","message":"Swagger UI disponible sur http:// 192.168.17.151:8080/api-docs","timestamp":"2026-07-03 08:45:10"}
