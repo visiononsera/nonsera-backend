@@ -227,6 +227,7 @@ exports.Prisma.MatchScalarFieldEnum = {
   type: 'type',
   status: 'status',
   giftId: 'giftId',
+  purchaseId: 'purchaseId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -309,11 +310,13 @@ exports.Prisma.AnnonceScalarFieldEnum = {
 
 exports.Prisma.PurchaseScalarFieldEnum = {
   id: 'id',
-  annonceId: 'annonceId',
   quantity: 'quantity',
+  totalPrice: 'totalPrice',
+  status: 'status',
+  annonceId: 'annonceId',
+  giftId: 'giftId',
   senderId: 'senderId',
   receiverId: 'receiverId',
-  status: 'status',
   deliveryAddress: 'deliveryAddress',
   recipientFullName: 'recipientFullName',
   createdAt: 'createdAt',

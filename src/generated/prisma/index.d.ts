@@ -4845,10 +4845,14 @@ export namespace Prisma {
 
   export type GiftCountOutputType = {
     preferredByUsers: number
+    matches: number
+    purchases: number
   }
 
   export type GiftCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     preferredByUsers?: boolean | GiftCountOutputTypeCountPreferredByUsersArgs
+    matches?: boolean | GiftCountOutputTypeCountMatchesArgs
+    purchases?: boolean | GiftCountOutputTypeCountPurchasesArgs
   }
 
   // Custom InputTypes
@@ -4867,6 +4871,20 @@ export namespace Prisma {
    */
   export type GiftCountOutputTypeCountPreferredByUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
+  }
+
+  /**
+   * GiftCountOutputType without action
+   */
+  export type GiftCountOutputTypeCountMatchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MatchWhereInput
+  }
+
+  /**
+   * GiftCountOutputType without action
+   */
+  export type GiftCountOutputTypeCountPurchasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PurchaseWhereInput
   }
 
 
@@ -4943,6 +4961,37 @@ export namespace Prisma {
    */
   export type AnnonceCountOutputTypeCountTargetUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
+  }
+
+
+  /**
+   * Count Type PurchaseCountOutputType
+   */
+
+  export type PurchaseCountOutputType = {
+    matches: number
+  }
+
+  export type PurchaseCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    matches?: boolean | PurchaseCountOutputTypeCountMatchesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PurchaseCountOutputType without action
+   */
+  export type PurchaseCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PurchaseCountOutputType
+     */
+    select?: PurchaseCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PurchaseCountOutputType without action
+   */
+  export type PurchaseCountOutputTypeCountMatchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MatchWhereInput
   }
 
 
@@ -13365,6 +13414,7 @@ export namespace Prisma {
     fromId: number | null
     toId: number | null
     giftId: number | null
+    purchaseId: number | null
   }
 
   export type MatchSumAggregateOutputType = {
@@ -13372,6 +13422,7 @@ export namespace Prisma {
     fromId: number | null
     toId: number | null
     giftId: number | null
+    purchaseId: number | null
   }
 
   export type MatchMinAggregateOutputType = {
@@ -13382,6 +13433,7 @@ export namespace Prisma {
     type: $Enums.MatchType | null
     status: $Enums.MatchStatus | null
     giftId: number | null
+    purchaseId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -13394,6 +13446,7 @@ export namespace Prisma {
     type: $Enums.MatchType | null
     status: $Enums.MatchStatus | null
     giftId: number | null
+    purchaseId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -13406,6 +13459,7 @@ export namespace Prisma {
     type: number
     status: number
     giftId: number
+    purchaseId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -13417,6 +13471,7 @@ export namespace Prisma {
     fromId?: true
     toId?: true
     giftId?: true
+    purchaseId?: true
   }
 
   export type MatchSumAggregateInputType = {
@@ -13424,6 +13479,7 @@ export namespace Prisma {
     fromId?: true
     toId?: true
     giftId?: true
+    purchaseId?: true
   }
 
   export type MatchMinAggregateInputType = {
@@ -13434,6 +13490,7 @@ export namespace Prisma {
     type?: true
     status?: true
     giftId?: true
+    purchaseId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -13446,6 +13503,7 @@ export namespace Prisma {
     type?: true
     status?: true
     giftId?: true
+    purchaseId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -13458,6 +13516,7 @@ export namespace Prisma {
     type?: true
     status?: true
     giftId?: true
+    purchaseId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -13557,6 +13616,7 @@ export namespace Prisma {
     type: $Enums.MatchType
     status: $Enums.MatchStatus
     giftId: number | null
+    purchaseId: number | null
     createdAt: Date
     updatedAt: Date
     _count: MatchCountAggregateOutputType | null
@@ -13588,10 +13648,13 @@ export namespace Prisma {
     type?: boolean
     status?: boolean
     giftId?: boolean
+    purchaseId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     from?: boolean | UserDefaultArgs<ExtArgs>
     to?: boolean | UserDefaultArgs<ExtArgs>
+    gift?: boolean | Match$giftArgs<ExtArgs>
+    purchase?: boolean | Match$purchaseArgs<ExtArgs>
   }, ExtArgs["result"]["match"]>
 
   export type MatchSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -13602,10 +13665,13 @@ export namespace Prisma {
     type?: boolean
     status?: boolean
     giftId?: boolean
+    purchaseId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     from?: boolean | UserDefaultArgs<ExtArgs>
     to?: boolean | UserDefaultArgs<ExtArgs>
+    gift?: boolean | Match$giftArgs<ExtArgs>
+    purchase?: boolean | Match$purchaseArgs<ExtArgs>
   }, ExtArgs["result"]["match"]>
 
   export type MatchSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -13616,10 +13682,13 @@ export namespace Prisma {
     type?: boolean
     status?: boolean
     giftId?: boolean
+    purchaseId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     from?: boolean | UserDefaultArgs<ExtArgs>
     to?: boolean | UserDefaultArgs<ExtArgs>
+    gift?: boolean | Match$giftArgs<ExtArgs>
+    purchase?: boolean | Match$purchaseArgs<ExtArgs>
   }, ExtArgs["result"]["match"]>
 
   export type MatchSelectScalar = {
@@ -13630,22 +13699,29 @@ export namespace Prisma {
     type?: boolean
     status?: boolean
     giftId?: boolean
+    purchaseId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type MatchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fromId" | "toId" | "isConfirmed" | "type" | "status" | "giftId" | "createdAt" | "updatedAt", ExtArgs["result"]["match"]>
+  export type MatchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fromId" | "toId" | "isConfirmed" | "type" | "status" | "giftId" | "purchaseId" | "createdAt" | "updatedAt", ExtArgs["result"]["match"]>
   export type MatchInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     from?: boolean | UserDefaultArgs<ExtArgs>
     to?: boolean | UserDefaultArgs<ExtArgs>
+    gift?: boolean | Match$giftArgs<ExtArgs>
+    purchase?: boolean | Match$purchaseArgs<ExtArgs>
   }
   export type MatchIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     from?: boolean | UserDefaultArgs<ExtArgs>
     to?: boolean | UserDefaultArgs<ExtArgs>
+    gift?: boolean | Match$giftArgs<ExtArgs>
+    purchase?: boolean | Match$purchaseArgs<ExtArgs>
   }
   export type MatchIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     from?: boolean | UserDefaultArgs<ExtArgs>
     to?: boolean | UserDefaultArgs<ExtArgs>
+    gift?: boolean | Match$giftArgs<ExtArgs>
+    purchase?: boolean | Match$purchaseArgs<ExtArgs>
   }
 
   export type $MatchPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -13653,6 +13729,8 @@ export namespace Prisma {
     objects: {
       from: Prisma.$UserPayload<ExtArgs>
       to: Prisma.$UserPayload<ExtArgs>
+      gift: Prisma.$GiftPayload<ExtArgs> | null
+      purchase: Prisma.$PurchasePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -13662,6 +13740,7 @@ export namespace Prisma {
       type: $Enums.MatchType
       status: $Enums.MatchStatus
       giftId: number | null
+      purchaseId: number | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["match"]>
@@ -14060,6 +14139,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     from<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     to<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    gift<T extends Match$giftArgs<ExtArgs> = {}>(args?: Subset<T, Match$giftArgs<ExtArgs>>): Prisma__GiftClient<$Result.GetResult<Prisma.$GiftPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    purchase<T extends Match$purchaseArgs<ExtArgs> = {}>(args?: Subset<T, Match$purchaseArgs<ExtArgs>>): Prisma__PurchaseClient<$Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14096,6 +14177,7 @@ export namespace Prisma {
     readonly type: FieldRef<"Match", 'MatchType'>
     readonly status: FieldRef<"Match", 'MatchStatus'>
     readonly giftId: FieldRef<"Match", 'Int'>
+    readonly purchaseId: FieldRef<"Match", 'Int'>
     readonly createdAt: FieldRef<"Match", 'DateTime'>
     readonly updatedAt: FieldRef<"Match", 'DateTime'>
   }
@@ -14496,6 +14578,44 @@ export namespace Prisma {
      * Limit how many Matches to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Match.gift
+   */
+  export type Match$giftArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Gift
+     */
+    select?: GiftSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Gift
+     */
+    omit?: GiftOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GiftInclude<ExtArgs> | null
+    where?: GiftWhereInput
+  }
+
+  /**
+   * Match.purchase
+   */
+  export type Match$purchaseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Purchase
+     */
+    select?: PurchaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Purchase
+     */
+    omit?: PurchaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PurchaseInclude<ExtArgs> | null
+    where?: PurchaseWhereInput
   }
 
   /**
@@ -18322,6 +18442,8 @@ export namespace Prisma {
     updatedAt?: boolean
     company?: boolean | Gift$companyArgs<ExtArgs>
     preferredByUsers?: boolean | Gift$preferredByUsersArgs<ExtArgs>
+    matches?: boolean | Gift$matchesArgs<ExtArgs>
+    purchases?: boolean | Gift$purchasesArgs<ExtArgs>
     _count?: boolean | GiftCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["gift"]>
 
@@ -18376,6 +18498,8 @@ export namespace Prisma {
   export type GiftInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | Gift$companyArgs<ExtArgs>
     preferredByUsers?: boolean | Gift$preferredByUsersArgs<ExtArgs>
+    matches?: boolean | Gift$matchesArgs<ExtArgs>
+    purchases?: boolean | Gift$purchasesArgs<ExtArgs>
     _count?: boolean | GiftCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type GiftIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -18390,6 +18514,8 @@ export namespace Prisma {
     objects: {
       company: Prisma.$CompanyPayload<ExtArgs> | null
       preferredByUsers: Prisma.$UserPayload<ExtArgs>[]
+      matches: Prisma.$MatchPayload<ExtArgs>[]
+      purchases: Prisma.$PurchasePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -18800,6 +18926,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     company<T extends Gift$companyArgs<ExtArgs> = {}>(args?: Subset<T, Gift$companyArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     preferredByUsers<T extends Gift$preferredByUsersArgs<ExtArgs> = {}>(args?: Subset<T, Gift$preferredByUsersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    matches<T extends Gift$matchesArgs<ExtArgs> = {}>(args?: Subset<T, Gift$matchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    purchases<T extends Gift$purchasesArgs<ExtArgs> = {}>(args?: Subset<T, Gift$purchasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -19282,6 +19410,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * Gift.matches
+   */
+  export type Gift$matchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Match
+     */
+    select?: MatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Match
+     */
+    omit?: MatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatchInclude<ExtArgs> | null
+    where?: MatchWhereInput
+    orderBy?: MatchOrderByWithRelationInput | MatchOrderByWithRelationInput[]
+    cursor?: MatchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MatchScalarFieldEnum | MatchScalarFieldEnum[]
+  }
+
+  /**
+   * Gift.purchases
+   */
+  export type Gift$purchasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Purchase
+     */
+    select?: PurchaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Purchase
+     */
+    omit?: PurchaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PurchaseInclude<ExtArgs> | null
+    where?: PurchaseWhereInput
+    orderBy?: PurchaseOrderByWithRelationInput | PurchaseOrderByWithRelationInput[]
+    cursor?: PurchaseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PurchaseScalarFieldEnum | PurchaseScalarFieldEnum[]
   }
 
   /**
@@ -20840,27 +21016,33 @@ export namespace Prisma {
 
   export type PurchaseAvgAggregateOutputType = {
     id: number | null
-    annonceId: number | null
     quantity: number | null
+    totalPrice: Decimal | null
+    annonceId: number | null
+    giftId: number | null
     senderId: number | null
     receiverId: number | null
   }
 
   export type PurchaseSumAggregateOutputType = {
     id: number | null
-    annonceId: number | null
     quantity: number | null
+    totalPrice: Decimal | null
+    annonceId: number | null
+    giftId: number | null
     senderId: number | null
     receiverId: number | null
   }
 
   export type PurchaseMinAggregateOutputType = {
     id: number | null
-    annonceId: number | null
     quantity: number | null
+    totalPrice: Decimal | null
+    status: $Enums.PurchaseStatus | null
+    annonceId: number | null
+    giftId: number | null
     senderId: number | null
     receiverId: number | null
-    status: $Enums.PurchaseStatus | null
     deliveryAddress: string | null
     recipientFullName: string | null
     createdAt: Date | null
@@ -20869,11 +21051,13 @@ export namespace Prisma {
 
   export type PurchaseMaxAggregateOutputType = {
     id: number | null
-    annonceId: number | null
     quantity: number | null
+    totalPrice: Decimal | null
+    status: $Enums.PurchaseStatus | null
+    annonceId: number | null
+    giftId: number | null
     senderId: number | null
     receiverId: number | null
-    status: $Enums.PurchaseStatus | null
     deliveryAddress: string | null
     recipientFullName: string | null
     createdAt: Date | null
@@ -20882,11 +21066,13 @@ export namespace Prisma {
 
   export type PurchaseCountAggregateOutputType = {
     id: number
-    annonceId: number
     quantity: number
+    totalPrice: number
+    status: number
+    annonceId: number
+    giftId: number
     senderId: number
     receiverId: number
-    status: number
     deliveryAddress: number
     recipientFullName: number
     createdAt: number
@@ -20897,27 +21083,33 @@ export namespace Prisma {
 
   export type PurchaseAvgAggregateInputType = {
     id?: true
-    annonceId?: true
     quantity?: true
+    totalPrice?: true
+    annonceId?: true
+    giftId?: true
     senderId?: true
     receiverId?: true
   }
 
   export type PurchaseSumAggregateInputType = {
     id?: true
-    annonceId?: true
     quantity?: true
+    totalPrice?: true
+    annonceId?: true
+    giftId?: true
     senderId?: true
     receiverId?: true
   }
 
   export type PurchaseMinAggregateInputType = {
     id?: true
-    annonceId?: true
     quantity?: true
+    totalPrice?: true
+    status?: true
+    annonceId?: true
+    giftId?: true
     senderId?: true
     receiverId?: true
-    status?: true
     deliveryAddress?: true
     recipientFullName?: true
     createdAt?: true
@@ -20926,11 +21118,13 @@ export namespace Prisma {
 
   export type PurchaseMaxAggregateInputType = {
     id?: true
-    annonceId?: true
     quantity?: true
+    totalPrice?: true
+    status?: true
+    annonceId?: true
+    giftId?: true
     senderId?: true
     receiverId?: true
-    status?: true
     deliveryAddress?: true
     recipientFullName?: true
     createdAt?: true
@@ -20939,11 +21133,13 @@ export namespace Prisma {
 
   export type PurchaseCountAggregateInputType = {
     id?: true
-    annonceId?: true
     quantity?: true
+    totalPrice?: true
+    status?: true
+    annonceId?: true
+    giftId?: true
     senderId?: true
     receiverId?: true
-    status?: true
     deliveryAddress?: true
     recipientFullName?: true
     createdAt?: true
@@ -21039,11 +21235,13 @@ export namespace Prisma {
 
   export type PurchaseGroupByOutputType = {
     id: number
-    annonceId: number
     quantity: number
+    totalPrice: Decimal
+    status: $Enums.PurchaseStatus
+    annonceId: number | null
+    giftId: number | null
     senderId: number
     receiverId: number
-    status: $Enums.PurchaseStatus
     deliveryAddress: string | null
     recipientFullName: string | null
     createdAt: Date
@@ -21071,78 +21269,96 @@ export namespace Prisma {
 
   export type PurchaseSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    annonceId?: boolean
     quantity?: boolean
+    totalPrice?: boolean
+    status?: boolean
+    annonceId?: boolean
+    giftId?: boolean
     senderId?: boolean
     receiverId?: boolean
-    status?: boolean
     deliveryAddress?: boolean
     recipientFullName?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    annonce?: boolean | AnnonceDefaultArgs<ExtArgs>
+    annonce?: boolean | Purchase$annonceArgs<ExtArgs>
+    gift?: boolean | Purchase$giftArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
     receiver?: boolean | UserDefaultArgs<ExtArgs>
+    matches?: boolean | Purchase$matchesArgs<ExtArgs>
+    _count?: boolean | PurchaseCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["purchase"]>
 
   export type PurchaseSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    annonceId?: boolean
     quantity?: boolean
+    totalPrice?: boolean
+    status?: boolean
+    annonceId?: boolean
+    giftId?: boolean
     senderId?: boolean
     receiverId?: boolean
-    status?: boolean
     deliveryAddress?: boolean
     recipientFullName?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    annonce?: boolean | AnnonceDefaultArgs<ExtArgs>
+    annonce?: boolean | Purchase$annonceArgs<ExtArgs>
+    gift?: boolean | Purchase$giftArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
     receiver?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["purchase"]>
 
   export type PurchaseSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    annonceId?: boolean
     quantity?: boolean
+    totalPrice?: boolean
+    status?: boolean
+    annonceId?: boolean
+    giftId?: boolean
     senderId?: boolean
     receiverId?: boolean
-    status?: boolean
     deliveryAddress?: boolean
     recipientFullName?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    annonce?: boolean | AnnonceDefaultArgs<ExtArgs>
+    annonce?: boolean | Purchase$annonceArgs<ExtArgs>
+    gift?: boolean | Purchase$giftArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
     receiver?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["purchase"]>
 
   export type PurchaseSelectScalar = {
     id?: boolean
-    annonceId?: boolean
     quantity?: boolean
+    totalPrice?: boolean
+    status?: boolean
+    annonceId?: boolean
+    giftId?: boolean
     senderId?: boolean
     receiverId?: boolean
-    status?: boolean
     deliveryAddress?: boolean
     recipientFullName?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type PurchaseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "annonceId" | "quantity" | "senderId" | "receiverId" | "status" | "deliveryAddress" | "recipientFullName" | "createdAt" | "updatedAt", ExtArgs["result"]["purchase"]>
+  export type PurchaseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "quantity" | "totalPrice" | "status" | "annonceId" | "giftId" | "senderId" | "receiverId" | "deliveryAddress" | "recipientFullName" | "createdAt" | "updatedAt", ExtArgs["result"]["purchase"]>
   export type PurchaseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    annonce?: boolean | AnnonceDefaultArgs<ExtArgs>
+    annonce?: boolean | Purchase$annonceArgs<ExtArgs>
+    gift?: boolean | Purchase$giftArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
     receiver?: boolean | UserDefaultArgs<ExtArgs>
+    matches?: boolean | Purchase$matchesArgs<ExtArgs>
+    _count?: boolean | PurchaseCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PurchaseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    annonce?: boolean | AnnonceDefaultArgs<ExtArgs>
+    annonce?: boolean | Purchase$annonceArgs<ExtArgs>
+    gift?: boolean | Purchase$giftArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
     receiver?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type PurchaseIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    annonce?: boolean | AnnonceDefaultArgs<ExtArgs>
+    annonce?: boolean | Purchase$annonceArgs<ExtArgs>
+    gift?: boolean | Purchase$giftArgs<ExtArgs>
     sender?: boolean | UserDefaultArgs<ExtArgs>
     receiver?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -21150,17 +21366,21 @@ export namespace Prisma {
   export type $PurchasePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Purchase"
     objects: {
-      annonce: Prisma.$AnnoncePayload<ExtArgs>
+      annonce: Prisma.$AnnoncePayload<ExtArgs> | null
+      gift: Prisma.$GiftPayload<ExtArgs> | null
       sender: Prisma.$UserPayload<ExtArgs>
       receiver: Prisma.$UserPayload<ExtArgs>
+      matches: Prisma.$MatchPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      annonceId: number
       quantity: number
+      totalPrice: Prisma.Decimal
+      status: $Enums.PurchaseStatus
+      annonceId: number | null
+      giftId: number | null
       senderId: number
       receiverId: number
-      status: $Enums.PurchaseStatus
       deliveryAddress: string | null
       recipientFullName: string | null
       createdAt: Date
@@ -21559,9 +21779,11 @@ export namespace Prisma {
    */
   export interface Prisma__PurchaseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    annonce<T extends AnnonceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AnnonceDefaultArgs<ExtArgs>>): Prisma__AnnonceClient<$Result.GetResult<Prisma.$AnnoncePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    annonce<T extends Purchase$annonceArgs<ExtArgs> = {}>(args?: Subset<T, Purchase$annonceArgs<ExtArgs>>): Prisma__AnnonceClient<$Result.GetResult<Prisma.$AnnoncePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    gift<T extends Purchase$giftArgs<ExtArgs> = {}>(args?: Subset<T, Purchase$giftArgs<ExtArgs>>): Prisma__GiftClient<$Result.GetResult<Prisma.$GiftPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     sender<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     receiver<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    matches<T extends Purchase$matchesArgs<ExtArgs> = {}>(args?: Subset<T, Purchase$matchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -21592,11 +21814,13 @@ export namespace Prisma {
    */
   interface PurchaseFieldRefs {
     readonly id: FieldRef<"Purchase", 'Int'>
-    readonly annonceId: FieldRef<"Purchase", 'Int'>
     readonly quantity: FieldRef<"Purchase", 'Int'>
+    readonly totalPrice: FieldRef<"Purchase", 'Decimal'>
+    readonly status: FieldRef<"Purchase", 'PurchaseStatus'>
+    readonly annonceId: FieldRef<"Purchase", 'Int'>
+    readonly giftId: FieldRef<"Purchase", 'Int'>
     readonly senderId: FieldRef<"Purchase", 'Int'>
     readonly receiverId: FieldRef<"Purchase", 'Int'>
-    readonly status: FieldRef<"Purchase", 'PurchaseStatus'>
     readonly deliveryAddress: FieldRef<"Purchase", 'String'>
     readonly recipientFullName: FieldRef<"Purchase", 'String'>
     readonly createdAt: FieldRef<"Purchase", 'DateTime'>
@@ -21999,6 +22223,68 @@ export namespace Prisma {
      * Limit how many Purchases to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Purchase.annonce
+   */
+  export type Purchase$annonceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Annonce
+     */
+    select?: AnnonceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Annonce
+     */
+    omit?: AnnonceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnnonceInclude<ExtArgs> | null
+    where?: AnnonceWhereInput
+  }
+
+  /**
+   * Purchase.gift
+   */
+  export type Purchase$giftArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Gift
+     */
+    select?: GiftSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Gift
+     */
+    omit?: GiftOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GiftInclude<ExtArgs> | null
+    where?: GiftWhereInput
+  }
+
+  /**
+   * Purchase.matches
+   */
+  export type Purchase$matchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Match
+     */
+    select?: MatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Match
+     */
+    omit?: MatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MatchInclude<ExtArgs> | null
+    where?: MatchWhereInput
+    orderBy?: MatchOrderByWithRelationInput | MatchOrderByWithRelationInput[]
+    cursor?: MatchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MatchScalarFieldEnum | MatchScalarFieldEnum[]
   }
 
   /**
@@ -49471,6 +49757,7 @@ export namespace Prisma {
     type: 'type',
     status: 'status',
     giftId: 'giftId',
+    purchaseId: 'purchaseId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -49571,11 +49858,13 @@ export namespace Prisma {
 
   export const PurchaseScalarFieldEnum: {
     id: 'id',
-    annonceId: 'annonceId',
     quantity: 'quantity',
+    totalPrice: 'totalPrice',
+    status: 'status',
+    annonceId: 'annonceId',
+    giftId: 'giftId',
     senderId: 'senderId',
     receiverId: 'receiverId',
-    status: 'status',
     deliveryAddress: 'deliveryAddress',
     recipientFullName: 'recipientFullName',
     createdAt: 'createdAt',
@@ -51065,10 +51354,13 @@ export namespace Prisma {
     type?: EnumMatchTypeFilter<"Match"> | $Enums.MatchType
     status?: EnumMatchStatusFilter<"Match"> | $Enums.MatchStatus
     giftId?: IntNullableFilter<"Match"> | number | null
+    purchaseId?: IntNullableFilter<"Match"> | number | null
     createdAt?: DateTimeFilter<"Match"> | Date | string
     updatedAt?: DateTimeFilter<"Match"> | Date | string
     from?: XOR<UserScalarRelationFilter, UserWhereInput>
     to?: XOR<UserScalarRelationFilter, UserWhereInput>
+    gift?: XOR<GiftNullableScalarRelationFilter, GiftWhereInput> | null
+    purchase?: XOR<PurchaseNullableScalarRelationFilter, PurchaseWhereInput> | null
   }
 
   export type MatchOrderByWithRelationInput = {
@@ -51079,10 +51371,13 @@ export namespace Prisma {
     type?: SortOrder
     status?: SortOrder
     giftId?: SortOrderInput | SortOrder
+    purchaseId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     from?: UserOrderByWithRelationInput
     to?: UserOrderByWithRelationInput
+    gift?: GiftOrderByWithRelationInput
+    purchase?: PurchaseOrderByWithRelationInput
   }
 
   export type MatchWhereUniqueInput = Prisma.AtLeast<{
@@ -51096,10 +51391,13 @@ export namespace Prisma {
     type?: EnumMatchTypeFilter<"Match"> | $Enums.MatchType
     status?: EnumMatchStatusFilter<"Match"> | $Enums.MatchStatus
     giftId?: IntNullableFilter<"Match"> | number | null
+    purchaseId?: IntNullableFilter<"Match"> | number | null
     createdAt?: DateTimeFilter<"Match"> | Date | string
     updatedAt?: DateTimeFilter<"Match"> | Date | string
     from?: XOR<UserScalarRelationFilter, UserWhereInput>
     to?: XOR<UserScalarRelationFilter, UserWhereInput>
+    gift?: XOR<GiftNullableScalarRelationFilter, GiftWhereInput> | null
+    purchase?: XOR<PurchaseNullableScalarRelationFilter, PurchaseWhereInput> | null
   }, "id">
 
   export type MatchOrderByWithAggregationInput = {
@@ -51110,6 +51408,7 @@ export namespace Prisma {
     type?: SortOrder
     status?: SortOrder
     giftId?: SortOrderInput | SortOrder
+    purchaseId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: MatchCountOrderByAggregateInput
@@ -51130,6 +51429,7 @@ export namespace Prisma {
     type?: EnumMatchTypeWithAggregatesFilter<"Match"> | $Enums.MatchType
     status?: EnumMatchStatusWithAggregatesFilter<"Match"> | $Enums.MatchStatus
     giftId?: IntNullableWithAggregatesFilter<"Match"> | number | null
+    purchaseId?: IntNullableWithAggregatesFilter<"Match"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Match"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Match"> | Date | string
   }
@@ -51396,6 +51696,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Gift"> | Date | string
     company?: XOR<CompanyNullableScalarRelationFilter, CompanyWhereInput> | null
     preferredByUsers?: UserListRelationFilter
+    matches?: MatchListRelationFilter
+    purchases?: PurchaseListRelationFilter
   }
 
   export type GiftOrderByWithRelationInput = {
@@ -51413,6 +51715,8 @@ export namespace Prisma {
     updatedAt?: SortOrder
     company?: CompanyOrderByWithRelationInput
     preferredByUsers?: UserOrderByRelationAggregateInput
+    matches?: MatchOrderByRelationAggregateInput
+    purchases?: PurchaseOrderByRelationAggregateInput
   }
 
   export type GiftWhereUniqueInput = Prisma.AtLeast<{
@@ -51433,6 +51737,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Gift"> | Date | string
     company?: XOR<CompanyNullableScalarRelationFilter, CompanyWhereInput> | null
     preferredByUsers?: UserListRelationFilter
+    matches?: MatchListRelationFilter
+    purchases?: PurchaseListRelationFilter
   }, "id">
 
   export type GiftOrderByWithAggregationInput = {
@@ -51638,34 +51944,42 @@ export namespace Prisma {
     OR?: PurchaseWhereInput[]
     NOT?: PurchaseWhereInput | PurchaseWhereInput[]
     id?: IntFilter<"Purchase"> | number
-    annonceId?: IntFilter<"Purchase"> | number
     quantity?: IntFilter<"Purchase"> | number
+    totalPrice?: DecimalFilter<"Purchase"> | Decimal | DecimalJsLike | number | string
+    status?: EnumPurchaseStatusFilter<"Purchase"> | $Enums.PurchaseStatus
+    annonceId?: IntNullableFilter<"Purchase"> | number | null
+    giftId?: IntNullableFilter<"Purchase"> | number | null
     senderId?: IntFilter<"Purchase"> | number
     receiverId?: IntFilter<"Purchase"> | number
-    status?: EnumPurchaseStatusFilter<"Purchase"> | $Enums.PurchaseStatus
     deliveryAddress?: StringNullableFilter<"Purchase"> | string | null
     recipientFullName?: StringNullableFilter<"Purchase"> | string | null
     createdAt?: DateTimeFilter<"Purchase"> | Date | string
     updatedAt?: DateTimeFilter<"Purchase"> | Date | string
-    annonce?: XOR<AnnonceScalarRelationFilter, AnnonceWhereInput>
+    annonce?: XOR<AnnonceNullableScalarRelationFilter, AnnonceWhereInput> | null
+    gift?: XOR<GiftNullableScalarRelationFilter, GiftWhereInput> | null
     sender?: XOR<UserScalarRelationFilter, UserWhereInput>
     receiver?: XOR<UserScalarRelationFilter, UserWhereInput>
+    matches?: MatchListRelationFilter
   }
 
   export type PurchaseOrderByWithRelationInput = {
     id?: SortOrder
-    annonceId?: SortOrder
     quantity?: SortOrder
+    totalPrice?: SortOrder
+    status?: SortOrder
+    annonceId?: SortOrderInput | SortOrder
+    giftId?: SortOrderInput | SortOrder
     senderId?: SortOrder
     receiverId?: SortOrder
-    status?: SortOrder
     deliveryAddress?: SortOrderInput | SortOrder
     recipientFullName?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     annonce?: AnnonceOrderByWithRelationInput
+    gift?: GiftOrderByWithRelationInput
     sender?: UserOrderByWithRelationInput
     receiver?: UserOrderByWithRelationInput
+    matches?: MatchOrderByRelationAggregateInput
   }
 
   export type PurchaseWhereUniqueInput = Prisma.AtLeast<{
@@ -51673,27 +51987,33 @@ export namespace Prisma {
     AND?: PurchaseWhereInput | PurchaseWhereInput[]
     OR?: PurchaseWhereInput[]
     NOT?: PurchaseWhereInput | PurchaseWhereInput[]
-    annonceId?: IntFilter<"Purchase"> | number
     quantity?: IntFilter<"Purchase"> | number
+    totalPrice?: DecimalFilter<"Purchase"> | Decimal | DecimalJsLike | number | string
+    status?: EnumPurchaseStatusFilter<"Purchase"> | $Enums.PurchaseStatus
+    annonceId?: IntNullableFilter<"Purchase"> | number | null
+    giftId?: IntNullableFilter<"Purchase"> | number | null
     senderId?: IntFilter<"Purchase"> | number
     receiverId?: IntFilter<"Purchase"> | number
-    status?: EnumPurchaseStatusFilter<"Purchase"> | $Enums.PurchaseStatus
     deliveryAddress?: StringNullableFilter<"Purchase"> | string | null
     recipientFullName?: StringNullableFilter<"Purchase"> | string | null
     createdAt?: DateTimeFilter<"Purchase"> | Date | string
     updatedAt?: DateTimeFilter<"Purchase"> | Date | string
-    annonce?: XOR<AnnonceScalarRelationFilter, AnnonceWhereInput>
+    annonce?: XOR<AnnonceNullableScalarRelationFilter, AnnonceWhereInput> | null
+    gift?: XOR<GiftNullableScalarRelationFilter, GiftWhereInput> | null
     sender?: XOR<UserScalarRelationFilter, UserWhereInput>
     receiver?: XOR<UserScalarRelationFilter, UserWhereInput>
+    matches?: MatchListRelationFilter
   }, "id">
 
   export type PurchaseOrderByWithAggregationInput = {
     id?: SortOrder
-    annonceId?: SortOrder
     quantity?: SortOrder
+    totalPrice?: SortOrder
+    status?: SortOrder
+    annonceId?: SortOrderInput | SortOrder
+    giftId?: SortOrderInput | SortOrder
     senderId?: SortOrder
     receiverId?: SortOrder
-    status?: SortOrder
     deliveryAddress?: SortOrderInput | SortOrder
     recipientFullName?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -51710,11 +52030,13 @@ export namespace Prisma {
     OR?: PurchaseScalarWhereWithAggregatesInput[]
     NOT?: PurchaseScalarWhereWithAggregatesInput | PurchaseScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Purchase"> | number
-    annonceId?: IntWithAggregatesFilter<"Purchase"> | number
     quantity?: IntWithAggregatesFilter<"Purchase"> | number
+    totalPrice?: DecimalWithAggregatesFilter<"Purchase"> | Decimal | DecimalJsLike | number | string
+    status?: EnumPurchaseStatusWithAggregatesFilter<"Purchase"> | $Enums.PurchaseStatus
+    annonceId?: IntNullableWithAggregatesFilter<"Purchase"> | number | null
+    giftId?: IntNullableWithAggregatesFilter<"Purchase"> | number | null
     senderId?: IntWithAggregatesFilter<"Purchase"> | number
     receiverId?: IntWithAggregatesFilter<"Purchase"> | number
-    status?: EnumPurchaseStatusWithAggregatesFilter<"Purchase"> | $Enums.PurchaseStatus
     deliveryAddress?: StringNullableWithAggregatesFilter<"Purchase"> | string | null
     recipientFullName?: StringNullableWithAggregatesFilter<"Purchase"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Purchase"> | Date | string
@@ -54210,11 +54532,12 @@ export namespace Prisma {
     isConfirmed?: boolean
     type?: $Enums.MatchType
     status?: $Enums.MatchStatus
-    giftId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     from: UserCreateNestedOneWithoutSentMatchesInput
     to: UserCreateNestedOneWithoutReceivedMatchesInput
+    gift?: GiftCreateNestedOneWithoutMatchesInput
+    purchase?: PurchaseCreateNestedOneWithoutMatchesInput
   }
 
   export type MatchUncheckedCreateInput = {
@@ -54225,6 +54548,7 @@ export namespace Prisma {
     type?: $Enums.MatchType
     status?: $Enums.MatchStatus
     giftId?: number | null
+    purchaseId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -54233,11 +54557,12 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
     status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
-    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     from?: UserUpdateOneRequiredWithoutSentMatchesNestedInput
     to?: UserUpdateOneRequiredWithoutReceivedMatchesNestedInput
+    gift?: GiftUpdateOneWithoutMatchesNestedInput
+    purchase?: PurchaseUpdateOneWithoutMatchesNestedInput
   }
 
   export type MatchUncheckedUpdateInput = {
@@ -54248,6 +54573,7 @@ export namespace Prisma {
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
     status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
     giftId?: NullableIntFieldUpdateOperationsInput | number | null
+    purchaseId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -54260,6 +54586,7 @@ export namespace Prisma {
     type?: $Enums.MatchType
     status?: $Enums.MatchStatus
     giftId?: number | null
+    purchaseId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -54268,7 +54595,6 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
     status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
-    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -54281,6 +54607,7 @@ export namespace Prisma {
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
     status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
     giftId?: NullableIntFieldUpdateOperationsInput | number | null
+    purchaseId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -54539,6 +54866,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     company?: CompanyCreateNestedOneWithoutGiftsInput
     preferredByUsers?: UserCreateNestedManyWithoutPreferredGiftInput
+    matches?: MatchCreateNestedManyWithoutGiftInput
+    purchases?: PurchaseCreateNestedManyWithoutGiftInput
   }
 
   export type GiftUncheckedCreateInput = {
@@ -54555,6 +54884,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     preferredByUsers?: UserUncheckedCreateNestedManyWithoutPreferredGiftInput
+    matches?: MatchUncheckedCreateNestedManyWithoutGiftInput
+    purchases?: PurchaseUncheckedCreateNestedManyWithoutGiftInput
   }
 
   export type GiftUpdateInput = {
@@ -54570,6 +54901,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneWithoutGiftsNestedInput
     preferredByUsers?: UserUpdateManyWithoutPreferredGiftNestedInput
+    matches?: MatchUpdateManyWithoutGiftNestedInput
+    purchases?: PurchaseUpdateManyWithoutGiftNestedInput
   }
 
   export type GiftUncheckedUpdateInput = {
@@ -54586,6 +54919,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     preferredByUsers?: UserUncheckedUpdateManyWithoutPreferredGiftNestedInput
+    matches?: MatchUncheckedUpdateManyWithoutGiftNestedInput
+    purchases?: PurchaseUncheckedUpdateManyWithoutGiftNestedInput
   }
 
   export type GiftCreateManyInput = {
@@ -54828,61 +55163,75 @@ export namespace Prisma {
 
   export type PurchaseCreateInput = {
     quantity?: number
+    totalPrice: Decimal | DecimalJsLike | number | string
     status?: $Enums.PurchaseStatus
     deliveryAddress?: string | null
     recipientFullName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    annonce: AnnonceCreateNestedOneWithoutPurchasesInput
+    annonce?: AnnonceCreateNestedOneWithoutPurchasesInput
+    gift?: GiftCreateNestedOneWithoutPurchasesInput
     sender: UserCreateNestedOneWithoutSentPurchasesInput
     receiver: UserCreateNestedOneWithoutReceivedPurchasesInput
+    matches?: MatchCreateNestedManyWithoutPurchaseInput
   }
 
   export type PurchaseUncheckedCreateInput = {
     id?: number
-    annonceId: number
     quantity?: number
+    totalPrice: Decimal | DecimalJsLike | number | string
+    status?: $Enums.PurchaseStatus
+    annonceId?: number | null
+    giftId?: number | null
     senderId: number
     receiverId: number
-    status?: $Enums.PurchaseStatus
     deliveryAddress?: string | null
     recipientFullName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    matches?: MatchUncheckedCreateNestedManyWithoutPurchaseInput
   }
 
   export type PurchaseUpdateInput = {
     quantity?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
     deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
     recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    annonce?: AnnonceUpdateOneRequiredWithoutPurchasesNestedInput
+    annonce?: AnnonceUpdateOneWithoutPurchasesNestedInput
+    gift?: GiftUpdateOneWithoutPurchasesNestedInput
     sender?: UserUpdateOneRequiredWithoutSentPurchasesNestedInput
     receiver?: UserUpdateOneRequiredWithoutReceivedPurchasesNestedInput
+    matches?: MatchUpdateManyWithoutPurchaseNestedInput
   }
 
   export type PurchaseUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    annonceId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
+    annonceId?: NullableIntFieldUpdateOperationsInput | number | null
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     senderId?: IntFieldUpdateOperationsInput | number
     receiverId?: IntFieldUpdateOperationsInput | number
-    status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
     deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
     recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    matches?: MatchUncheckedUpdateManyWithoutPurchaseNestedInput
   }
 
   export type PurchaseCreateManyInput = {
     id?: number
-    annonceId: number
     quantity?: number
+    totalPrice: Decimal | DecimalJsLike | number | string
+    status?: $Enums.PurchaseStatus
+    annonceId?: number | null
+    giftId?: number | null
     senderId: number
     receiverId: number
-    status?: $Enums.PurchaseStatus
     deliveryAddress?: string | null
     recipientFullName?: string | null
     createdAt?: Date | string
@@ -54891,6 +55240,7 @@ export namespace Prisma {
 
   export type PurchaseUpdateManyMutationInput = {
     quantity?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
     deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
     recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54900,11 +55250,13 @@ export namespace Prisma {
 
   export type PurchaseUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    annonceId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
+    annonceId?: NullableIntFieldUpdateOperationsInput | number | null
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     senderId?: IntFieldUpdateOperationsInput | number
     receiverId?: IntFieldUpdateOperationsInput | number
-    status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
     deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
     recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -57546,6 +57898,11 @@ export namespace Prisma {
     not?: NestedEnumMatchStatusFilter<$PrismaModel> | $Enums.MatchStatus
   }
 
+  export type PurchaseNullableScalarRelationFilter = {
+    is?: PurchaseWhereInput | null
+    isNot?: PurchaseWhereInput | null
+  }
+
   export type MatchCountOrderByAggregateInput = {
     id?: SortOrder
     fromId?: SortOrder
@@ -57554,6 +57911,7 @@ export namespace Prisma {
     type?: SortOrder
     status?: SortOrder
     giftId?: SortOrder
+    purchaseId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -57563,6 +57921,7 @@ export namespace Prisma {
     fromId?: SortOrder
     toId?: SortOrder
     giftId?: SortOrder
+    purchaseId?: SortOrder
   }
 
   export type MatchMaxOrderByAggregateInput = {
@@ -57573,6 +57932,7 @@ export namespace Prisma {
     type?: SortOrder
     status?: SortOrder
     giftId?: SortOrder
+    purchaseId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -57585,6 +57945,7 @@ export namespace Prisma {
     type?: SortOrder
     status?: SortOrder
     giftId?: SortOrder
+    purchaseId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -57594,6 +57955,7 @@ export namespace Prisma {
     fromId?: SortOrder
     toId?: SortOrder
     giftId?: SortOrder
+    purchaseId?: SortOrder
   }
 
   export type EnumMatchTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -58057,18 +58419,15 @@ export namespace Prisma {
     not?: NestedEnumPurchaseStatusFilter<$PrismaModel> | $Enums.PurchaseStatus
   }
 
-  export type AnnonceScalarRelationFilter = {
-    is?: AnnonceWhereInput
-    isNot?: AnnonceWhereInput
-  }
-
   export type PurchaseCountOrderByAggregateInput = {
     id?: SortOrder
-    annonceId?: SortOrder
     quantity?: SortOrder
+    totalPrice?: SortOrder
+    status?: SortOrder
+    annonceId?: SortOrder
+    giftId?: SortOrder
     senderId?: SortOrder
     receiverId?: SortOrder
-    status?: SortOrder
     deliveryAddress?: SortOrder
     recipientFullName?: SortOrder
     createdAt?: SortOrder
@@ -58077,19 +58436,23 @@ export namespace Prisma {
 
   export type PurchaseAvgOrderByAggregateInput = {
     id?: SortOrder
-    annonceId?: SortOrder
     quantity?: SortOrder
+    totalPrice?: SortOrder
+    annonceId?: SortOrder
+    giftId?: SortOrder
     senderId?: SortOrder
     receiverId?: SortOrder
   }
 
   export type PurchaseMaxOrderByAggregateInput = {
     id?: SortOrder
-    annonceId?: SortOrder
     quantity?: SortOrder
+    totalPrice?: SortOrder
+    status?: SortOrder
+    annonceId?: SortOrder
+    giftId?: SortOrder
     senderId?: SortOrder
     receiverId?: SortOrder
-    status?: SortOrder
     deliveryAddress?: SortOrder
     recipientFullName?: SortOrder
     createdAt?: SortOrder
@@ -58098,11 +58461,13 @@ export namespace Prisma {
 
   export type PurchaseMinOrderByAggregateInput = {
     id?: SortOrder
-    annonceId?: SortOrder
     quantity?: SortOrder
+    totalPrice?: SortOrder
+    status?: SortOrder
+    annonceId?: SortOrder
+    giftId?: SortOrder
     senderId?: SortOrder
     receiverId?: SortOrder
-    status?: SortOrder
     deliveryAddress?: SortOrder
     recipientFullName?: SortOrder
     createdAt?: SortOrder
@@ -58111,8 +58476,10 @@ export namespace Prisma {
 
   export type PurchaseSumOrderByAggregateInput = {
     id?: SortOrder
-    annonceId?: SortOrder
     quantity?: SortOrder
+    totalPrice?: SortOrder
+    annonceId?: SortOrder
+    giftId?: SortOrder
     senderId?: SortOrder
     receiverId?: SortOrder
   }
@@ -58132,6 +58499,11 @@ export namespace Prisma {
     in?: $Enums.ReservationStatus[] | ListEnumReservationStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.ReservationStatus[] | ListEnumReservationStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumReservationStatusFilter<$PrismaModel> | $Enums.ReservationStatus
+  }
+
+  export type AnnonceScalarRelationFilter = {
+    is?: AnnonceWhereInput
+    isNot?: AnnonceWhereInput
   }
 
   export type ReservationCountOrderByAggregateInput = {
@@ -61023,6 +61395,18 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type GiftCreateNestedOneWithoutMatchesInput = {
+    create?: XOR<GiftCreateWithoutMatchesInput, GiftUncheckedCreateWithoutMatchesInput>
+    connectOrCreate?: GiftCreateOrConnectWithoutMatchesInput
+    connect?: GiftWhereUniqueInput
+  }
+
+  export type PurchaseCreateNestedOneWithoutMatchesInput = {
+    create?: XOR<PurchaseCreateWithoutMatchesInput, PurchaseUncheckedCreateWithoutMatchesInput>
+    connectOrCreate?: PurchaseCreateOrConnectWithoutMatchesInput
+    connect?: PurchaseWhereUniqueInput
+  }
+
   export type EnumMatchTypeFieldUpdateOperationsInput = {
     set?: $Enums.MatchType
   }
@@ -61045,6 +61429,26 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutReceivedMatchesInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReceivedMatchesInput, UserUpdateWithoutReceivedMatchesInput>, UserUncheckedUpdateWithoutReceivedMatchesInput>
+  }
+
+  export type GiftUpdateOneWithoutMatchesNestedInput = {
+    create?: XOR<GiftCreateWithoutMatchesInput, GiftUncheckedCreateWithoutMatchesInput>
+    connectOrCreate?: GiftCreateOrConnectWithoutMatchesInput
+    upsert?: GiftUpsertWithoutMatchesInput
+    disconnect?: GiftWhereInput | boolean
+    delete?: GiftWhereInput | boolean
+    connect?: GiftWhereUniqueInput
+    update?: XOR<XOR<GiftUpdateToOneWithWhereWithoutMatchesInput, GiftUpdateWithoutMatchesInput>, GiftUncheckedUpdateWithoutMatchesInput>
+  }
+
+  export type PurchaseUpdateOneWithoutMatchesNestedInput = {
+    create?: XOR<PurchaseCreateWithoutMatchesInput, PurchaseUncheckedCreateWithoutMatchesInput>
+    connectOrCreate?: PurchaseCreateOrConnectWithoutMatchesInput
+    upsert?: PurchaseUpsertWithoutMatchesInput
+    disconnect?: PurchaseWhereInput | boolean
+    delete?: PurchaseWhereInput | boolean
+    connect?: PurchaseWhereUniqueInput
+    update?: XOR<XOR<PurchaseUpdateToOneWithWhereWithoutMatchesInput, PurchaseUpdateWithoutMatchesInput>, PurchaseUncheckedUpdateWithoutMatchesInput>
   }
 
   export type UserCreateNestedOneWithoutChatRoomsAsOneInput = {
@@ -61198,11 +61602,39 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
+  export type MatchCreateNestedManyWithoutGiftInput = {
+    create?: XOR<MatchCreateWithoutGiftInput, MatchUncheckedCreateWithoutGiftInput> | MatchCreateWithoutGiftInput[] | MatchUncheckedCreateWithoutGiftInput[]
+    connectOrCreate?: MatchCreateOrConnectWithoutGiftInput | MatchCreateOrConnectWithoutGiftInput[]
+    createMany?: MatchCreateManyGiftInputEnvelope
+    connect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+  }
+
+  export type PurchaseCreateNestedManyWithoutGiftInput = {
+    create?: XOR<PurchaseCreateWithoutGiftInput, PurchaseUncheckedCreateWithoutGiftInput> | PurchaseCreateWithoutGiftInput[] | PurchaseUncheckedCreateWithoutGiftInput[]
+    connectOrCreate?: PurchaseCreateOrConnectWithoutGiftInput | PurchaseCreateOrConnectWithoutGiftInput[]
+    createMany?: PurchaseCreateManyGiftInputEnvelope
+    connect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutPreferredGiftInput = {
     create?: XOR<UserCreateWithoutPreferredGiftInput, UserUncheckedCreateWithoutPreferredGiftInput> | UserCreateWithoutPreferredGiftInput[] | UserUncheckedCreateWithoutPreferredGiftInput[]
     connectOrCreate?: UserCreateOrConnectWithoutPreferredGiftInput | UserCreateOrConnectWithoutPreferredGiftInput[]
     createMany?: UserCreateManyPreferredGiftInputEnvelope
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type MatchUncheckedCreateNestedManyWithoutGiftInput = {
+    create?: XOR<MatchCreateWithoutGiftInput, MatchUncheckedCreateWithoutGiftInput> | MatchCreateWithoutGiftInput[] | MatchUncheckedCreateWithoutGiftInput[]
+    connectOrCreate?: MatchCreateOrConnectWithoutGiftInput | MatchCreateOrConnectWithoutGiftInput[]
+    createMany?: MatchCreateManyGiftInputEnvelope
+    connect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+  }
+
+  export type PurchaseUncheckedCreateNestedManyWithoutGiftInput = {
+    create?: XOR<PurchaseCreateWithoutGiftInput, PurchaseUncheckedCreateWithoutGiftInput> | PurchaseCreateWithoutGiftInput[] | PurchaseUncheckedCreateWithoutGiftInput[]
+    connectOrCreate?: PurchaseCreateOrConnectWithoutGiftInput | PurchaseCreateOrConnectWithoutGiftInput[]
+    createMany?: PurchaseCreateManyGiftInputEnvelope
+    connect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
   }
 
   export type EnumGiftCategoryFieldUpdateOperationsInput = {
@@ -61233,6 +61665,34 @@ export namespace Prisma {
     deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
+  export type MatchUpdateManyWithoutGiftNestedInput = {
+    create?: XOR<MatchCreateWithoutGiftInput, MatchUncheckedCreateWithoutGiftInput> | MatchCreateWithoutGiftInput[] | MatchUncheckedCreateWithoutGiftInput[]
+    connectOrCreate?: MatchCreateOrConnectWithoutGiftInput | MatchCreateOrConnectWithoutGiftInput[]
+    upsert?: MatchUpsertWithWhereUniqueWithoutGiftInput | MatchUpsertWithWhereUniqueWithoutGiftInput[]
+    createMany?: MatchCreateManyGiftInputEnvelope
+    set?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    disconnect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    delete?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    connect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    update?: MatchUpdateWithWhereUniqueWithoutGiftInput | MatchUpdateWithWhereUniqueWithoutGiftInput[]
+    updateMany?: MatchUpdateManyWithWhereWithoutGiftInput | MatchUpdateManyWithWhereWithoutGiftInput[]
+    deleteMany?: MatchScalarWhereInput | MatchScalarWhereInput[]
+  }
+
+  export type PurchaseUpdateManyWithoutGiftNestedInput = {
+    create?: XOR<PurchaseCreateWithoutGiftInput, PurchaseUncheckedCreateWithoutGiftInput> | PurchaseCreateWithoutGiftInput[] | PurchaseUncheckedCreateWithoutGiftInput[]
+    connectOrCreate?: PurchaseCreateOrConnectWithoutGiftInput | PurchaseCreateOrConnectWithoutGiftInput[]
+    upsert?: PurchaseUpsertWithWhereUniqueWithoutGiftInput | PurchaseUpsertWithWhereUniqueWithoutGiftInput[]
+    createMany?: PurchaseCreateManyGiftInputEnvelope
+    set?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    disconnect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    delete?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    connect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    update?: PurchaseUpdateWithWhereUniqueWithoutGiftInput | PurchaseUpdateWithWhereUniqueWithoutGiftInput[]
+    updateMany?: PurchaseUpdateManyWithWhereWithoutGiftInput | PurchaseUpdateManyWithWhereWithoutGiftInput[]
+    deleteMany?: PurchaseScalarWhereInput | PurchaseScalarWhereInput[]
+  }
+
   export type UserUncheckedUpdateManyWithoutPreferredGiftNestedInput = {
     create?: XOR<UserCreateWithoutPreferredGiftInput, UserUncheckedCreateWithoutPreferredGiftInput> | UserCreateWithoutPreferredGiftInput[] | UserUncheckedCreateWithoutPreferredGiftInput[]
     connectOrCreate?: UserCreateOrConnectWithoutPreferredGiftInput | UserCreateOrConnectWithoutPreferredGiftInput[]
@@ -61245,6 +61705,34 @@ export namespace Prisma {
     update?: UserUpdateWithWhereUniqueWithoutPreferredGiftInput | UserUpdateWithWhereUniqueWithoutPreferredGiftInput[]
     updateMany?: UserUpdateManyWithWhereWithoutPreferredGiftInput | UserUpdateManyWithWhereWithoutPreferredGiftInput[]
     deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type MatchUncheckedUpdateManyWithoutGiftNestedInput = {
+    create?: XOR<MatchCreateWithoutGiftInput, MatchUncheckedCreateWithoutGiftInput> | MatchCreateWithoutGiftInput[] | MatchUncheckedCreateWithoutGiftInput[]
+    connectOrCreate?: MatchCreateOrConnectWithoutGiftInput | MatchCreateOrConnectWithoutGiftInput[]
+    upsert?: MatchUpsertWithWhereUniqueWithoutGiftInput | MatchUpsertWithWhereUniqueWithoutGiftInput[]
+    createMany?: MatchCreateManyGiftInputEnvelope
+    set?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    disconnect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    delete?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    connect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    update?: MatchUpdateWithWhereUniqueWithoutGiftInput | MatchUpdateWithWhereUniqueWithoutGiftInput[]
+    updateMany?: MatchUpdateManyWithWhereWithoutGiftInput | MatchUpdateManyWithWhereWithoutGiftInput[]
+    deleteMany?: MatchScalarWhereInput | MatchScalarWhereInput[]
+  }
+
+  export type PurchaseUncheckedUpdateManyWithoutGiftNestedInput = {
+    create?: XOR<PurchaseCreateWithoutGiftInput, PurchaseUncheckedCreateWithoutGiftInput> | PurchaseCreateWithoutGiftInput[] | PurchaseUncheckedCreateWithoutGiftInput[]
+    connectOrCreate?: PurchaseCreateOrConnectWithoutGiftInput | PurchaseCreateOrConnectWithoutGiftInput[]
+    upsert?: PurchaseUpsertWithWhereUniqueWithoutGiftInput | PurchaseUpsertWithWhereUniqueWithoutGiftInput[]
+    createMany?: PurchaseCreateManyGiftInputEnvelope
+    set?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    disconnect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    delete?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    connect?: PurchaseWhereUniqueInput | PurchaseWhereUniqueInput[]
+    update?: PurchaseUpdateWithWhereUniqueWithoutGiftInput | PurchaseUpdateWithWhereUniqueWithoutGiftInput[]
+    updateMany?: PurchaseUpdateManyWithWhereWithoutGiftInput | PurchaseUpdateManyWithWhereWithoutGiftInput[]
+    deleteMany?: PurchaseScalarWhereInput | PurchaseScalarWhereInput[]
   }
 
   export type CompanyCreateNestedOneWithoutAnnoncesInput = {
@@ -61529,6 +62017,12 @@ export namespace Prisma {
     connect?: AnnonceWhereUniqueInput
   }
 
+  export type GiftCreateNestedOneWithoutPurchasesInput = {
+    create?: XOR<GiftCreateWithoutPurchasesInput, GiftUncheckedCreateWithoutPurchasesInput>
+    connectOrCreate?: GiftCreateOrConnectWithoutPurchasesInput
+    connect?: GiftWhereUniqueInput
+  }
+
   export type UserCreateNestedOneWithoutSentPurchasesInput = {
     create?: XOR<UserCreateWithoutSentPurchasesInput, UserUncheckedCreateWithoutSentPurchasesInput>
     connectOrCreate?: UserCreateOrConnectWithoutSentPurchasesInput
@@ -61541,16 +62035,42 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type MatchCreateNestedManyWithoutPurchaseInput = {
+    create?: XOR<MatchCreateWithoutPurchaseInput, MatchUncheckedCreateWithoutPurchaseInput> | MatchCreateWithoutPurchaseInput[] | MatchUncheckedCreateWithoutPurchaseInput[]
+    connectOrCreate?: MatchCreateOrConnectWithoutPurchaseInput | MatchCreateOrConnectWithoutPurchaseInput[]
+    createMany?: MatchCreateManyPurchaseInputEnvelope
+    connect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+  }
+
+  export type MatchUncheckedCreateNestedManyWithoutPurchaseInput = {
+    create?: XOR<MatchCreateWithoutPurchaseInput, MatchUncheckedCreateWithoutPurchaseInput> | MatchCreateWithoutPurchaseInput[] | MatchUncheckedCreateWithoutPurchaseInput[]
+    connectOrCreate?: MatchCreateOrConnectWithoutPurchaseInput | MatchCreateOrConnectWithoutPurchaseInput[]
+    createMany?: MatchCreateManyPurchaseInputEnvelope
+    connect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+  }
+
   export type EnumPurchaseStatusFieldUpdateOperationsInput = {
     set?: $Enums.PurchaseStatus
   }
 
-  export type AnnonceUpdateOneRequiredWithoutPurchasesNestedInput = {
+  export type AnnonceUpdateOneWithoutPurchasesNestedInput = {
     create?: XOR<AnnonceCreateWithoutPurchasesInput, AnnonceUncheckedCreateWithoutPurchasesInput>
     connectOrCreate?: AnnonceCreateOrConnectWithoutPurchasesInput
     upsert?: AnnonceUpsertWithoutPurchasesInput
+    disconnect?: AnnonceWhereInput | boolean
+    delete?: AnnonceWhereInput | boolean
     connect?: AnnonceWhereUniqueInput
     update?: XOR<XOR<AnnonceUpdateToOneWithWhereWithoutPurchasesInput, AnnonceUpdateWithoutPurchasesInput>, AnnonceUncheckedUpdateWithoutPurchasesInput>
+  }
+
+  export type GiftUpdateOneWithoutPurchasesNestedInput = {
+    create?: XOR<GiftCreateWithoutPurchasesInput, GiftUncheckedCreateWithoutPurchasesInput>
+    connectOrCreate?: GiftCreateOrConnectWithoutPurchasesInput
+    upsert?: GiftUpsertWithoutPurchasesInput
+    disconnect?: GiftWhereInput | boolean
+    delete?: GiftWhereInput | boolean
+    connect?: GiftWhereUniqueInput
+    update?: XOR<XOR<GiftUpdateToOneWithWhereWithoutPurchasesInput, GiftUpdateWithoutPurchasesInput>, GiftUncheckedUpdateWithoutPurchasesInput>
   }
 
   export type UserUpdateOneRequiredWithoutSentPurchasesNestedInput = {
@@ -61567,6 +62087,34 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutReceivedPurchasesInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReceivedPurchasesInput, UserUpdateWithoutReceivedPurchasesInput>, UserUncheckedUpdateWithoutReceivedPurchasesInput>
+  }
+
+  export type MatchUpdateManyWithoutPurchaseNestedInput = {
+    create?: XOR<MatchCreateWithoutPurchaseInput, MatchUncheckedCreateWithoutPurchaseInput> | MatchCreateWithoutPurchaseInput[] | MatchUncheckedCreateWithoutPurchaseInput[]
+    connectOrCreate?: MatchCreateOrConnectWithoutPurchaseInput | MatchCreateOrConnectWithoutPurchaseInput[]
+    upsert?: MatchUpsertWithWhereUniqueWithoutPurchaseInput | MatchUpsertWithWhereUniqueWithoutPurchaseInput[]
+    createMany?: MatchCreateManyPurchaseInputEnvelope
+    set?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    disconnect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    delete?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    connect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    update?: MatchUpdateWithWhereUniqueWithoutPurchaseInput | MatchUpdateWithWhereUniqueWithoutPurchaseInput[]
+    updateMany?: MatchUpdateManyWithWhereWithoutPurchaseInput | MatchUpdateManyWithWhereWithoutPurchaseInput[]
+    deleteMany?: MatchScalarWhereInput | MatchScalarWhereInput[]
+  }
+
+  export type MatchUncheckedUpdateManyWithoutPurchaseNestedInput = {
+    create?: XOR<MatchCreateWithoutPurchaseInput, MatchUncheckedCreateWithoutPurchaseInput> | MatchCreateWithoutPurchaseInput[] | MatchUncheckedCreateWithoutPurchaseInput[]
+    connectOrCreate?: MatchCreateOrConnectWithoutPurchaseInput | MatchCreateOrConnectWithoutPurchaseInput[]
+    upsert?: MatchUpsertWithWhereUniqueWithoutPurchaseInput | MatchUpsertWithWhereUniqueWithoutPurchaseInput[]
+    createMany?: MatchCreateManyPurchaseInputEnvelope
+    set?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    disconnect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    delete?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    connect?: MatchWhereUniqueInput | MatchWhereUniqueInput[]
+    update?: MatchUpdateWithWhereUniqueWithoutPurchaseInput | MatchUpdateWithWhereUniqueWithoutPurchaseInput[]
+    updateMany?: MatchUpdateManyWithWhereWithoutPurchaseInput | MatchUpdateManyWithWhereWithoutPurchaseInput[]
+    deleteMany?: MatchScalarWhereInput | MatchScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutReservationsInput = {
@@ -63445,6 +63993,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     company?: CompanyCreateNestedOneWithoutGiftsInput
+    matches?: MatchCreateNestedManyWithoutGiftInput
+    purchases?: PurchaseCreateNestedManyWithoutGiftInput
   }
 
   export type GiftUncheckedCreateWithoutPreferredByUsersInput = {
@@ -63460,6 +64010,8 @@ export namespace Prisma {
     companyId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    matches?: MatchUncheckedCreateNestedManyWithoutGiftInput
+    purchases?: PurchaseUncheckedCreateNestedManyWithoutGiftInput
   }
 
   export type GiftCreateOrConnectWithoutPreferredByUsersInput = {
@@ -63584,10 +64136,11 @@ export namespace Prisma {
     isConfirmed?: boolean
     type?: $Enums.MatchType
     status?: $Enums.MatchStatus
-    giftId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     to: UserCreateNestedOneWithoutReceivedMatchesInput
+    gift?: GiftCreateNestedOneWithoutMatchesInput
+    purchase?: PurchaseCreateNestedOneWithoutMatchesInput
   }
 
   export type MatchUncheckedCreateWithoutFromInput = {
@@ -63597,6 +64150,7 @@ export namespace Prisma {
     type?: $Enums.MatchType
     status?: $Enums.MatchStatus
     giftId?: number | null
+    purchaseId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -63615,10 +64169,11 @@ export namespace Prisma {
     isConfirmed?: boolean
     type?: $Enums.MatchType
     status?: $Enums.MatchStatus
-    giftId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     from: UserCreateNestedOneWithoutSentMatchesInput
+    gift?: GiftCreateNestedOneWithoutMatchesInput
+    purchase?: PurchaseCreateNestedOneWithoutMatchesInput
   }
 
   export type MatchUncheckedCreateWithoutToInput = {
@@ -63628,6 +64183,7 @@ export namespace Prisma {
     type?: $Enums.MatchType
     status?: $Enums.MatchStatus
     giftId?: number | null
+    purchaseId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -64105,25 +64661,31 @@ export namespace Prisma {
 
   export type PurchaseCreateWithoutSenderInput = {
     quantity?: number
+    totalPrice: Decimal | DecimalJsLike | number | string
     status?: $Enums.PurchaseStatus
     deliveryAddress?: string | null
     recipientFullName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    annonce: AnnonceCreateNestedOneWithoutPurchasesInput
+    annonce?: AnnonceCreateNestedOneWithoutPurchasesInput
+    gift?: GiftCreateNestedOneWithoutPurchasesInput
     receiver: UserCreateNestedOneWithoutReceivedPurchasesInput
+    matches?: MatchCreateNestedManyWithoutPurchaseInput
   }
 
   export type PurchaseUncheckedCreateWithoutSenderInput = {
     id?: number
-    annonceId: number
     quantity?: number
-    receiverId: number
+    totalPrice: Decimal | DecimalJsLike | number | string
     status?: $Enums.PurchaseStatus
+    annonceId?: number | null
+    giftId?: number | null
+    receiverId: number
     deliveryAddress?: string | null
     recipientFullName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    matches?: MatchUncheckedCreateNestedManyWithoutPurchaseInput
   }
 
   export type PurchaseCreateOrConnectWithoutSenderInput = {
@@ -64138,25 +64700,31 @@ export namespace Prisma {
 
   export type PurchaseCreateWithoutReceiverInput = {
     quantity?: number
+    totalPrice: Decimal | DecimalJsLike | number | string
     status?: $Enums.PurchaseStatus
     deliveryAddress?: string | null
     recipientFullName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    annonce: AnnonceCreateNestedOneWithoutPurchasesInput
+    annonce?: AnnonceCreateNestedOneWithoutPurchasesInput
+    gift?: GiftCreateNestedOneWithoutPurchasesInput
     sender: UserCreateNestedOneWithoutSentPurchasesInput
+    matches?: MatchCreateNestedManyWithoutPurchaseInput
   }
 
   export type PurchaseUncheckedCreateWithoutReceiverInput = {
     id?: number
-    annonceId: number
     quantity?: number
-    senderId: number
+    totalPrice: Decimal | DecimalJsLike | number | string
     status?: $Enums.PurchaseStatus
+    annonceId?: number | null
+    giftId?: number | null
+    senderId: number
     deliveryAddress?: string | null
     recipientFullName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    matches?: MatchUncheckedCreateNestedManyWithoutPurchaseInput
   }
 
   export type PurchaseCreateOrConnectWithoutReceiverInput = {
@@ -64804,6 +65372,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     company?: CompanyUpdateOneWithoutGiftsNestedInput
+    matches?: MatchUpdateManyWithoutGiftNestedInput
+    purchases?: PurchaseUpdateManyWithoutGiftNestedInput
   }
 
   export type GiftUncheckedUpdateWithoutPreferredByUsersInput = {
@@ -64819,6 +65389,8 @@ export namespace Prisma {
     companyId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    matches?: MatchUncheckedUpdateManyWithoutGiftNestedInput
+    purchases?: PurchaseUncheckedUpdateManyWithoutGiftNestedInput
   }
 
   export type AnnonceUpsertWithoutGiftPurposesInput = {
@@ -64975,6 +65547,7 @@ export namespace Prisma {
     type?: EnumMatchTypeFilter<"Match"> | $Enums.MatchType
     status?: EnumMatchStatusFilter<"Match"> | $Enums.MatchStatus
     giftId?: IntNullableFilter<"Match"> | number | null
+    purchaseId?: IntNullableFilter<"Match"> | number | null
     createdAt?: DateTimeFilter<"Match"> | Date | string
     updatedAt?: DateTimeFilter<"Match"> | Date | string
   }
@@ -65422,11 +65995,13 @@ export namespace Prisma {
     OR?: PurchaseScalarWhereInput[]
     NOT?: PurchaseScalarWhereInput | PurchaseScalarWhereInput[]
     id?: IntFilter<"Purchase"> | number
-    annonceId?: IntFilter<"Purchase"> | number
     quantity?: IntFilter<"Purchase"> | number
+    totalPrice?: DecimalFilter<"Purchase"> | Decimal | DecimalJsLike | number | string
+    status?: EnumPurchaseStatusFilter<"Purchase"> | $Enums.PurchaseStatus
+    annonceId?: IntNullableFilter<"Purchase"> | number | null
+    giftId?: IntNullableFilter<"Purchase"> | number | null
     senderId?: IntFilter<"Purchase"> | number
     receiverId?: IntFilter<"Purchase"> | number
-    status?: EnumPurchaseStatusFilter<"Purchase"> | $Enums.PurchaseStatus
     deliveryAddress?: StringNullableFilter<"Purchase"> | string | null
     recipientFullName?: StringNullableFilter<"Purchase"> | string | null
     createdAt?: DateTimeFilter<"Purchase"> | Date | string
@@ -67264,6 +67839,78 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutReceivedMatchesInput, UserUncheckedCreateWithoutReceivedMatchesInput>
   }
 
+  export type GiftCreateWithoutMatchesInput = {
+    name: string
+    price: Decimal | DecimalJsLike | number | string
+    points?: Decimal | DecimalJsLike | number | string
+    image: string
+    description?: string | null
+    category?: $Enums.GiftCategory
+    isAvailable?: boolean
+    expiresIn?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    company?: CompanyCreateNestedOneWithoutGiftsInput
+    preferredByUsers?: UserCreateNestedManyWithoutPreferredGiftInput
+    purchases?: PurchaseCreateNestedManyWithoutGiftInput
+  }
+
+  export type GiftUncheckedCreateWithoutMatchesInput = {
+    id?: number
+    name: string
+    price: Decimal | DecimalJsLike | number | string
+    points?: Decimal | DecimalJsLike | number | string
+    image: string
+    description?: string | null
+    category?: $Enums.GiftCategory
+    isAvailable?: boolean
+    expiresIn?: number
+    companyId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    preferredByUsers?: UserUncheckedCreateNestedManyWithoutPreferredGiftInput
+    purchases?: PurchaseUncheckedCreateNestedManyWithoutGiftInput
+  }
+
+  export type GiftCreateOrConnectWithoutMatchesInput = {
+    where: GiftWhereUniqueInput
+    create: XOR<GiftCreateWithoutMatchesInput, GiftUncheckedCreateWithoutMatchesInput>
+  }
+
+  export type PurchaseCreateWithoutMatchesInput = {
+    quantity?: number
+    totalPrice: Decimal | DecimalJsLike | number | string
+    status?: $Enums.PurchaseStatus
+    deliveryAddress?: string | null
+    recipientFullName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    annonce?: AnnonceCreateNestedOneWithoutPurchasesInput
+    gift?: GiftCreateNestedOneWithoutPurchasesInput
+    sender: UserCreateNestedOneWithoutSentPurchasesInput
+    receiver: UserCreateNestedOneWithoutReceivedPurchasesInput
+  }
+
+  export type PurchaseUncheckedCreateWithoutMatchesInput = {
+    id?: number
+    quantity?: number
+    totalPrice: Decimal | DecimalJsLike | number | string
+    status?: $Enums.PurchaseStatus
+    annonceId?: number | null
+    giftId?: number | null
+    senderId: number
+    receiverId: number
+    deliveryAddress?: string | null
+    recipientFullName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PurchaseCreateOrConnectWithoutMatchesInput = {
+    where: PurchaseWhereUniqueInput
+    create: XOR<PurchaseCreateWithoutMatchesInput, PurchaseUncheckedCreateWithoutMatchesInput>
+  }
+
   export type UserUpsertWithoutSentMatchesInput = {
     update: XOR<UserUpdateWithoutSentMatchesInput, UserUncheckedUpdateWithoutSentMatchesInput>
     create: XOR<UserCreateWithoutSentMatchesInput, UserUncheckedCreateWithoutSentMatchesInput>
@@ -67614,6 +68261,90 @@ export namespace Prisma {
     reportsMade?: UserReportUncheckedUpdateManyWithoutReporterNestedInput
     reportsReceived?: UserReportUncheckedUpdateManyWithoutReportedNestedInput
     targetedAnnonces?: AnnonceUncheckedUpdateManyWithoutTargetUsersNestedInput
+  }
+
+  export type GiftUpsertWithoutMatchesInput = {
+    update: XOR<GiftUpdateWithoutMatchesInput, GiftUncheckedUpdateWithoutMatchesInput>
+    create: XOR<GiftCreateWithoutMatchesInput, GiftUncheckedCreateWithoutMatchesInput>
+    where?: GiftWhereInput
+  }
+
+  export type GiftUpdateToOneWithWhereWithoutMatchesInput = {
+    where?: GiftWhereInput
+    data: XOR<GiftUpdateWithoutMatchesInput, GiftUncheckedUpdateWithoutMatchesInput>
+  }
+
+  export type GiftUpdateWithoutMatchesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    points?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    image?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: EnumGiftCategoryFieldUpdateOperationsInput | $Enums.GiftCategory
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    expiresIn?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneWithoutGiftsNestedInput
+    preferredByUsers?: UserUpdateManyWithoutPreferredGiftNestedInput
+    purchases?: PurchaseUpdateManyWithoutGiftNestedInput
+  }
+
+  export type GiftUncheckedUpdateWithoutMatchesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    points?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    image?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: EnumGiftCategoryFieldUpdateOperationsInput | $Enums.GiftCategory
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    expiresIn?: IntFieldUpdateOperationsInput | number
+    companyId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    preferredByUsers?: UserUncheckedUpdateManyWithoutPreferredGiftNestedInput
+    purchases?: PurchaseUncheckedUpdateManyWithoutGiftNestedInput
+  }
+
+  export type PurchaseUpsertWithoutMatchesInput = {
+    update: XOR<PurchaseUpdateWithoutMatchesInput, PurchaseUncheckedUpdateWithoutMatchesInput>
+    create: XOR<PurchaseCreateWithoutMatchesInput, PurchaseUncheckedCreateWithoutMatchesInput>
+    where?: PurchaseWhereInput
+  }
+
+  export type PurchaseUpdateToOneWithWhereWithoutMatchesInput = {
+    where?: PurchaseWhereInput
+    data: XOR<PurchaseUpdateWithoutMatchesInput, PurchaseUncheckedUpdateWithoutMatchesInput>
+  }
+
+  export type PurchaseUpdateWithoutMatchesInput = {
+    quantity?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
+    deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    annonce?: AnnonceUpdateOneWithoutPurchasesNestedInput
+    gift?: GiftUpdateOneWithoutPurchasesNestedInput
+    sender?: UserUpdateOneRequiredWithoutSentPurchasesNestedInput
+    receiver?: UserUpdateOneRequiredWithoutReceivedPurchasesNestedInput
+  }
+
+  export type PurchaseUncheckedUpdateWithoutMatchesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
+    annonceId?: NullableIntFieldUpdateOperationsInput | number | null
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
+    senderId?: IntFieldUpdateOperationsInput | number
+    receiverId?: IntFieldUpdateOperationsInput | number
+    deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateWithoutChatRoomsAsOneInput = {
@@ -69702,6 +70433,78 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type MatchCreateWithoutGiftInput = {
+    isConfirmed?: boolean
+    type?: $Enums.MatchType
+    status?: $Enums.MatchStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    from: UserCreateNestedOneWithoutSentMatchesInput
+    to: UserCreateNestedOneWithoutReceivedMatchesInput
+    purchase?: PurchaseCreateNestedOneWithoutMatchesInput
+  }
+
+  export type MatchUncheckedCreateWithoutGiftInput = {
+    id?: number
+    fromId: number
+    toId: number
+    isConfirmed?: boolean
+    type?: $Enums.MatchType
+    status?: $Enums.MatchStatus
+    purchaseId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MatchCreateOrConnectWithoutGiftInput = {
+    where: MatchWhereUniqueInput
+    create: XOR<MatchCreateWithoutGiftInput, MatchUncheckedCreateWithoutGiftInput>
+  }
+
+  export type MatchCreateManyGiftInputEnvelope = {
+    data: MatchCreateManyGiftInput | MatchCreateManyGiftInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PurchaseCreateWithoutGiftInput = {
+    quantity?: number
+    totalPrice: Decimal | DecimalJsLike | number | string
+    status?: $Enums.PurchaseStatus
+    deliveryAddress?: string | null
+    recipientFullName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    annonce?: AnnonceCreateNestedOneWithoutPurchasesInput
+    sender: UserCreateNestedOneWithoutSentPurchasesInput
+    receiver: UserCreateNestedOneWithoutReceivedPurchasesInput
+    matches?: MatchCreateNestedManyWithoutPurchaseInput
+  }
+
+  export type PurchaseUncheckedCreateWithoutGiftInput = {
+    id?: number
+    quantity?: number
+    totalPrice: Decimal | DecimalJsLike | number | string
+    status?: $Enums.PurchaseStatus
+    annonceId?: number | null
+    senderId: number
+    receiverId: number
+    deliveryAddress?: string | null
+    recipientFullName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    matches?: MatchUncheckedCreateNestedManyWithoutPurchaseInput
+  }
+
+  export type PurchaseCreateOrConnectWithoutGiftInput = {
+    where: PurchaseWhereUniqueInput
+    create: XOR<PurchaseCreateWithoutGiftInput, PurchaseUncheckedCreateWithoutGiftInput>
+  }
+
+  export type PurchaseCreateManyGiftInputEnvelope = {
+    data: PurchaseCreateManyGiftInput | PurchaseCreateManyGiftInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CompanyUpsertWithoutGiftsInput = {
     update: XOR<CompanyUpdateWithoutGiftsInput, CompanyUncheckedUpdateWithoutGiftsInput>
     create: XOR<CompanyCreateWithoutGiftsInput, CompanyUncheckedCreateWithoutGiftsInput>
@@ -69788,6 +70591,38 @@ export namespace Prisma {
     data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutPreferredGiftInput>
   }
 
+  export type MatchUpsertWithWhereUniqueWithoutGiftInput = {
+    where: MatchWhereUniqueInput
+    update: XOR<MatchUpdateWithoutGiftInput, MatchUncheckedUpdateWithoutGiftInput>
+    create: XOR<MatchCreateWithoutGiftInput, MatchUncheckedCreateWithoutGiftInput>
+  }
+
+  export type MatchUpdateWithWhereUniqueWithoutGiftInput = {
+    where: MatchWhereUniqueInput
+    data: XOR<MatchUpdateWithoutGiftInput, MatchUncheckedUpdateWithoutGiftInput>
+  }
+
+  export type MatchUpdateManyWithWhereWithoutGiftInput = {
+    where: MatchScalarWhereInput
+    data: XOR<MatchUpdateManyMutationInput, MatchUncheckedUpdateManyWithoutGiftInput>
+  }
+
+  export type PurchaseUpsertWithWhereUniqueWithoutGiftInput = {
+    where: PurchaseWhereUniqueInput
+    update: XOR<PurchaseUpdateWithoutGiftInput, PurchaseUncheckedUpdateWithoutGiftInput>
+    create: XOR<PurchaseCreateWithoutGiftInput, PurchaseUncheckedCreateWithoutGiftInput>
+  }
+
+  export type PurchaseUpdateWithWhereUniqueWithoutGiftInput = {
+    where: PurchaseWhereUniqueInput
+    data: XOR<PurchaseUpdateWithoutGiftInput, PurchaseUncheckedUpdateWithoutGiftInput>
+  }
+
+  export type PurchaseUpdateManyWithWhereWithoutGiftInput = {
+    where: PurchaseScalarWhereInput
+    data: XOR<PurchaseUpdateManyMutationInput, PurchaseUncheckedUpdateManyWithoutGiftInput>
+  }
+
   export type CompanyCreateWithoutAnnoncesInput = {
     name?: string | null
     phoneNumber: string
@@ -69854,25 +70689,31 @@ export namespace Prisma {
 
   export type PurchaseCreateWithoutAnnonceInput = {
     quantity?: number
+    totalPrice: Decimal | DecimalJsLike | number | string
     status?: $Enums.PurchaseStatus
     deliveryAddress?: string | null
     recipientFullName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    gift?: GiftCreateNestedOneWithoutPurchasesInput
     sender: UserCreateNestedOneWithoutSentPurchasesInput
     receiver: UserCreateNestedOneWithoutReceivedPurchasesInput
+    matches?: MatchCreateNestedManyWithoutPurchaseInput
   }
 
   export type PurchaseUncheckedCreateWithoutAnnonceInput = {
     id?: number
     quantity?: number
+    totalPrice: Decimal | DecimalJsLike | number | string
+    status?: $Enums.PurchaseStatus
+    giftId?: number | null
     senderId: number
     receiverId: number
-    status?: $Enums.PurchaseStatus
     deliveryAddress?: string | null
     recipientFullName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    matches?: MatchUncheckedCreateNestedManyWithoutPurchaseInput
   }
 
   export type PurchaseCreateOrConnectWithoutAnnonceInput = {
@@ -70565,6 +71406,44 @@ export namespace Prisma {
     create: XOR<AnnonceCreateWithoutPurchasesInput, AnnonceUncheckedCreateWithoutPurchasesInput>
   }
 
+  export type GiftCreateWithoutPurchasesInput = {
+    name: string
+    price: Decimal | DecimalJsLike | number | string
+    points?: Decimal | DecimalJsLike | number | string
+    image: string
+    description?: string | null
+    category?: $Enums.GiftCategory
+    isAvailable?: boolean
+    expiresIn?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    company?: CompanyCreateNestedOneWithoutGiftsInput
+    preferredByUsers?: UserCreateNestedManyWithoutPreferredGiftInput
+    matches?: MatchCreateNestedManyWithoutGiftInput
+  }
+
+  export type GiftUncheckedCreateWithoutPurchasesInput = {
+    id?: number
+    name: string
+    price: Decimal | DecimalJsLike | number | string
+    points?: Decimal | DecimalJsLike | number | string
+    image: string
+    description?: string | null
+    category?: $Enums.GiftCategory
+    isAvailable?: boolean
+    expiresIn?: number
+    companyId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    preferredByUsers?: UserUncheckedCreateNestedManyWithoutPreferredGiftInput
+    matches?: MatchUncheckedCreateNestedManyWithoutGiftInput
+  }
+
+  export type GiftCreateOrConnectWithoutPurchasesInput = {
+    where: GiftWhereUniqueInput
+    create: XOR<GiftCreateWithoutPurchasesInput, GiftUncheckedCreateWithoutPurchasesInput>
+  }
+
   export type UserCreateWithoutSentPurchasesInput = {
     phoneNumber: string
     passCode?: string | null
@@ -70905,6 +71784,39 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutReceivedPurchasesInput, UserUncheckedCreateWithoutReceivedPurchasesInput>
   }
 
+  export type MatchCreateWithoutPurchaseInput = {
+    isConfirmed?: boolean
+    type?: $Enums.MatchType
+    status?: $Enums.MatchStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    from: UserCreateNestedOneWithoutSentMatchesInput
+    to: UserCreateNestedOneWithoutReceivedMatchesInput
+    gift?: GiftCreateNestedOneWithoutMatchesInput
+  }
+
+  export type MatchUncheckedCreateWithoutPurchaseInput = {
+    id?: number
+    fromId: number
+    toId: number
+    isConfirmed?: boolean
+    type?: $Enums.MatchType
+    status?: $Enums.MatchStatus
+    giftId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MatchCreateOrConnectWithoutPurchaseInput = {
+    where: MatchWhereUniqueInput
+    create: XOR<MatchCreateWithoutPurchaseInput, MatchUncheckedCreateWithoutPurchaseInput>
+  }
+
+  export type MatchCreateManyPurchaseInputEnvelope = {
+    data: MatchCreateManyPurchaseInput | MatchCreateManyPurchaseInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AnnonceUpsertWithoutPurchasesInput = {
     update: XOR<AnnonceUpdateWithoutPurchasesInput, AnnonceUncheckedUpdateWithoutPurchasesInput>
     create: XOR<AnnonceCreateWithoutPurchasesInput, AnnonceUncheckedCreateWithoutPurchasesInput>
@@ -70973,6 +71885,50 @@ export namespace Prisma {
     dmList?: DmListUncheckedUpdateManyWithoutAnnonceNestedInput
     giftPurposes?: UserUncheckedUpdateManyWithoutGiftPurposeNestedInput
     targetUsers?: UserUncheckedUpdateManyWithoutTargetedAnnoncesNestedInput
+  }
+
+  export type GiftUpsertWithoutPurchasesInput = {
+    update: XOR<GiftUpdateWithoutPurchasesInput, GiftUncheckedUpdateWithoutPurchasesInput>
+    create: XOR<GiftCreateWithoutPurchasesInput, GiftUncheckedCreateWithoutPurchasesInput>
+    where?: GiftWhereInput
+  }
+
+  export type GiftUpdateToOneWithWhereWithoutPurchasesInput = {
+    where?: GiftWhereInput
+    data: XOR<GiftUpdateWithoutPurchasesInput, GiftUncheckedUpdateWithoutPurchasesInput>
+  }
+
+  export type GiftUpdateWithoutPurchasesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    points?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    image?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: EnumGiftCategoryFieldUpdateOperationsInput | $Enums.GiftCategory
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    expiresIn?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneWithoutGiftsNestedInput
+    preferredByUsers?: UserUpdateManyWithoutPreferredGiftNestedInput
+    matches?: MatchUpdateManyWithoutGiftNestedInput
+  }
+
+  export type GiftUncheckedUpdateWithoutPurchasesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    points?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    image?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: EnumGiftCategoryFieldUpdateOperationsInput | $Enums.GiftCategory
+    isAvailable?: BoolFieldUpdateOperationsInput | boolean
+    expiresIn?: IntFieldUpdateOperationsInput | number
+    companyId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    preferredByUsers?: UserUncheckedUpdateManyWithoutPreferredGiftNestedInput
+    matches?: MatchUncheckedUpdateManyWithoutGiftNestedInput
   }
 
   export type UserUpsertWithoutSentPurchasesInput = {
@@ -71325,6 +72281,22 @@ export namespace Prisma {
     reportsMade?: UserReportUncheckedUpdateManyWithoutReporterNestedInput
     reportsReceived?: UserReportUncheckedUpdateManyWithoutReportedNestedInput
     targetedAnnonces?: AnnonceUncheckedUpdateManyWithoutTargetUsersNestedInput
+  }
+
+  export type MatchUpsertWithWhereUniqueWithoutPurchaseInput = {
+    where: MatchWhereUniqueInput
+    update: XOR<MatchUpdateWithoutPurchaseInput, MatchUncheckedUpdateWithoutPurchaseInput>
+    create: XOR<MatchCreateWithoutPurchaseInput, MatchUncheckedCreateWithoutPurchaseInput>
+  }
+
+  export type MatchUpdateWithWhereUniqueWithoutPurchaseInput = {
+    where: MatchWhereUniqueInput
+    data: XOR<MatchUpdateWithoutPurchaseInput, MatchUncheckedUpdateWithoutPurchaseInput>
+  }
+
+  export type MatchUpdateManyWithWhereWithoutPurchaseInput = {
+    where: MatchScalarWhereInput
+    data: XOR<MatchUpdateManyMutationInput, MatchUncheckedUpdateManyWithoutPurchaseInput>
   }
 
   export type UserCreateWithoutReservationsInput = {
@@ -76575,6 +77547,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     preferredByUsers?: UserCreateNestedManyWithoutPreferredGiftInput
+    matches?: MatchCreateNestedManyWithoutGiftInput
+    purchases?: PurchaseCreateNestedManyWithoutGiftInput
   }
 
   export type GiftUncheckedCreateWithoutCompanyInput = {
@@ -76590,6 +77564,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     preferredByUsers?: UserUncheckedCreateNestedManyWithoutPreferredGiftInput
+    matches?: MatchUncheckedCreateNestedManyWithoutGiftInput
+    purchases?: PurchaseUncheckedCreateNestedManyWithoutGiftInput
   }
 
   export type GiftCreateOrConnectWithoutCompanyInput = {
@@ -79729,6 +80705,7 @@ export namespace Prisma {
     type?: $Enums.MatchType
     status?: $Enums.MatchStatus
     giftId?: number | null
+    purchaseId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -79740,6 +80717,7 @@ export namespace Prisma {
     type?: $Enums.MatchType
     status?: $Enums.MatchStatus
     giftId?: number | null
+    purchaseId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -79898,10 +80876,12 @@ export namespace Prisma {
 
   export type PurchaseCreateManySenderInput = {
     id?: number
-    annonceId: number
     quantity?: number
-    receiverId: number
+    totalPrice: Decimal | DecimalJsLike | number | string
     status?: $Enums.PurchaseStatus
+    annonceId?: number | null
+    giftId?: number | null
+    receiverId: number
     deliveryAddress?: string | null
     recipientFullName?: string | null
     createdAt?: Date | string
@@ -79910,10 +80890,12 @@ export namespace Prisma {
 
   export type PurchaseCreateManyReceiverInput = {
     id?: number
-    annonceId: number
     quantity?: number
-    senderId: number
+    totalPrice: Decimal | DecimalJsLike | number | string
     status?: $Enums.PurchaseStatus
+    annonceId?: number | null
+    giftId?: number | null
+    senderId: number
     deliveryAddress?: string | null
     recipientFullName?: string | null
     createdAt?: Date | string
@@ -80319,10 +81301,11 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
     status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
-    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     to?: UserUpdateOneRequiredWithoutReceivedMatchesNestedInput
+    gift?: GiftUpdateOneWithoutMatchesNestedInput
+    purchase?: PurchaseUpdateOneWithoutMatchesNestedInput
   }
 
   export type MatchUncheckedUpdateWithoutFromInput = {
@@ -80332,6 +81315,7 @@ export namespace Prisma {
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
     status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
     giftId?: NullableIntFieldUpdateOperationsInput | number | null
+    purchaseId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -80343,6 +81327,7 @@ export namespace Prisma {
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
     status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
     giftId?: NullableIntFieldUpdateOperationsInput | number | null
+    purchaseId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -80351,10 +81336,11 @@ export namespace Prisma {
     isConfirmed?: BoolFieldUpdateOperationsInput | boolean
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
     status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
-    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     from?: UserUpdateOneRequiredWithoutSentMatchesNestedInput
+    gift?: GiftUpdateOneWithoutMatchesNestedInput
+    purchase?: PurchaseUpdateOneWithoutMatchesNestedInput
   }
 
   export type MatchUncheckedUpdateWithoutToInput = {
@@ -80364,6 +81350,7 @@ export namespace Prisma {
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
     status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
     giftId?: NullableIntFieldUpdateOperationsInput | number | null
+    purchaseId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -80375,6 +81362,7 @@ export namespace Prisma {
     type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
     status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
     giftId?: NullableIntFieldUpdateOperationsInput | number | null
+    purchaseId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -80828,33 +81816,41 @@ export namespace Prisma {
 
   export type PurchaseUpdateWithoutSenderInput = {
     quantity?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
     deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
     recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    annonce?: AnnonceUpdateOneRequiredWithoutPurchasesNestedInput
+    annonce?: AnnonceUpdateOneWithoutPurchasesNestedInput
+    gift?: GiftUpdateOneWithoutPurchasesNestedInput
     receiver?: UserUpdateOneRequiredWithoutReceivedPurchasesNestedInput
+    matches?: MatchUpdateManyWithoutPurchaseNestedInput
   }
 
   export type PurchaseUncheckedUpdateWithoutSenderInput = {
     id?: IntFieldUpdateOperationsInput | number
-    annonceId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
-    receiverId?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
+    annonceId?: NullableIntFieldUpdateOperationsInput | number | null
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
+    receiverId?: IntFieldUpdateOperationsInput | number
     deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
     recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    matches?: MatchUncheckedUpdateManyWithoutPurchaseNestedInput
   }
 
   export type PurchaseUncheckedUpdateManyWithoutSenderInput = {
     id?: IntFieldUpdateOperationsInput | number
-    annonceId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
-    receiverId?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
+    annonceId?: NullableIntFieldUpdateOperationsInput | number | null
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
+    receiverId?: IntFieldUpdateOperationsInput | number
     deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
     recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -80863,33 +81859,41 @@ export namespace Prisma {
 
   export type PurchaseUpdateWithoutReceiverInput = {
     quantity?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
     deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
     recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    annonce?: AnnonceUpdateOneRequiredWithoutPurchasesNestedInput
+    annonce?: AnnonceUpdateOneWithoutPurchasesNestedInput
+    gift?: GiftUpdateOneWithoutPurchasesNestedInput
     sender?: UserUpdateOneRequiredWithoutSentPurchasesNestedInput
+    matches?: MatchUpdateManyWithoutPurchaseNestedInput
   }
 
   export type PurchaseUncheckedUpdateWithoutReceiverInput = {
     id?: IntFieldUpdateOperationsInput | number
-    annonceId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
-    senderId?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
+    annonceId?: NullableIntFieldUpdateOperationsInput | number | null
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
+    senderId?: IntFieldUpdateOperationsInput | number
     deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
     recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    matches?: MatchUncheckedUpdateManyWithoutPurchaseNestedInput
   }
 
   export type PurchaseUncheckedUpdateManyWithoutReceiverInput = {
     id?: IntFieldUpdateOperationsInput | number
-    annonceId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
-    senderId?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
+    annonceId?: NullableIntFieldUpdateOperationsInput | number | null
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
+    senderId?: IntFieldUpdateOperationsInput | number
     deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
     recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -81498,6 +82502,32 @@ export namespace Prisma {
     deletedAt?: Date | string | null
   }
 
+  export type MatchCreateManyGiftInput = {
+    id?: number
+    fromId: number
+    toId: number
+    isConfirmed?: boolean
+    type?: $Enums.MatchType
+    status?: $Enums.MatchStatus
+    purchaseId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PurchaseCreateManyGiftInput = {
+    id?: number
+    quantity?: number
+    totalPrice: Decimal | DecimalJsLike | number | string
+    status?: $Enums.PurchaseStatus
+    annonceId?: number | null
+    senderId: number
+    receiverId: number
+    deliveryAddress?: string | null
+    recipientFullName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type UserUpdateWithoutPreferredGiftInput = {
     phoneNumber?: StringFieldUpdateOperationsInput | string
     passCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -81711,12 +82741,92 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type MatchUpdateWithoutGiftInput = {
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
+    type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    from?: UserUpdateOneRequiredWithoutSentMatchesNestedInput
+    to?: UserUpdateOneRequiredWithoutReceivedMatchesNestedInput
+    purchase?: PurchaseUpdateOneWithoutMatchesNestedInput
+  }
+
+  export type MatchUncheckedUpdateWithoutGiftInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fromId?: IntFieldUpdateOperationsInput | number
+    toId?: IntFieldUpdateOperationsInput | number
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
+    type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    purchaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MatchUncheckedUpdateManyWithoutGiftInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fromId?: IntFieldUpdateOperationsInput | number
+    toId?: IntFieldUpdateOperationsInput | number
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
+    type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    purchaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PurchaseUpdateWithoutGiftInput = {
+    quantity?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
+    deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    annonce?: AnnonceUpdateOneWithoutPurchasesNestedInput
+    sender?: UserUpdateOneRequiredWithoutSentPurchasesNestedInput
+    receiver?: UserUpdateOneRequiredWithoutReceivedPurchasesNestedInput
+    matches?: MatchUpdateManyWithoutPurchaseNestedInput
+  }
+
+  export type PurchaseUncheckedUpdateWithoutGiftInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
+    annonceId?: NullableIntFieldUpdateOperationsInput | number | null
+    senderId?: IntFieldUpdateOperationsInput | number
+    receiverId?: IntFieldUpdateOperationsInput | number
+    deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    matches?: MatchUncheckedUpdateManyWithoutPurchaseNestedInput
+  }
+
+  export type PurchaseUncheckedUpdateManyWithoutGiftInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
+    annonceId?: NullableIntFieldUpdateOperationsInput | number | null
+    senderId?: IntFieldUpdateOperationsInput | number
+    receiverId?: IntFieldUpdateOperationsInput | number
+    deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type PurchaseCreateManyAnnonceInput = {
     id?: number
     quantity?: number
+    totalPrice: Decimal | DecimalJsLike | number | string
+    status?: $Enums.PurchaseStatus
+    giftId?: number | null
     senderId: number
     receiverId: number
-    status?: $Enums.PurchaseStatus
     deliveryAddress?: string | null
     recipientFullName?: string | null
     createdAt?: Date | string
@@ -81812,33 +82922,41 @@ export namespace Prisma {
 
   export type PurchaseUpdateWithoutAnnonceInput = {
     quantity?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
     deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
     recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    gift?: GiftUpdateOneWithoutPurchasesNestedInput
     sender?: UserUpdateOneRequiredWithoutSentPurchasesNestedInput
     receiver?: UserUpdateOneRequiredWithoutReceivedPurchasesNestedInput
+    matches?: MatchUpdateManyWithoutPurchaseNestedInput
   }
 
   export type PurchaseUncheckedUpdateWithoutAnnonceInput = {
     id?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     senderId?: IntFieldUpdateOperationsInput | number
     receiverId?: IntFieldUpdateOperationsInput | number
-    status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
     deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
     recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    matches?: MatchUncheckedUpdateManyWithoutPurchaseNestedInput
   }
 
   export type PurchaseUncheckedUpdateManyWithoutAnnonceInput = {
     id?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    totalPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
     senderId?: IntFieldUpdateOperationsInput | number
     receiverId?: IntFieldUpdateOperationsInput | number
-    status?: EnumPurchaseStatusFieldUpdateOperationsInput | $Enums.PurchaseStatus
     deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
     recipientFullName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -82386,6 +83504,53 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type MatchCreateManyPurchaseInput = {
+    id?: number
+    fromId: number
+    toId: number
+    isConfirmed?: boolean
+    type?: $Enums.MatchType
+    status?: $Enums.MatchStatus
+    giftId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MatchUpdateWithoutPurchaseInput = {
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
+    type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    from?: UserUpdateOneRequiredWithoutSentMatchesNestedInput
+    to?: UserUpdateOneRequiredWithoutReceivedMatchesNestedInput
+    gift?: GiftUpdateOneWithoutMatchesNestedInput
+  }
+
+  export type MatchUncheckedUpdateWithoutPurchaseInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fromId?: IntFieldUpdateOperationsInput | number
+    toId?: IntFieldUpdateOperationsInput | number
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
+    type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MatchUncheckedUpdateManyWithoutPurchaseInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fromId?: IntFieldUpdateOperationsInput | number
+    toId?: IntFieldUpdateOperationsInput | number
+    isConfirmed?: BoolFieldUpdateOperationsInput | boolean
+    type?: EnumMatchTypeFieldUpdateOperationsInput | $Enums.MatchType
+    status?: EnumMatchStatusFieldUpdateOperationsInput | $Enums.MatchStatus
+    giftId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type PodiumStarCreateManyPodiumInput = {
     id?: number
     userId: number
@@ -82659,6 +83824,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     preferredByUsers?: UserUpdateManyWithoutPreferredGiftNestedInput
+    matches?: MatchUpdateManyWithoutGiftNestedInput
+    purchases?: PurchaseUpdateManyWithoutGiftNestedInput
   }
 
   export type GiftUncheckedUpdateWithoutCompanyInput = {
@@ -82674,6 +83841,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     preferredByUsers?: UserUncheckedUpdateManyWithoutPreferredGiftNestedInput
+    matches?: MatchUncheckedUpdateManyWithoutGiftNestedInput
+    purchases?: PurchaseUncheckedUpdateManyWithoutGiftNestedInput
   }
 
   export type GiftUncheckedUpdateManyWithoutCompanyInput = {

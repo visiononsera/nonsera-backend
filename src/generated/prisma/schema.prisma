@@ -416,6 +416,10 @@ model Match {
 
   // Optionnel : Permet de savoir quel cadeau a déclenché ce match
   giftId Int?
+  gift   Gift? @relation(fields: [giftId], references: [id], onDelete: SetNull)
+
+  purchaseId Int?
+  purchase   Purchase? @relation(fields: [purchaseId], references: [id], onDelete: SetNull)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -505,6 +509,9 @@ model Gift {
 
   preferredByUsers User[] @relation("PreferredGift")
 
+  matches   Match[]
+  purchases Purchase[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -563,22 +570,35 @@ model Annonce {
 // PURCHASE
 // ======================================================
 
-model Purchase {
-  id         Int     @id @default(autoincrement())
-  annonceId  Int
-  annonce    Annonce @relation(fields: [annonceId], references: [id])
-  quantity   Int     @default(1)
-  senderId   Int
-  sender     User    @relation("PurchaseSender", fields: [senderId], references: [id])
-  receiverId Int
-  receiver   User    @relation("PurchaseReceiver", fields: [receiverId], references: [id])
+// ======================================================
+// PURCHASE
+// ======================================================
 
-  status            PurchaseStatus @default(PENDING)
+model Purchase {
+  id         Int            @id @default(autoincrement())
+  quantity   Int            @default(1)
+  totalPrice Decimal        @db.Decimal(18, 2) // <-- FIXATION DU PRIX A L'ACHAT (Comptabilité figée)
+  status     PurchaseStatus @default(PENDING)
+
+  // --- FLUX POLYMORTPHE (Les deux sont optionnels, une ligne contient l'un ou l'autre) ---
+  annonceId Int?
+  annonce   Annonce? @relation(fields: [annonceId], references: [id], onDelete: SetNull)
+
+  giftId Int?
+  gift   Gift? @relation(fields: [giftId], references: [id], onDelete: SetNull)
+
+  // --- ACTEURS ---
+  senderId   Int
+  sender     User @relation("PurchaseSender", fields: [senderId], references: [id])
+  receiverId Int
+  receiver   User @relation("PurchaseReceiver", fields: [receiverId], references: [id])
+
   deliveryAddress   String?
   recipientFullName String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  matches   Match[]
 
   @@index([senderId])
   @@index([receiverId])

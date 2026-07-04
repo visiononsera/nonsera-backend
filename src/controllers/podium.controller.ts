@@ -1,4 +1,4 @@
-import type { Request, Response } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import { PodiumService } from '../services/podium.service';
 import { MatchService } from '../services/match.service';
 import prisma from '../services/prisma.service';
@@ -8,7 +8,7 @@ export class PodiumController {
    * Force manuellement le rechargement/génération des podiums d'un pays
    * POST /podiums/trigger
    */
-  static async triggerRounds(req: Request, res: Response) {
+  static async triggerRounds(req: Request, res: Response, next: NextFunction) {
     try {
       const { country } = req.body;
       if (!country) {
@@ -23,7 +23,7 @@ export class PodiumController {
 
       return res.status(200).json({ message: `Podiums mis à jour avec succès pour le pays : ${country}` });
     } catch (error: any) {
-      return res.status(500).json({ error: error.message });
+      next(error);
     }
   }
 
@@ -31,14 +31,14 @@ export class PodiumController {
    * Récupérer la Star active du podium pour le spectateur connecté
    * GET /podiums/current-star
    */
-  static async getCurrentStarForSpectator(req: Request, res: Response) {
+  static async getCurrentStarForSpectator(req: Request, res: Response, next: NextFunction) {
     try {
-      const spectatorId = req.user?.id; // Injecté par loadContext
+      const spectatorId = (req as any).user?.id; 
       if (!spectatorId) {
         return res.status(401).json({ success: false, message: "Non authentifié." });
       }
 
-      const liveData = await PodiumService.getLiveStarForUser(spectatorId);
+      const liveData = await PodiumService.getLiveStarForUser(Number(spectatorId));
       
       if (!liveData) {
         return res.status(200).json({ 
@@ -48,7 +48,7 @@ export class PodiumController {
         });
       }
 
-      console.log("Star pour le profile connecté : ", liveData)
+      console.log("Star pour le profile connecté : ", liveData);
 
       return res.status(200).json({
         success: true,
@@ -59,20 +59,25 @@ export class PodiumController {
       });
     } catch (error: any) {
       console.error("[PodiumController.getCurrentStarForSpectator] Error:", error);
-      return res.status(500).json({ success: false, message: error.message });
+      next(error);
     }
   }
 
   /**
-   * Étape 1 : Le spectateur clique sur le bouton Danielle et offre un cadeau
-   * POST /podiums/danielle/send-gift
+   * Étape 1 : Le spectateur clique sur le bouton Danielle et offre une approche (Present ou Annonce)
+   * POST /podiums/danielle/send-present
    */
-  static async sendDanielleGift(req: Request, res: Response) {
+  static async sendDaniellePresent(req: Request, res: Response, next: NextFunction) {
     try {
-      const { podiumStarId, senderId, giftId } = req.body;
+      const senderId = (req as any).user?.id || req.body.senderId;
+      const { podiumStarId, presentId, annonceId } = req.body;
 
-      if (!podiumStarId || !senderId || !giftId) {
-        return res.status(400).json({ error: 'Paramètres manquants (podiumStarId, senderId, giftId).' });
+      if (!podiumStarId || !senderId) {
+        return res.status(400).json({ error: 'Paramètres manquants (podiumStarId, senderId).' });
+      }
+
+      if (!presentId && !annonceId) {
+        return res.status(400).json({ error: "Vous devez spécifier soit un présent simple (presentId), soit une annonce (annonceId)." });
       }
 
       // 1. Récupérer la star du podium pour valider son ID
@@ -87,44 +92,54 @@ export class PodiumController {
 
       const starId = round.userId;
 
-      // 2. Utiliser MatchService pour valider les statuts célibataires et notifier la Star
-      // (Bénéficie de la validation et de l'émission socket de sendDirectGift)
-      await MatchService.sendDirectGift(Number(senderId), starId, Number(giftId));
-
-      return res.status(200).json({ 
-        success: true, 
-        message: 'Proposition et cadeau envoyés avec succès à la Star. En attente de sa décision.' 
-      });
-    } catch (error: any) {
-      return res.status(500).json({ error: error.message });
-    }
-  }
-
-  /**
-   * Étape 2 : La Star clique sur "Accepter le cadeau"
-   * POST /podiums/danielle/accept-gift
-   */
-  static async acceptDanielleGift(req: Request, res: Response) {
-    try {
-      const { podiumStarId, matchSenderId, giftId } = req.body; // <--- Récupération essentielle du giftId ici
-
-      if (!podiumStarId || !matchSenderId || !giftId) {
-        return res.status(400).json({ error: 'Paramètres manquants (podiumStarId, matchSenderId, giftId).' });
-      }
-
-      // Exécute la mise en couple via MatchService + la passation automatique gérée par le service
-      await PodiumService.acceptDanielleGift(
-        Number(podiumStarId), 
-        Number(matchSenderId), 
-        Number(giftId)
+      // 2. Utilisation de la méthode métier de MatchService (avec signature à plat)
+      const result = await MatchService.sendGiftProposal(
+        Number(senderId),
+        Number(starId),
+        presentId ? Number(presentId) : null,
+        annonceId ? Number(annonceId) : null
       );
 
       return res.status(200).json({ 
         success: true, 
-        message: 'Cadeau accepté. Match validé et passation du podium effectuée.' 
+        message: 'Proposition et attention envoyées avec succès à la Star. En attente de sa décision.',
+        purchaseId: result.purchaseId
       });
     } catch (error: any) {
-      return res.status(500).json({ error: error.message });
+      next(error);
+    }
+  }
+
+  /**
+   * Étape 2 : La Star clique sur "Accepter l'attention"
+   * POST /podiums/danielle/accept-present
+   */
+  static async acceptDaniellePresent(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { podiumStarId, matchSenderId, presentId, annonceId } = req.body;
+
+      if (!podiumStarId || !matchSenderId) {
+        return res.status(400).json({ error: 'Paramètres manquants (podiumStarId, matchSenderId).' });
+      }
+
+      if (!presentId && !annonceId) {
+        return res.status(400).json({ error: "Référence du présent (presentId) ou de l'annonce (annonceId) manquante." });
+      }
+
+      // Exécute la mise en couple avec l'objet de paramètres attendu par PodiumService
+      await PodiumService.acceptDaniellePresent({
+        podiumStarId: Number(podiumStarId),
+        matchSenderId: Number(matchSenderId),
+        presentId: presentId ? Number(presentId) : null,
+        annonceId: annonceId ? Number(annonceId) : null
+      });
+
+      return res.status(200).json({ 
+        success: true, 
+        message: 'Attention acceptée. Match BOOST validé et passation du podium effectuée.' 
+      });
+    } catch (error: any) {
+      next(error);
     }
   }
 }

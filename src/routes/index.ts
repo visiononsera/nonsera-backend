@@ -8,6 +8,7 @@ import podiumRoutes from "./podiums.routes";
 import companyRoutes from "./companies.routes";
 import reservationRoutes from "./reservations.routes";
 import matchRoutes from "./match.routes";
+import giftsRoutes from "./gifts.routes";
 
 const apiRouter = Router();
 
@@ -20,5 +21,6 @@ apiRouter.use(podiumRoutes);
 apiRouter.use(companyRoutes);
 apiRouter.use(reservationRoutes);
 apiRouter.use(matchRoutes);
+apiRouter.use(giftsRoutes);
 
 export default apiRouter;

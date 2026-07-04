@@ -1,13 +1,15 @@
+import { PurchaseStatus } from "../generated/prisma";
 import prisma from "./prisma.service";
 import { walletService } from "./wallet.service";
+
+// Déclaration globale pour éviter les erreurs de build si io est injecté globalement
+declare const io: any;
 
 export class MatchService {
   /**
    * RÉCUPÉRATION DU MATCH ACTIF
-   * Permet de savoir si l'utilisateur est en couple et renvoie les infos du partenaire ainsi que la ChatRoom.
    */
   static async getCurrentMatch(userId: number) {
-    // 1. Trouver le match actif incluant les profils des deux participants
     const activeMatch = await prisma.match.findFirst({
       where: {
         status: "ACTIVE",
@@ -20,15 +22,11 @@ export class MatchService {
       },
     });
 
-    if (!activeMatch) {
-      return null;
-    }
+    if (!activeMatch) return null;
 
-    // 2. Identifier qui est le partenaire
     const isFromUser = activeMatch.fromId === userId;
     const partner = isFromUser ? activeMatch.to : activeMatch.from;
 
-    // 3. Récupérer la ChatRoom correspondante
     const participantOneId = Math.min(activeMatch.fromId, activeMatch.toId);
     const participantTwoId = Math.max(activeMatch.fromId, activeMatch.toId);
 
@@ -49,84 +47,136 @@ export class MatchService {
   }
 
   /**
-   * Étape 1 : Envoi d'un cadeau direct (Hors Podium)
-   * VERIFICATION : Bloquer l'envoi si l'expéditeur ou le destinataire est déjà en couple.
+   * Étape 1 : ENVOYER / ACHETER UN CADEAU (Virtuel ou Annonce)
+   * Crée SYSTEMATIQUEMENT une ligne Purchase au statut PENDING
    */
-  static async sendDirectGift(
+  static async sendGiftProposal(
     senderId: number,
     receiverId: number,
-    giftId: number,
+    giftId: number | null,
+    annonceId: number | null
   ) {
     if (senderId === receiverId) {
       throw new Error("Vous ne pouvez pas vous envoyer un cadeau à vous-même.");
     }
+    if (!giftId && !annonceId) {
+      throw new Error("Vous devez spécifier soit un cadeau simple (giftId), soit une annonce (annonceId).");
+    }
 
-    // 1. Vérification stricte du statut célibataire des deux côtés
-    const senderBusy = await this.isUserInCouple(senderId);
-    if (senderBusy) {
-      throw new Error(
-        "Vous êtes déjà en couple. Vous ne pouvez pas envoyer de cadeau direct.",
+    // 1. Vérifications des statuts relationnels
+    const [senderMatch, receiverMatch] = await Promise.all([
+      this.getCurrentMatch(senderId),
+      this.getCurrentMatch(receiverId),
+    ]);
+
+    if (receiverMatch && receiverMatch.partner.id !== senderId) {
+      throw new Error("Cet utilisateur est en couple. Seul son partenaire peut lui offrir des cadeaux.");
+    }
+
+    if (senderMatch && senderMatch.partner.id !== receiverId) {
+      throw new Error("Vous êtes en couple. Vous ne pouvez offrir des cadeaux qu'à votre partenaire.");
+    }
+
+    // 2. Calcul du prix et validation de l'existence de l'item
+    let totalPrice = 0;
+    let giftName = "";
+
+    if (giftId) {
+      const gift = await prisma.gift.findUnique({ where: { id: giftId } });
+      if (!gift || !gift.isAvailable) throw new Error("Le cadeau standard spécifié n'est pas disponible.");
+      totalPrice = Number(gift.price);
+      giftName = gift.name;
+    } else if (annonceId) {
+      const annonce = await prisma.annonce.findUnique({ where: { id: annonceId } });
+      if (!annonce || !annonce.isAvailable) throw new Error("L'annonce spécifiée n'est pas disponible.");
+      totalPrice = Number(annonce.price);
+      giftName = annonce.name;
+    }
+
+    // 3. TRANSACTION FINANCIÈRE ET CRÉATION DE L'ACHAT EN ATTENTE
+    return await prisma.$transaction(async (tx) => {
+      await walletService.debitWallet(
+        senderId,
+        totalPrice,
+        `Achat de l'approche cadeau : ${giftName} pour l'utilisateur #${receiverId}`,
+        tx
       );
-    }
 
-    const receiverBusy = await this.isUserInCouple(receiverId);
-    if (receiverBusy) {
-      throw new Error("Cet utilisateur est déjà en couple.");
-    }
+      // CORRECTION : On enregistre l'achat PEU IMPORTE le type (Polymorphisme complet)
+      const purchase = await tx.purchase.create({
+        data: {
+          senderId,
+          receiverId,
+          giftId: giftId || null,
+          annonceId: annonceId || null,
+          status: PurchaseStatus.PENDING,
+          quantity: 1,
+          totalPrice,
+        },
+      });
 
-    // 2. Validation du cadeau
-    const gift = await prisma.gift.findUnique({ where: { id: giftId } });
-    if (!gift) throw new Error("Le cadeau spécifié n'existe pas.");
+      // 4. Notification Temps Réel via Socket.io
+      if (typeof io !== "undefined") {
+        io.to(`user_${receiverId}`).emit("gift:received", {
+          senderId,
+          giftId,
+          annonceId,
+          purchaseId: purchase.id,
+          giftName,
+          message: "Vous avez reçu une attention et une proposition !",
+        });
+      }
 
-    // 3. Notification temps réel au destinataire
-    io.to(`user_${receiverId}`).emit("gift:received", {
-      senderId,
-      giftId,
-      giftName: gift.name,
-      giftPrice: gift.price,
-      message: "Vous avez reçu une proposition et un cadeau direct !",
+      return { success: true, purchaseId: purchase.id };
     });
-
-    return { success: true };
   }
 
   /**
-   * Étape 2 : Le destinataire accepte le cadeau direct
+   * Étape 2 : LE DESTINATAIRE ACCEPTE LE CADEAU / L'ANNONCE
    */
   static async acceptDirectGift(
     receiverId: number,
     senderId: number,
-    giftId: number,
-    matchType: "NORMAL" | "BOOST" = "NORMAL",
+    giftId: number | null,
+    annonceId: number | null,
+    matchType: "NORMAL" | "BOOST" = "NORMAL"
   ) {
     return await prisma.$transaction(async (tx) => {
-      const gift = await tx.gift.findUnique({ where: { id: giftId } });
-      if (!gift) throw new Error("Cadeau introuvable.");
+      // 1. Double check de sécurité concurrentielle
+      const [senderBusy, receiverBusy] = await Promise.all([
+        this.isUserInCouple(senderId, tx),
+        this.isUserInCouple(receiverId, tx),
+      ]);
 
-      const giftPrice = Number(gift.price);
-
-      // A. Débit sécurisé (Verrou exclusif sur les tranches financières)
-      await walletService.debitWallet(
-        senderId,
-        giftPrice,
-        `Achat Cadeau Direct (#${giftId}) accepté par l'utilisateur #${receiverId}`,
-        tx,
-      );
-
-      // B. Double-check de sécurité concurrentielle
-      const isBusy =
-        (await this.isUserInCouple(senderId, tx)) ||
-        (await this.isUserInCouple(receiverId, tx));
-      if (isBusy) {
-        throw new Error(
-          "Action annulée : L'un des utilisateurs s'est mis en couple entre-temps.",
-        );
+      if (senderBusy || receiverBusy) {
+        throw new Error("Action impossible : L'un des utilisateurs est déjà engagé dans un couple actif.");
       }
+
+      //  On récupère et met à jour le Purchase correspondant au flux polymorphe
+      const pendingPurchase = await tx.purchase.findFirst({
+        where: {
+          senderId,
+          receiverId,
+          giftId: giftId || null,
+          annonceId: annonceId || null,
+          status: PurchaseStatus.PENDING,
+        },
+        orderBy: { createdAt: "desc" },
+      });
+
+      if (!pendingPurchase) {
+        throw new Error("Aucune proposition d'achat en attente n'a été trouvée pour ce couple.");
+      }
+
+      await tx.purchase.update({
+        where: { id: pendingPurchase.id },
+        data: { status: PurchaseStatus.RECEIVED },
+      });
 
       const participantOneId = Math.min(senderId, receiverId);
       const participantTwoId = Math.max(senderId, receiverId);
 
-      // C. Création du Match ACTIVE et de la ChatRoom
+      // 3. Création ou activation du Match et de la ChatRoom
       const [match, chatRoom] = await Promise.all([
         tx.match.create({
           data: {
@@ -135,29 +185,41 @@ export class MatchService {
             isConfirmed: true,
             type: matchType,
             status: "ACTIVE",
-            giftId: giftId,
+            giftId: giftId || null,
+            purchaseId: pendingPurchase.id, // Liaison avec la table Purchase
           },
         }),
-        tx.chatRoom.create({
-          data: {
+        tx.chatRoom.upsert({
+          where: {
+            participantOneId_participantTwoId: { participantOneId, participantTwoId },
+          },
+          update: {
+            lastMessage: "Proposition acceptée ! Votre salon privé est désormais actif.",
+          },
+          create: {
             participantOneId,
             participantTwoId,
-            lastMessage: "Cadeau accepté ! Le salon privé est ouvert.",
+            lastMessage: "Félicitations ! Le salon privé est ouvert.",
           },
         }),
       ]);
 
-      io.to(`user_${senderId}`).to(`user_${receiverId}`).emit("match:created", {
-        chatRoomId: chatRoom.id,
-        partnerId: receiverId,
-      });
+      if (typeof io !== "undefined") {
+        io.to(`user_${senderId}`)
+          .to(`user_${receiverId}`)
+          .emit("match:created", {
+            chatRoomId: chatRoom.id,
+            partnerId: receiverId,
+            matchId: match.id,
+          });
+      }
 
       return { match, chatRoom };
     });
   }
 
   /**
-   * Étape 3 : RUPTURE (Unmatch -> Retour instantané au statut célibataire)
+   * Étape 3 : RUPTURE (Unmatch)
    */
   static async breakMatch(userId: number, partnerId: number) {
     return await prisma.$transaction(async (tx) => {
@@ -171,14 +233,11 @@ export class MatchService {
         },
       });
 
-      if (!activeMatch) {
-        throw new Error("Aucun match actif trouvé entre vous.");
-      }
+      if (!activeMatch) throw new Error("Aucun match actif trouvé entre vous.");
 
       const participantOneId = Math.min(userId, partnerId);
       const participantTwoId = Math.max(userId, partnerId);
 
-      // Le statut bascule sur BROKEN : les deux redeviennent célibataires instantanément
       await Promise.all([
         tx.match.update({
           where: { id: activeMatch.id },
@@ -190,22 +249,21 @@ export class MatchService {
         }),
       ]);
 
-      io.to(`user_${userId}`).to(`user_${partnerId}`).emit("match:broken", {
-        matchId: activeMatch.id,
-        message: "La relation a pris fin. Vous êtes de nouveau célibataire.",
-      });
+      if (typeof io !== "undefined") {
+        io.to(`user_${userId}`).to(`user_${partnerId}`).emit("match:broken", {
+          matchId: activeMatch.id,
+          message: "La relation a pris fin. Vous êtes de nouveau célibataire.",
+        });
+      }
 
       return { success: true };
     });
   }
 
   /**
-   * UTILITAIRE : Recherche si un utilisateur possède un match avec le statut 'ACTIVE'
+   * UTILITAIRE
    */
-  static async isUserInCouple(
-    userId: number,
-    txClient: any = null,
-  ): Promise<boolean> {
+  static async isUserInCouple(userId: number, txClient: any = null): Promise<boolean> {
     const tx = txClient || prisma;
     const activeMatch = await tx.match.findFirst({
       where: {

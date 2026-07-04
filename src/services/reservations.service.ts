@@ -1,6 +1,6 @@
 import prisma from "./prisma.service";
 import { ReservationStatus, CompanyCategory } from "../generated/prisma";
-import { walletService } from "./wallet.service"; 
+import { walletService } from "./wallet.service";
 
 export interface CreateReservationInput {
   userId: number;
@@ -8,8 +8,8 @@ export interface CreateReservationInput {
   startDate: Date;
   endDate?: Date | null;
   quantity?: number;
-  receiverId?: number | null; 
-  
+  receiverId?: number | null;
+
   // Options logistiques / Restaurant
   isDelivery?: boolean;
   deliveryAddress?: string | null;
@@ -24,19 +24,20 @@ export interface CreateReservationInput {
 }
 
 export const reservationsService = {
-
   /**
    * 1. CRÉATION D'UNE RÉSERVATION (Débit via le wallet)
    */
   create: async (data: CreateReservationInput) => {
     const annonce = await prisma.annonce.findUnique({
       where: { id: data.annonceId },
-      include: { company: true }
+      include: { company: true },
     });
 
     if (!annonce) throw new Error("L'annonce spécifiée n'existe pas.");
-    if (!annonce.isAvailable) throw new Error("Cette annonce n'est plus disponible.");
-    if (!annonce.company) throw new Error("L'annonce n'est rattachée à aucune entreprise valide.");
+    if (!annonce.isAvailable)
+      throw new Error("Cette annonce n'est plus disponible.");
+    if (!annonce.company)
+      throw new Error("L'annonce n'est rattachée à aucune entreprise valide.");
 
     const companyCategory = annonce.company.category;
     const quantity = data.quantity ?? 1;
@@ -44,7 +45,9 @@ export const reservationsService = {
     // --- VALIDATIONS PAR CATÉGORIE ---
     if (companyCategory === CompanyCategory.TRANSPORT) {
       if (!data.startLatitude || !data.startLongitude) {
-        throw new Error("Les coordonnées GPS de départ sont obligatoires pour un trajet.");
+        throw new Error(
+          "Les coordonnées GPS de départ sont obligatoires pour un trajet.",
+        );
       }
       if (annonce.nbPlaces !== null && annonce.nbPlaces < quantity) {
         throw new Error("Nombre de places insuffisantes pour ce trajet.");
@@ -52,36 +55,42 @@ export const reservationsService = {
     }
 
     if (companyCategory === CompanyCategory.HOTEL && !data.endDate) {
-      throw new Error("La date de fin est obligatoire pour réserver une chambre d'Hôtel.");
+      throw new Error(
+        "La date de fin est obligatoire pour réserver une chambre d'Hôtel.",
+      );
     }
 
     // --- CALCUL DU PRIX ---
     let basePrice = Number(annonce.price);
     if (companyCategory === CompanyCategory.HOTEL && data.endDate) {
-      const diffTime = Math.abs(new Date(data.endDate).getTime() - new Date(data.startDate).getTime());
+      const diffTime = Math.abs(
+        new Date(data.endDate).getTime() - new Date(data.startDate).getTime(),
+      );
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       basePrice = basePrice * (diffDays > 0 ? diffDays : 1);
     }
 
     const totalPrice = basePrice * quantity;
-    const reference = `RES-${new Date().toISOString().slice(0,10).replace(/-/g, '')}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+    const reference = `RES-${new Date().toISOString().slice(0, 10).replace(/-/g, "")}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
 
     // --- INITIATION DE LA TRANSACTION ---
     return await prisma.$transaction(async (tx) => {
-      
       // Utilisation de ton debitWallet (Remboursement / FIFO automatique)
       await walletService.debitWallet(
         data.userId,
         totalPrice,
         `Réservation ${reference} - ${annonce.name}`,
-        tx // Partage de la transaction Prisma
+        tx, // Partage de la transaction Prisma
       );
 
       // Si c'est un transport, on réserve les places
-      if (companyCategory === CompanyCategory.TRANSPORT && annonce.nbPlaces !== null) {
+      if (
+        companyCategory === CompanyCategory.TRANSPORT &&
+        annonce.nbPlaces !== null
+      ) {
         await tx.annonce.update({
           where: { id: annonce.id },
-          data: { nbPlaces: { decrement: quantity } }
+          data: { nbPlaces: { decrement: quantity } },
         });
       }
 
@@ -105,12 +114,88 @@ export const reservationsService = {
           endLatitude: data.endLatitude ?? null,
           endLongitude: data.endLongitude ?? null,
           startAddressText: data.startAddressText ?? null,
-          cancellationDeadline: companyCategory === CompanyCategory.HOTEL 
-            ? new Date(new Date(data.startDate).getTime() - 24 * 60 * 60 * 1000) // 24h avant pour Hôtel
-            : new Date(new Date(data.startDate).getTime() - 2 * 60 * 60 * 1000)  // 2h par défaut (Resto, Activité...)
-        }
+          cancellationDeadline:
+            companyCategory === CompanyCategory.HOTEL
+              ? new Date(
+                  new Date(data.startDate).getTime() - 24 * 60 * 60 * 1000,
+                ) // 24h avant pour Hôtel
+              : new Date(
+                  new Date(data.startDate).getTime() - 2 * 60 * 60 * 1000,
+                ), // 2h par défaut (Resto, Activité...)
+        },
       });
     });
+  },
+
+  /**
+   * 1b. RÉCUPÉRATION DES RÉSERVATIONS D'UN UTILISATEUR
+   * Récupère l'historique complet avec les détails de l'annonce et de l'entreprise
+   */
+  getByUser: async (
+    userId: number,
+    options?: { status?: ReservationStatus; limit?: number; page?: number },
+  ) => {
+    const limit = options?.limit ?? 20;
+    const page = options?.page ?? 1;
+    const skip = (page - 1) * limit;
+
+    // Construction du filtre de recherche
+    const whereCondition: any = {
+      userId: userId,
+    };
+
+    // Si un statut spécifique est demandé (ex: PENDING, CONFIRMED...)
+    if (options?.status) {
+      whereCondition.status = options.status;
+    }
+
+    // Récupération des données et du compte total en parallèle
+    const [reservations, total] = await Promise.all([
+      prisma.reservation.findMany({
+        where: whereCondition,
+        include: {
+          annonce: {
+            include: {
+              company: {
+                select: {
+                  id: true,
+                  name: true,
+                  category: true,
+                  logo: true,
+                  city: true,
+                  country: true,
+                },
+              },
+            },
+          },
+          // Inclut le profil du receveur si le cadeau a été offert à un tiers
+          receiver: {
+            select: {
+              id: true,
+              fullname: true,
+              profilePhoto: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: "desc", // Les plus récentes en premier
+        },
+        take: limit,
+        skip: skip,
+      }),
+      prisma.reservation.count({ where: whereCondition }),
+    ]);
+
+    return {
+      success: true,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+      data: reservations,
+    };
   },
 
   /**
@@ -118,14 +203,16 @@ export const reservationsService = {
    * Règle d'encaissement intelligente selon le domaine d'activité.
    */
   confirm: async (id: number) => {
-    const reservation = await prisma.reservation.findUnique({ 
+    const reservation = await prisma.reservation.findUnique({
       where: { id },
-      include: { annonce: { include: { company: true } } }
+      include: { annonce: { include: { company: true } } },
     });
 
     if (!reservation) throw new Error("Réservation introuvable.");
     if (reservation.status !== ReservationStatus.PENDING) {
-      throw new Error(`Action impossible. Statut actuel : ${reservation.status}`);
+      throw new Error(
+        `Action impossible. Statut actuel : ${reservation.status}`,
+      );
     }
 
     const companyCategory = reservation.annonce.company?.category;
@@ -133,7 +220,7 @@ export const reservationsService = {
     // Étape 1 : Passer le statut global à CONFIRMED
     const updatedReservation = await prisma.reservation.update({
       where: { id },
-      data: { status: ReservationStatus.CONFIRMED }
+      data: { status: ReservationStatus.CONFIRMED },
     });
 
     // Étape 2 : Encaissement immédiat pour Hôtel, Resto et Activité.
@@ -151,15 +238,19 @@ export const reservationsService = {
   startTrip: async (id: number) => {
     const reservation = await prisma.reservation.findUnique({
       where: { id },
-      include: { annonce: { include: { company: true } } }
+      include: { annonce: { include: { company: true } } },
     });
 
     if (!reservation) throw new Error("Réservation introuvable.");
     if (reservation.annonce.company?.category !== CompanyCategory.TRANSPORT) {
-      throw new Error("Cette action est réservée pour le suivi des trajets de Transport.");
+      throw new Error(
+        "Cette action est réservée pour le suivi des trajets de Transport.",
+      );
     }
     if (reservation.status !== ReservationStatus.CONFIRMED) {
-      throw new Error("La course ne peut démarrer que si la réservation est confirmée.");
+      throw new Error(
+        "La course ne peut démarrer que si la réservation est confirmée.",
+      );
     }
 
     return { success: true, message: "Le voyage a commencé.", reservation };
@@ -173,14 +264,21 @@ export const reservationsService = {
   completeOrProcess: async (id: number) => {
     const reservation = await prisma.reservation.findUnique({
       where: { id },
-      include: { annonce: { include: { company: true } } }
+      include: { annonce: { include: { company: true } } },
     });
 
     if (!reservation) throw new Error("Réservation introuvable.");
-    
+
     // On tolère PENDING ici pour absorber l'appel chaîné de la méthode `confirm`
-    if (!(reservation.status === ReservationStatus.CONFIRMED || reservation.status === ReservationStatus.PENDING)) {
-      throw new Error("Seule une réservation en cours ou confirmée peut être finalisée.");
+    if (
+      !(
+        reservation.status === ReservationStatus.CONFIRMED ||
+        reservation.status === ReservationStatus.PENDING
+      )
+    ) {
+      throw new Error(
+        "Seule une réservation en cours ou confirmée peut être finalisée.",
+      );
     }
 
     const company = reservation.annonce.company;
@@ -190,13 +288,13 @@ export const reservationsService = {
       // 1. Créditer la balance réelle de la Company
       await tx.company.update({
         where: { id: company.id },
-        data: { balance: { increment: Number(reservation.totalPrice) } }
+        data: { balance: { increment: Number(reservation.totalPrice) } },
       });
 
       // 2. Clôturer la réservation au statut final PROCESSED
       return await tx.reservation.update({
         where: { id },
-        data: { status: ReservationStatus.PROCESSED }
+        data: { status: ReservationStatus.PROCESSED },
       });
     });
   },
@@ -204,30 +302,43 @@ export const reservationsService = {
   /**
    * 5. OUVERTURE D'UN LITIGE (Par l'utilisateur ou la compagnie)
    */
-  openDispute: async (id: number, openedBy: "USER" | "COMPANY", reason: string) => {
+  openDispute: async (
+    id: number,
+    openedBy: "USER" | "COMPANY",
+    reason: string,
+  ) => {
     const reservation = await prisma.reservation.findUnique({ where: { id } });
     if (!reservation) throw new Error("Réservation introuvable.");
 
-    if (reservation.status === ReservationStatus.CANCELLED || reservation.status === ReservationStatus.PROCESSED) {
-      throw new Error("Impossible d'ouvrir un litige sur une réservation déjà clôturée.");
+    if (
+      reservation.status === ReservationStatus.CANCELLED ||
+      reservation.status === ReservationStatus.PROCESSED
+    ) {
+      throw new Error(
+        "Impossible d'ouvrir un litige sur une réservation déjà clôturée.",
+      );
     }
 
     return await prisma.reservation.update({
       where: { id },
       data: {
         status: ReservationStatus.LITIGE,
-        litigeReason: `Litige ouvert par le ${openedBy}. Motif : ${reason}`
-      }
+        litigeReason: `Litige ouvert par le ${openedBy}. Motif : ${reason}`,
+      },
     });
   },
 
   /**
    * 6. RÉSOLUTION DU LITIGE (Arbitrage exclusif Admin)
    */
-  resolveDispute: async (id: number, decision: "REFUND_CLIENT" | "PAY_COMPANY", adminNotes: string) => {
+  resolveDispute: async (
+    id: number,
+    decision: "REFUND_CLIENT" | "PAY_COMPANY",
+    adminNotes: string,
+  ) => {
     const reservation = await prisma.reservation.findUnique({
       where: { id },
-      include: { annonce: { include: { company: true } } }
+      include: { annonce: { include: { company: true } } },
     });
 
     if (!reservation) throw new Error("Réservation introuvable.");
@@ -240,15 +351,21 @@ export const reservationsService = {
       let historicalTrancheId = `REF-LITIGE-${Date.now()}`;
 
       await prisma.$transaction(async (tx) => {
-        if (reservation.annonce.company?.category === CompanyCategory.TRANSPORT && reservation.annonce.nbPlaces !== null) {
+        if (
+          reservation.annonce.company?.category === CompanyCategory.TRANSPORT &&
+          reservation.annonce.nbPlaces !== null
+        ) {
           await tx.annonce.update({
             where: { id: reservation.annonceId },
-            data: { nbPlaces: { increment: reservation.quantity } }
+            data: { nbPlaces: { increment: reservation.quantity } },
           });
         }
 
         const historicalDebit = await tx.walletTranche.findFirst({
-          where: { userId: reservation.userId, description: { contains: reservation.reference } }
+          where: {
+            userId: reservation.userId,
+            description: { contains: reservation.reference },
+          },
         });
         if (historicalDebit) historicalTrancheId = historicalDebit.trancheId;
       });
@@ -257,15 +374,15 @@ export const reservationsService = {
         reservation.userId,
         historicalTrancheId,
         Number(reservation.totalPrice),
-        `Remboursement arbitrage litige : ${adminNotes}`
+        `Remboursement arbitrage litige : ${adminNotes}`,
       );
 
       return await prisma.reservation.update({
         where: { id },
         data: {
           status: ReservationStatus.CANCELLED,
-          litigeReason: `Tranché par Admin (Remboursement Client). Notes : ${adminNotes}`
-        }
+          litigeReason: `Tranché par Admin (Remboursement Client). Notes : ${adminNotes}`,
+        },
       });
     }
 
@@ -277,7 +394,7 @@ export const reservationsService = {
       await prisma.$transaction(async (tx) => {
         await tx.company.update({
           where: { id: company.id },
-          data: { balance: { increment: Number(reservation.totalPrice) } }
+          data: { balance: { increment: Number(reservation.totalPrice) } },
         });
       });
 
@@ -285,19 +402,19 @@ export const reservationsService = {
         where: { id },
         data: {
           status: ReservationStatus.PROCESSED,
-          litigeReason: `Tranché par Admin (Versement Partenaire). Notes : ${adminNotes}`
-        }
+          litigeReason: `Tranché par Admin (Versement Partenaire). Notes : ${adminNotes}`,
+        },
       });
     }
   },
 
   /**
-   * 7. ANNULATION ET REMBOURSEMENT PAR SOUSTRACTION 
+   * 7. ANNULATION ET REMBOURSEMENT PAR SOUSTRACTION
    */
   cancel: async (id: number, actor: "USER" | "COMPANY", reason?: string) => {
     const reservation = await prisma.reservation.findUnique({
       where: { id },
-      include: { annonce: { include: { company: true } } }
+      include: { annonce: { include: { company: true } } },
     });
 
     if (!reservation) throw new Error("Réservation introuvable.");
@@ -308,21 +425,28 @@ export const reservationsService = {
       throw new Error("Cette réservation est déjà clôturée ou annulée.");
     }
     if (reservation.status === ReservationStatus.LITIGE) {
-      throw new Error("Un litige est en cours sur cette réservation. Utilisez l'arbitrage Admin.");
+      throw new Error(
+        "Un litige est en cours sur cette réservation. Utilisez l'arbitrage Admin.",
+      );
     }
 
     let shouldRefund = false;
 
     if (actor === "COMPANY") {
-      shouldRefund = true; 
+      shouldRefund = true;
     } else if (actor === "USER") {
       if (reservation.status === ReservationStatus.PENDING) {
         shouldRefund = true;
       } else if (reservation.status === ReservationStatus.CONFIRMED) {
-        if (!reservation.cancellationDeadline || new Date() <= new Date(reservation.cancellationDeadline)) {
+        if (
+          !reservation.cancellationDeadline ||
+          new Date() <= new Date(reservation.cancellationDeadline)
+        ) {
           shouldRefund = true;
         } else {
-          throw new Error("Le délai de rétractation gratuite pour cette réservation est dépassé.");
+          throw new Error(
+            "Le délai de rétractation gratuite pour cette réservation est dépassé.",
+          );
         }
       }
     }
@@ -331,18 +455,21 @@ export const reservationsService = {
 
     // Étape 1 : Libération des verrous et stocks dans la transaction principale
     await prisma.$transaction(async (tx) => {
-      if (reservation.annonce.company?.category === CompanyCategory.TRANSPORT && reservation.annonce.nbPlaces !== null) {
+      if (
+        reservation.annonce.company?.category === CompanyCategory.TRANSPORT &&
+        reservation.annonce.nbPlaces !== null
+      ) {
         await tx.annonce.update({
           where: { id: reservation.annonceId },
-          data: { nbPlaces: { increment: reservation.quantity } }
+          data: { nbPlaces: { increment: reservation.quantity } },
         });
       }
 
       const historicalDebit = await tx.walletTranche.findFirst({
-        where: { 
+        where: {
           userId: reservation.userId,
-          description: { contains: reservation.reference }
-        }
+          description: { contains: reservation.reference },
+        },
       });
 
       if (historicalDebit) {
@@ -365,8 +492,8 @@ export const reservationsService = {
       where: { id },
       data: {
         status: ReservationStatus.CANCELLED,
-        litigeReason: reason ?? `Annulée par le profil : ${actor}`
-      }
+        litigeReason: reason ?? `Annulée par le profil : ${actor}`,
+      },
     });
-  }
+  },
 };

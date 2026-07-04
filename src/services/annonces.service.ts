@@ -105,7 +105,7 @@ export const annoncesService = {
   },
 
   /**
-   * 3. RÉCUPÉRATION INDIVIDUELLE D'UNE ANNONCE (Détails)
+   * 3. RÉCUPÉRATION INDIVIDUELLE D'UNE ANNONCE
    */
   getById: async (id: number) => {
     const annonce = await prisma.annonce.findUnique({
