@@ -13,7 +13,7 @@
     "clean": "rm -rf dist",
     "prisma:generate": "prisma generate",
     "type-check": "tsc --noEmit",
-    "build": "npm run prisma:generate && npm run type-check && tsup src/server.ts --format esm --clean --minify",
+    "build": "npm run prisma:generate && npm run type-check && tsup src/server.ts --format esm --clean --minify --platform node",
     "start": "NODE_ENV=production node dist/server.js",
     "start:test": "NODE_ENV=test node dist/server.js",
     "dev": "tsx watch src/server.ts",
