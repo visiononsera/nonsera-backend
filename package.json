@@ -11,12 +11,13 @@
   "main": "server.js",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "prisma generate && tsup src/server.ts --format esm --clean --minify",
+    "prisma:generate": "prisma generate",
+    "type-check": "tsc --noEmit",
+    "build": "npm run prisma:generate && npm run type-check && tsup src/server.ts --format esm --clean --minify",
     "start": "NODE_ENV=production node dist/server.js",
     "start:test": "NODE_ENV=test node dist/server.js",
     "dev": "tsx watch src/server.ts",
     "dev:test": "NODE_ENV=test tsx watch src/server.ts",
-    "prisma:generate": "prisma generate",
     "prisma:push:test": "env-cmd -f .env.test prisma db push",
     "seed:test": "NODE_ENV=test env-cmd -f .env.test tsx prisma/seed.ts"
   },
