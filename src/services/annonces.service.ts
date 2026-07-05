@@ -1,13 +1,14 @@
 import prisma from "./prisma.service";
 import { AmbianceType, VehicleType, ActivityType } from "../generated/prisma";
+import { storageService } from "./storage/storage.factory.js";
 
 export interface AnnonceCreateInput {
   name: string;
   price: number | string;
   points?: number;
   image: string;
-  description?: string | null; 
-  category?: string | null;    
+  description?: string | null;
+  category?: string | null;
   expiresIn?: number;
   companyId: number;
   ambiance?: AmbianceType | null;
@@ -31,11 +32,10 @@ export interface AnnonceFilters {
 }
 
 export const annoncesService = {
-
   /**
    * 1. CRÉATION D'UNE ANNONCE
    */
-  create: async (data: AnnonceCreateInput) => {
+  create: async (data: AnnonceCreateInput, file?: Express.Multer.File) => {
     // Vérification préalable de l'existence de l'entreprise
     const company = await prisma.company.findUnique({
       where: { id: data.companyId },
@@ -46,27 +46,38 @@ export const annoncesService = {
       );
     }
 
+    // Gestion de l'upload d'image si un fichier est fourni
+    let imageUrl = data.image; // Par défaut, on utilise l'image existante si elle est fournie
+    if (file) {
+      // Appel du service de stockage pour uploader le fichier
+      imageUrl = await storageService.uploadFile(file);
+    } else if (!imageUrl && !data.description && !data.points) {
+      // Si aucune image n'est fournie et que d'autres champs obligatoires sont manquants, lever une erreur
+      // Vous pouvez personnaliser cette validation selon vos besoins
+      throw new Error("Une image est requise pour créer une annonce.");
+    }
+
     return await prisma.annonce.create({
       data: {
         name: data.name,
         price: data.price,
         points: data.points ?? 1,
-        image: data.image,
+        image: imageUrl,
         description: data.description ?? null,
         category: data.category ?? null,
         expiresIn: data.expiresIn ?? 30,
         companyId: data.companyId,
-        
+
         // Données contextuelles injectées de manière sécurisée
         ambiance: data.ambiance ?? "SALLE_PRINCIPALE",
         hasAnimation: data.hasAnimation ?? false,
         isDeliveryAvailable: data.isDeliveryAvailable ?? false,
         isRomantique: data.isRomantique ?? false,
         equipements: data.equipements ?? null,
-        
+
         vehicleType: data.vehicleType ?? null,
         nbPlaces: data.nbPlaces ?? null,
-        activityType: data.activityType ?? null
+        activityType: data.activityType ?? null,
       },
     });
   },
@@ -81,6 +92,7 @@ export const annoncesService = {
       isVerified?: boolean;
       isSpecial?: boolean;
     },
+    file?: Express.Multer.File,
   ) => {
     const annonce = await prisma.annonce.findUnique({ where: { id } });
     if (!annonce) throw new Error("Annonce introuvable.");
@@ -90,16 +102,54 @@ export const annoncesService = {
       updateData.price = updateData.price;
     }
 
+    let imageUrl = updateData.image;
+    // Gérer l'upload si un nouveau fichier est fourni
+    if (file) {
+      // Uploader la nouvelle image
+      imageUrl = await storageService.uploadFile(file);
+
+      // Nettoyage : Supprimer l'ancienne image si elle existe et n'est pas la même que la nouvelle
+      if (annonce.image && annonce.image !== imageUrl) {
+        // Suppression asynchrone pour ne pas bloquer l'utilisateur, avec capture d'erreur
+        storageService
+          .deleteFile(annonce.image)
+          .catch((err) =>
+            console.error(
+              `Impossible de supprimer l'ancienne image de l'annonce ${id} :`,
+              err,
+            ),
+          );
+      }
+    }
     return await prisma.annonce.update({
       where: { id },
       data: {
         ...updateData,
-        description: updateData.description !== undefined ? (updateData.description ?? null) : undefined,
-        category: updateData.category !== undefined ? (updateData.category ?? null) : undefined,
-        ambiance: updateData.ambiance !== undefined ? (updateData.ambiance ?? null) : undefined,
-        vehicleType: updateData.vehicleType !== undefined ? (updateData.vehicleType ?? null) : undefined,
-        nbPlaces: updateData.nbPlaces !== undefined ? (updateData.nbPlaces ?? null) : undefined,
-        activityType: updateData.activityType !== undefined ? (updateData.activityType ?? null) : undefined,
+        image: imageUrl,
+        description:
+          updateData.description !== undefined
+            ? (updateData.description ?? null)
+            : undefined,
+        category:
+          updateData.category !== undefined
+            ? (updateData.category ?? null)
+            : undefined,
+        ambiance:
+          updateData.ambiance !== undefined
+            ? (updateData.ambiance ?? null)
+            : undefined,
+        vehicleType:
+          updateData.vehicleType !== undefined
+            ? (updateData.vehicleType ?? null)
+            : undefined,
+        nbPlaces:
+          updateData.nbPlaces !== undefined
+            ? (updateData.nbPlaces ?? null)
+            : undefined,
+        activityType:
+          updateData.activityType !== undefined
+            ? (updateData.activityType ?? null)
+            : undefined,
       } as any,
     });
   },

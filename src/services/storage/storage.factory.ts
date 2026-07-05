@@ -2,6 +2,7 @@ import { STORAGE_PROVIDER } from "../../config/env";
 import { IStorageService } from "./storage.interface";
 import { LocalStorageService } from "./local.storage";
 import { S3StorageService } from "./s3.storage";
+import { CloudinaryStorageService } from "./cloudinary.storage";
 
 class StorageFactory {
   // Typage via l'interface commune pour accepter n'importe quel provider implémenté
@@ -16,6 +17,9 @@ class StorageFactory {
     switch (STORAGE_PROVIDER?.toUpperCase()) {
       case "S3":
         this.service = new S3StorageService();
+        break;
+      case "CLOUDINARY":
+        this.service = new CloudinaryStorageService();
         break;
       case "LOCAL":
       default:

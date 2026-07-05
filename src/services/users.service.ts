@@ -1,7 +1,8 @@
 import bcrypt from "bcrypt";
 import prisma from "./prisma.service.js";
-import type { Gender, Role } from "../generated/prisma/index.js";
+import type { Gender, Role } from "../generated/prisma/index";
 import { SALT_ROUND } from "../config/env.js";
+import { storageService } from "./storage/storage.factory";
 
 export const usersService = {
   getMany: async (
@@ -174,6 +175,8 @@ export const usersService = {
         }
       }
 
+      const newPhotoUrl = await storageService.uploadFile(inputData.profilePhoto);
+
       // Algorithme de décalage de la file d'attente (Max 3 photos secondaires)
       // L'ancienne Photo Principale devient l'Image 2 (firstOtherPhoto)
       // L'ancienne Image 2 devient l'Image 3 (secondOtherPhoto)
@@ -187,7 +190,7 @@ export const usersService = {
       }
 
       // La nouvelle image devient l'image principale
-      updatePayload.profilePhoto = inputData.profilePhoto;
+      updatePayload.profilePhoto = newPhotoUrl;
       updatePayload.lastPhotoUpdated = new Date();
     }
 

@@ -21,3 +21,7 @@ export const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID || '';
 export const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN || '';
 export const VERIFICATION_SID = process.env.VERIFICATION_SID || '';
 export const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER || '';
+
+export const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME || '';
+export const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY || '';
+export const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET || '';
