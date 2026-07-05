@@ -1,1 +1,0 @@
-{"version":3,"file":"appwrite.config.d.ts","sourceRoot":"","sources":["../../src/config/appwrite.config.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,MAAM,EAAE,SAAS,EAAE,OAAO,EAAE,MAAM,eAAe,CAAC;AAc3D,QAAA,MAAM,MAAM,QAAe,CAAC;AAM5B,eAAO,MAAM,cAAc;;;;;CAK1B,CAAC;AAGF,eAAO,MAAM,UAAU,WAAwB,CAAC;AAChD,eAAO,MAAM,eAAe,SAAsB,CAAC;AACnD,eAAe,MAAM,CAAC"}

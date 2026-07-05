@@ -1,1 +1,0 @@
-{"version":3,"file":"storage.interface.d.ts","sourceRoot":"","sources":["../../../src/services/storage/storage.interface.ts"],"names":[],"mappings":"AAAA,8BAAsB,eAAe;IACnC;;;OAGG;IACH,QAAQ,CAAC,UAAU,CAAC,IAAI,EAAE,OAAO,CAAC,MAAM,CAAC,IAAI,GAAG,OAAO,CAAC,MAAM,CAAC;IAE/D;;;OAGG;IACH,QAAQ,CAAC,UAAU,CAAC,OAAO,EAAE,MAAM,GAAG,OAAO,CAAC,IAAI,CAAC;CACpD"}
