@@ -1,0 +1,21 @@
+export declare const PORT: number;
+export declare const NODE_ENV: string;
+export declare const APP_URL: string;
+export declare const SALT_ROUND = 12;
+export declare const JWT_SECRET: string;
+export declare const JWT_DURATION: string;
+export declare const JWT_REFRESH_SECRET: string;
+export declare const JWT_REFRESH_DURATION: string;
+export declare const STORAGE_PROVIDER: string;
+export declare const AWS_ACCESS_KEY_ID: string;
+export declare const AWS_SECRET_ACCESS_KEY: string;
+export declare const AWS_REGION: string;
+export declare const S3_BUCKET_NAME: string;
+export declare const TWILIO_ACCOUNT_SID: string;
+export declare const TWILIO_AUTH_TOKEN: string;
+export declare const VERIFICATION_SID: string;
+export declare const TWILIO_PHONE_NUMBER: string;
+export declare const CLOUDINARY_CLOUD_NAME: string;
+export declare const CLOUDINARY_API_KEY: string;
+export declare const CLOUDINARY_API_SECRET: string;
+//# sourceMappingURL=env.d.ts.map

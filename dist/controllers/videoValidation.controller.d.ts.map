@@ -1,0 +1,1 @@
+{"version":3,"file":"videoValidation.controller.d.ts","sourceRoot":"","sources":["../../src/controllers/videoValidation.controller.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAC;AAIjD,eAAO,MAAM,yBAAyB;IACpC;;OAEG;sBACqB,OAAO,OAAO,QAAQ;IAe9C;;OAEG;iCACgC,OAAO,OAAO,QAAQ;IAuDzD;;OAEG;+BAC8B,OAAO,OAAO,QAAQ;CA+CxD,CAAC"}

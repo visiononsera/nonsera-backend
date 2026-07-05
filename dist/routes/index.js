@@ -9,10 +9,7 @@ import companyRoutes from "./companies.routes";
 import reservationRoutes from "./reservations.routes";
 import matchRoutes from "./match.routes";
 import giftsRoutes from "./gifts.routes";
-import annoncesRoutes from "./annonces.routes";
-
 const apiRouter = Router();
-
 apiRouter.use(authRoutes);
 apiRouter.use(userRoutes);
 apiRouter.use(videoRoutes);
@@ -23,6 +20,5 @@ apiRouter.use(companyRoutes);
 apiRouter.use(reservationRoutes);
 apiRouter.use(matchRoutes);
 apiRouter.use(giftsRoutes);
-apiRouter.use(annoncesRoutes);
-
 export default apiRouter;
+//# sourceMappingURL=index.js.map

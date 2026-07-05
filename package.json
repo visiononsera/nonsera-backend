@@ -12,8 +12,12 @@
   "scripts": {
     "build": "tsc",
     "start": "NODE_ENV=production node dist/server.js",
+    "start:test": "NODE_ENV=test node dist/server.js",
     "dev": "tsx watch src/server.ts",
-    "seed": "tsx prisma/seed.ts"
+    "dev:test": "NODE_ENV=test tsx watch src/server.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:push:test": "env-cmd -f .env.test prisma db push",
+    "seed:test": "NODE_ENV=test env-cmd -f .env.test tsx src/database/seed.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1068.0",
