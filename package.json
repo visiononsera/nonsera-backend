@@ -9,20 +9,14 @@
   "author": "breality.",
   "type": "module",
   "main": "server.js",
-  "engines": {
-    "node": "22.x"
-  },
   "scripts": {
-    "clean": "rm -rf dist",
-    "prisma:generate": "prisma generate",
-    "type-check": "tsc --noEmit",
-    "build": "npm run prisma:generate && npm run type-check && tsup",
-    "start": "NODE_ENV=production node dist/server.js",
-    "start:test": "NODE_ENV=test node dist/server.js",
-    "dev": "tsx watch src/server.ts",
-    "dev:test": "NODE_ENV=test tsx watch src/server.ts",
-    "prisma:push:test": "env-cmd -f .env.test prisma db push",
-    "seed:test": "NODE_ENV=test env-cmd -f .env.test tsx prisma/seed.ts"
+    "build": "prisma generate",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "doctor": "node scripts/doctor.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1068.0",
@@ -35,6 +29,7 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "glob": "^13.0.6",
     "helmet": "^8.2.0",
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.11.0",
@@ -44,27 +39,23 @@
     "node-cron": "^4.2.1",
     "pg": "^8.21.0",
     "socket.io": "^4.8.3",
+    "swagger-jsdoc": "^6.3.0",
     "swagger-ui-express": "^5.0.1",
     "twilio": "^6.0.2",
     "winston": "^3.19.0",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "@types/bcrypt": "^6.0.0",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/morgan": "^1.9.10",
-    "@types/multer": "^2.1.0",
-    "@types/node": "^25.9.3",
-    "@types/pg": "^8.20.0",
-    "@types/swagger-ui-express": "^4.1.8",
-    "@types/yamljs": "^0.2.34",
+    "@eslint/js": "^9.39.4",
+    "@eslint/json": "^2.0.1",
+    "@eslint/markdown": "^8.0.3",
+    "eslint": "^9.39.4",
+    "globals": "^15.15.0",
     "nodemon": "^3.1.14",
-    "prisma": "^7.8.0",
-    "ts-node-dev": "^2.0.0",
-    "tsup": "^8.5.1",
-    "tsx": "^4.22.4",
-    "typescript": "^6.0.3"
-  }
+    "prisma": "^7.8.0"
+  },
+  "files": [
+    "prisma",
+    "docs"
+  ]
 }
