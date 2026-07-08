@@ -159,7 +159,7 @@ app.use(
 );
 
 // Route Swagger
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/", (req, res) => {
   res.status(200).send("<h1>Nonsera Unified Backend Engine</h1>");
