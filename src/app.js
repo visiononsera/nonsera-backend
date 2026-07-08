@@ -14,129 +14,130 @@ import { errorHandler } from "./middlewares/error.middleware.js";
 const app = express();
 
 
+// A CORRIGER ULTERIEUREMENT
 // -----------------------------------------------------------------------------
 // Swagger Configuration
 // -----------------------------------------------------------------------------
-const swaggerOptions = {
-  definition: {
-    openapi: "3.0.3",
-    info: {
-      title: "Nonsera Unified Backend API",
-      version: "1.0.0",
-      description: "Official REST API documentation",
-    },
+// const swaggerOptions = {
+//   definition: {
+//     openapi: "3.0.3",
+//     info: {
+//       title: "Nonsera Unified Backend API",
+//       version: "1.0.0",
+//       description: "Official REST API documentation",
+//     },
 
-    servers: [
-      {
-        url: "http://localhost:3000/api/v1",
-      },
-    ],
+//     servers: [
+//       {
+//         url: "http://localhost:3000/api/v1",
+//       },
+//     ],
 
-    components: {
-      securitySchemes: {
-        bearerAuth: {
-          type: "http",
-          scheme: "bearer",
-          bearerFormat: "JWT",
-        },
-      },
-    },
-  },
+//     components: {
+//       securitySchemes: {
+//         bearerAuth: {
+//           type: "http",
+//           scheme: "bearer",
+//           bearerFormat: "JWT",
+//         },
+//       },
+//     },
+//   },
 
-  apis: [
-   "src/routes/**/*.js",
-    "src/docs/**/*.yaml",
-  ],
-};
+//   apis: [
+//    "src/routes/**/*.js",
+//     "src/docs/**/*.yaml",
+//   ],
+// };
 
-let swaggerDocument = {};
+// let swaggerDocument = {};
 
-try {
-  console.log("\n=====================================");
-  console.log("      SWAGGER SCAN STARTED");
-  console.log("=====================================\n");
+// try {
+//   console.log("\n=====================================");
+//   console.log("      SWAGGER SCAN STARTED");
+//   console.log("=====================================\n");
 
-  // --------------------------------------------------
-  // Display scanned files
-  // --------------------------------------------------
+//   // --------------------------------------------------
+//   // Display scanned files
+//   // --------------------------------------------------
 
-  let scannedFiles = [];
+//   let scannedFiles = [];
 
-  for (const pattern of swaggerOptions.apis) {
-    console.log(`Pattern : ${pattern}`);
+//   for (const pattern of swaggerOptions.apis) {
+//     console.log(`Pattern : ${pattern}`);
 
-    const files = globSync(pattern);
+//     const files = globSync(pattern);
 
-    if (files.length === 0) {
-      console.warn("   -> No file found");
-    } else {
-      files.forEach(file => {
-        console.log(`   ✓ ${path.relative(process.cwd(), file)}`);
-      });
-    }
+//     if (files.length === 0) {
+//       console.warn("   -> No file found");
+//     } else {
+//       files.forEach(file => {
+//         console.log(`   ✓ ${path.relative(process.cwd(), file)}`);
+//       });
+//     }
 
-    scannedFiles.push(...files);
-  }
+//     scannedFiles.push(...files);
+//   }
 
-  console.log("");
+//   console.log("");
 
-  if (scannedFiles.length === 0) {
-    console.warn("No Swagger source files found.\n");
-  } else {
-    console.log(`${scannedFiles.length} file(s) detected.\n`);
-  }
+//   if (scannedFiles.length === 0) {
+//     console.warn("No Swagger source files found.\n");
+//   } else {
+//     console.log(`${scannedFiles.length} file(s) detected.\n`);
+//   }
 
-  // --------------------------------------------------
-  // Generate documentation
-  // --------------------------------------------------
+//   // --------------------------------------------------
+//   // Generate documentation
+//   // --------------------------------------------------
 
-  swaggerDocument = swaggerJsdoc(swaggerOptions);
+//   swaggerDocument = swaggerJsdoc(swaggerOptions);
 
-  const paths = swaggerDocument.paths || {};
+//   const paths = swaggerDocument.paths || {};
 
-  console.log("-------------------------------------");
-  console.log("Discovered API paths");
-  console.log("-------------------------------------");
+//   console.log("-------------------------------------");
+//   console.log("Discovered API paths");
+//   console.log("-------------------------------------");
 
-  if (Object.keys(paths).length === 0) {
-    console.warn("❌ No OpenAPI routes detected.");
-    console.warn("This usually means:");
-    console.warn(" - invalid @openapi YAML");
-    console.warn(" - wrong apis path");
-    console.warn(" - no @openapi comments");
-  } else {
-    Object.keys(paths).forEach(route => {
-      console.log(`✓ ${route}`);
+//   if (Object.keys(paths).length === 0) {
+//     console.warn("No OpenAPI routes detected.");
+//     console.warn("This usually means:");
+//     console.warn(" - invalid @openapi YAML");
+//     console.warn(" - wrong apis path");
+//     console.warn(" - no @openapi comments");
+//   } else {
+//     Object.keys(paths).forEach(route => {
+//       console.log(`✓ ${route}`);
 
-      Object.keys(paths[route]).forEach(method => {
-        console.log(`    ${method.toUpperCase()}`);
-      });
-    });
-  }
+//       Object.keys(paths[route]).forEach(method => {
+//         console.log(`    ${method.toUpperCase()}`);
+//       });
+//     });
+//   }
 
-  console.log("");
+//   console.log("");
 
-  console.log(
-    `Swagger generation completed (${Object.keys(paths).length} endpoint(s)).`
-  );
+//   console.log(
+//     `Swagger generation completed (${Object.keys(paths).length} endpoint(s)).`
+//   );
 
-  const docsDir = path.resolve(process.cwd(), "docs");
+//   const docsDir = path.resolve(process.cwd(), "docs");
 
-  if (!fs.existsSync(docsDir)) {
-    fs.mkdirSync(docsDir, { recursive: true });
-  }
+//   if (!fs.existsSync(docsDir)) {
+//     fs.mkdirSync(docsDir, { recursive: true });
+//   }
 
-  fs.writeFileSync(
-    path.join(docsDir, "swagger.yaml"),
-    YAML.stringify(swaggerDocument, 10)
-  );
+//   fs.writeFileSync(
+//     path.join(docsDir, "swagger.yaml"),
+//     YAML.stringify(swaggerDocument, 10)
+//   );
 
-  console.log(`swagger.yaml saved to ${docsDir}`);
+//   console.log(`swagger.yaml saved to ${docsDir}`);
 
-} catch (err) {
-  console.error("\nSwagger generation failed.\n");
-  console.error(err);
-}
+// } catch (err) {
+//   console.error("\nSwagger generation failed.\n");
+//   console.error(err);
+// }
 
 // Configuration des middlewares
 app.use(helmet({ crossOriginResourcePolicy: false }));
