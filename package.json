@@ -9,6 +9,9 @@
   "author": "breality.",
   "type": "module",
   "main": "server.js",
+   "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "build": "prisma generate",
     "test": "echo \"Error: no test specified\" && exit 1",
