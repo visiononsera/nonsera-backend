@@ -1205,6 +1205,172 @@ async function seedCompanies() {
 }
 
 // ======================================================
+// SEED CADEAUX (GIFT)
+// ======================================================
+async function seedGifts() {
+  console.log("Démarrage de l'injection des Cadeaux (Gifts)...");
+
+  // 1. Récupérer les entreprises de type "GIFT" ou "BEAUTY" générées plus haut pour l'association
+  const partnerCompanies = await prisma.company.findMany({
+    where: { category: { in: ["GIFT", "BEAUTY"] } },
+    select: { id: true, name: true }
+  });
+
+  const mainGiftShop = partnerCompanies.find(c => c.name.includes("Nonsera Sweet Gift")) || partnerCompanies[0];
+  const beautySpaShop = partnerCompanies.find(c => c.name.includes("Jardins de Vénus")) || partnerCompanies[1];
+
+  const rawGifts = [
+    {
+      name: "Rose Éternelle Rouge",
+      price: 5000,
+      image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80",
+      description: "Une magnifique rose rouge naturelle stabilisée qui ne fane jamais. Symbole d'amour éternel.",
+      category: "ROSE",
+      companyId: mainGiftShop?.id || null,
+    },
+    {
+      name: "Bouquet de 12 Roses Pastel",
+      price: 15000,
+      image: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=600&q=80",
+      description: "Un assortiment élégant de roses fraîches aux teintes douces et romantiques.",
+      category: "ROSE",
+      companyId: mainGiftShop?.id || null,
+    },
+    {
+      name: "Parfum Ébène Sensuel (50ml)",
+      price: 45000,
+      image: "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=600&q=80",
+      description: "Notes de fond boisées et musquées, une fragrance envoûtante haut de gamme.",
+      category: "MODE_BEAUTE",
+      companyId: beautySpaShop?.id || null,
+    },
+    {
+      name: "Rouge à Lèvres Velours Éclat",
+      price: 12500,
+      image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=600&q=80",
+      description: "Texture crémeuse au fini mat longue tenue pour illuminer les sourires.",
+      category: "MODE_BEAUTE",
+      companyId: beautySpaShop?.id || null,
+    },
+    {
+      name: "Coffret Macarons Saveurs d'Afrique",
+      price: 18000,
+      image: "https://images.unsplash.com/photo-1569864358642-9d1684040f43?auto=format&fit=crop&w=600&q=80",
+      description: "12 macarons artisanaux aux parfums uniques : Bissap, Baobab, Citronnelle et Chocolat local.",
+      category: "CUISINE_GASTRONOMIE",
+      companyId: mainGiftShop?.id || null,
+    },
+    {
+      name: "Bracelet Jonc en Or Laminé",
+      price: 35000,
+      image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=600&q=80",
+      description: "Bijou fin et ajustable, idéal pour graver un souvenir impérissable.",
+      category: "BIJOUX_ACCESSOIRES",
+      companyId: mainGiftShop?.id, 
+    },
+    {
+      name: "Écouteurs Sans Fil Pro Sound",
+      price: 28000,
+      image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80",
+      description: "Réduction active du bruit et autonomie longue durée pour s'évader en musique.",
+      category: "TECHNOLOGIE_GADGET",
+      companyId: mainGiftShop?.id,
+    },
+    {
+      name: "Roman d'Amour Contemporain",
+      price: 7500,
+      image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=600&q=80",
+      description: "Une œuvre littéraire captivante qui explore les méandres des relations modernes.",
+      category: "LITTERATURE_ECRITURE",
+      companyId: beautySpaShop?.id,
+    },
+    {
+    name: "iPhone 15 Pro Max (256 Go)",
+    price: 950000,
+    image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=600&q=80",
+    description: "Le fleuron de la technologie Apple avec châssis en titane et zoom optique 5x.",
+    category: "TECHNOLOGIE_GADGET",
+    companyId: mainGiftShop?.id,
+  },
+  {
+    name: "Samsung Galaxy S24 Ultra",
+    price: 890000,
+    image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&w=600&q=80",
+    description: "Le summum de l'expérience Android avec stylet S-Pen intégré et IA photo avancée.",
+    category: "TECHNOLOGIE_GADGET",
+    companyId: mainGiftShop?.id,
+  },
+
+  // ======================================================
+  // STYLE & TEXTILE (HOMME / FEMME)
+  // ======================================================
+  {
+    name: "Robe de Soirée Haute Couture en Pagne",
+    price: 65000,
+    image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80",
+    description: "Une tenue de soirée sur-mesure confectionnée par un grand styliste partenaire.",
+    category: "MODE_BEAUTE",
+    companyId: beautySpaShop?.id,
+  },
+  {
+    name: "Costume Ajusté 3 Pièces Homme",
+    price: 95000,
+    image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=600&q=80",
+    description: "Ensemble veste, gilet et pantalon coupe italienne moderne pour les grandes occasions.",
+    category: "MODE_BEAUTE",
+    companyId: beautySpaShop?.id,
+  },
+
+  // ======================================================
+  // LIFESTYLE AUTOMOBILE & ROULANT (PREMIUM / RÊVES)
+  // ======================================================
+  {
+    name: "Moto Scooter Haojue 110 (Neuf)",
+    price: 750000,
+    image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=600&q=80",
+    description: "Le cadeau utilitaire ultime pour faciliter les déplacements urbains au quotidien.",
+    category: "JEUX_LOISIRS", 
+    companyId: mainGiftShop?.id,
+  },
+  {
+    name: "Berline Confort (Clés en Main)",
+    price: 8500000,
+    image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80",
+    description: "Le cadeau d'exception absolu : Une berline d'occasion révisée et garantie.",
+    category: "UNCLASSIFIED",
+    companyId: mainGiftShop?.id,
+  }
+  ];
+
+  let giftCount = 0;
+
+  for (const raw of rawGifts) {
+    try {
+      await safeTransaction(async (tx) => {
+        await tx.gift.create({
+          data: {
+            name: raw.name,
+            price: raw.price,
+            points: Math.floor(raw.price * 0.001) || 1,
+            image: raw.image,
+            description: raw.description,
+            category: raw.category,
+            isAvailable: true,
+            expiresIn: 30,
+            companyId: raw.companyId 
+          },
+        });
+        giftCount++;
+      });
+    } catch (err) {
+      console.error(`❌ Échec de l'injection du cadeau "${raw.name}":`, err.message);
+    }
+  }
+
+  console.log(`Bilan Cadeaux : ${giftCount} cadeaux injectés avec succès.`);
+}
+
+// ======================================================
 // SEED COMPLÉMENTAIRE : PORTES-FEUILLES BRUTS
 // ======================================================
 async function seedWallets() {
