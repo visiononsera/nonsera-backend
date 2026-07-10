@@ -38,6 +38,7 @@ export class MatchService {
       matchId: activeMatch.id,
       type: activeMatch.type,
       createdAt: activeMatch.createdAt,
+      flameExpiresAt: activeMatch.flameExpiresAt,
       partner,
       chatRoomId: chatRoom ? chatRoom.id : null,
     };
@@ -45,14 +46,16 @@ export class MatchService {
 
   /**
    * Étape 1 : ENVOYER / ACHETER UN CADEAU (Virtuel ou Annonce)
-   * Crée SYSTEMATIQUEMENT une ligne Purchase au statut PENDING
+   * Débite l'expéditeur, génère des Starpoints (1$ = 1 pt) et met à jour la flamme si déjà en couple
    */
   static async sendGiftProposal(senderId, receiverId, giftId, annonceId) {
     if (senderId === receiverId) {
       throw new Error("Vous ne pouvez pas vous envoyer un cadeau à vous-même.");
     }
     if (!giftId && !annonceId) {
-      throw new Error("Vous devez spécifier soit un cadeau simple (giftId), soit une annonce (annonceId).");
+      throw new Error(
+        "Vous devez spécifier soit un cadeau simple (giftId), soit une annonce (annonceId).",
+      );
     }
 
     // 1. Vérifications des statuts relationnels
@@ -62,11 +65,15 @@ export class MatchService {
     ]);
 
     if (receiverMatch && receiverMatch.partner.id !== senderId) {
-      throw new Error("Cet utilisateur est en couple. Seul son partenaire peut lui offrir des cadeaux.");
+      throw new Error(
+        "Cet utilisateur est en couple. Seul son partenaire peut lui offrir des cadeaux.",
+      );
     }
 
     if (senderMatch && senderMatch.partner.id !== receiverId) {
-      throw new Error("Vous êtes en couple. Vous ne pouvez offrir des cadeaux qu'à votre partenaire.");
+      throw new Error(
+        "Vous êtes en couple. Vous ne pouvez offrir des cadeaux qu'à votre partenaire.",
+      );
     }
 
     // 2. Calcul du prix et validation de l'existence de l'item
@@ -75,26 +82,31 @@ export class MatchService {
 
     if (giftId) {
       const gift = await prisma.gift.findUnique({ where: { id: giftId } });
-      if (!gift || !gift.isAvailable) throw new Error("Le cadeau standard spécifié n'est pas disponible.");
+      if (!gift || !gift.isAvailable)
+        throw new Error("Le cadeau standard spécifié n'est pas disponible.");
       totalPrice = Number(gift.price);
       giftName = gift.name;
     } else if (annonceId) {
-      const annonce = await prisma.annonce.findUnique({ where: { id: annonceId } });
-      if (!annonce || !annonce.isAvailable) throw new Error("L'annonce spécifiée n'est pas disponible.");
+      const annonce = await prisma.annonce.findUnique({
+        where: { id: annonceId },
+      });
+      if (!annonce || !annonce.isAvailable)
+        throw new Error("L'annonce spécifiée n'est pas disponible.");
       totalPrice = Number(annonce.price);
       giftName = annonce.name;
     }
 
-    // 3. TRANSACTION FINANCIÈRE ET CRÉATION DE L'ACHAT EN ATTENTE
+    // 3. TRANSACTION FINANCIÈRE, DEBIT FIFO, STARPOINTS & FLAMME
     return await prisma.$transaction(async (tx) => {
+      // Débit du wallet unifié FIFO
       await walletService.debitWallet(
         senderId,
         totalPrice,
-        `Achat de l'approche cadeau : ${giftName} pour l'utilisateur #${receiverId}`,
-        tx
+        `Achat du cadeau : ${giftName} pour l'utilisateur #${receiverId}`,
+        tx,
       );
 
-      // On enregistre l'achat PEU IMPORTE le type (Polymorphisme complet)
+      // Enregistrement de l'achat
       const purchase = await tx.purchase.create({
         data: {
           senderId,
@@ -107,6 +119,30 @@ export class MatchService {
         },
       });
 
+      // RG: Chaque cadeau génère des Starpoints : 1 Coin dépensé = 1 Starpoint
+      const starpointsToGenerate = Math.floor(totalPrice);
+      if (starpointsToGenerate > 0) {
+        await tx.starpointWallet.upsert({
+          where: { userId: senderId },
+          update: { points: { increment: starpointsToGenerate } },
+          create: { userId: senderId, points: starpointsToGenerate },
+        });
+      }
+
+      // RG: Chaque cadeau envoyé dans le couple réinitialise automatiquement le chrono de 15 jours
+      if (senderMatch) {
+        const fifteenDaysLater = new Date();
+        fifteenDaysLater.setDate(fifteenDaysLater.getDate() + 15);
+
+        await tx.match.update({
+          where: { id: senderMatch.matchId },
+          data: {
+            flameExpiresAt: fifteenDaysLater,
+            updatedAt: new Date(),
+          },
+        });
+      }
+
       // 4. Notification Temps Réel via Socket.io
       if (typeof io !== "undefined") {
         io.to(`user_${receiverId}`).emit("gift:received", {
@@ -115,7 +151,7 @@ export class MatchService {
           annonceId,
           purchaseId: purchase.id,
           giftName,
-          message: "Vous avez reçu une attention et une proposition !",
+          message: "Vous avez reçu un cadeau !",
         });
       }
 
@@ -124,9 +160,15 @@ export class MatchService {
   }
 
   /**
-   * Étape 2 : LE DESTINATAIRE ACCEPTE LE CADEAU / L'ANNONCE
+   * Étape 2 : LE DESTINATAIRE ACCEPTE LE CADEAU / L'ANNONCE (Initie le couple)
    */
-  static async acceptDirectGift(receiverId, senderId, giftId, annonceId, matchType = "NORMAL") {
+  static async acceptDirectGift(
+    receiverId,
+    senderId,
+    giftId,
+    annonceId,
+    matchType = "NORMAL",
+  ) {
     return await prisma.$transaction(async (tx) => {
       // 1. Double check de sécurité concurrentielle
       const [senderBusy, receiverBusy] = await Promise.all([
@@ -135,10 +177,11 @@ export class MatchService {
       ]);
 
       if (senderBusy || receiverBusy) {
-        throw new Error("Action impossible : L'un des utilisateurs est déjà engagé dans un couple actif.");
+        throw new Error(
+          "Action impossible : L'un des utilisateurs est déjà engagé dans un couple actif.",
+        );
       }
 
-      // On récupère et met à jour le Purchase correspondant au flux polymorphe
       const pendingPurchase = await tx.purchase.findFirst({
         where: {
           senderId,
@@ -151,9 +194,12 @@ export class MatchService {
       });
 
       if (!pendingPurchase) {
-        throw new Error("Aucune proposition d'achat en attente n'a été trouvée pour ce couple.");
+        throw new Error(
+          "Aucune proposition d'achat en attente n'a été trouvée pour ce couple.",
+        );
       }
 
+      // Validation de l'achat
       await tx.purchase.update({
         where: { id: pendingPurchase.id },
         data: { status: PurchaseStatus.RECEIVED },
@@ -161,6 +207,10 @@ export class MatchService {
 
       const participantOneId = Math.min(senderId, receiverId);
       const participantTwoId = Math.max(senderId, receiverId);
+
+      // Calcul de la jauge de flamme initiale (15 jours)
+      const initialFlameExpiration = new Date();
+      initialFlameExpiration.setDate(initialFlameExpiration.getDate() + 15);
 
       // 3. Création ou activation du Match et de la ChatRoom
       const [match, chatRoom] = await Promise.all([
@@ -172,15 +222,20 @@ export class MatchService {
             type: matchType,
             status: "ACTIVE",
             giftId: giftId || null,
-            purchaseId: pendingPurchase.id, // Liaison avec la table Purchase
+            purchaseId: pendingPurchase.id,
+            flameExpiresAt: initialFlameExpiration, // Initialisation de la flamme à 15 jours
           },
         }),
         tx.chatRoom.upsert({
           where: {
-            participantOneId_participantTwoId: { participantOneId, participantTwoId },
+            participantOneId_participantTwoId: {
+              participantOneId,
+              participantTwoId,
+            },
           },
           update: {
-            lastMessage: "Proposition acceptée ! Votre salon privé est désormais actif.",
+            lastMessage:
+              "Proposition acceptée ! Votre salon privé est désormais actif.",
           },
           create: {
             participantOneId,
@@ -206,6 +261,7 @@ export class MatchService {
 
   /**
    * Étape 3 : RUPTURE (Unmatch)
+   * Éteint le chrono du couple (status: BROKEN)
    */
   static async breakMatch(userId, partnerId) {
     return await prisma.$transaction(async (tx) => {
@@ -227,7 +283,10 @@ export class MatchService {
       await Promise.all([
         tx.match.update({
           where: { id: activeMatch.id },
-          data: { status: "BROKEN" },
+          data: {
+            status: "BROKEN",
+            flameExpiresAt: null, // Extinction du chrono de couple
+          },
         }),
         tx.chatRoom.updateMany({
           where: { participantOneId, participantTwoId },

@@ -7,6 +7,134 @@ const router = Router();
 const authStack = [jwtMiddleware, loadContext];
 
 // ==========================================
+// --- CONSULTATION & HISTORIQUES ---
+// ==========================================
+
+/**
+ * @openapi
+ * /api/reservations/me:
+ * get:
+ * summary: Récupérer l'historique complet des réservations standard de l'utilisateur connecté
+ * tags:
+ * - Reservations
+ * security:
+ * - bearerAuth: []
+ * parameters:
+ * - in: query
+ * name: status
+ * schema:
+ * type: string
+ * description: Filtrer par statut (PENDING, CONFIRMED, PROCESSED, CANCELLED)
+ * - in: query
+ * name: page
+ * schema:
+ * type: integer
+ * description: Numéro de la page (pagination)
+ * - in: query
+ * name: limit
+ * schema:
+ * type: integer
+ * description: Nombre de résultats par page
+ * responses:
+ * 200:
+ * description: Liste paginée des réservations de l'utilisateur.
+ * 401:
+ * description: Jeton manquant ou expiré.
+ */
+router.get(
+  "/reservations/me",
+  ...authStack,
+  reservationsController.getMyReservations,
+);
+
+/**
+ * @openapi
+ * /api/reservations/coffrets/me:
+ * get:
+ * summary: Récupérer l'historique des réservations de coffrets de l'utilisateur connecté
+ * tags:
+ * - Reservations (Coffrets)
+ * security:
+ * - bearerAuth: []
+ * parameters:
+ * - in: query
+ * name: status
+ * schema:
+ * type: string
+ * description: Filtrer par statut
+ * - in: query
+ * name: page
+ * schema:
+ * type: integer
+ * - in: query
+ * name: limit
+ * schema:
+ * type: integer
+ * responses:
+ * 200:
+ * description: Liste paginée des réservations de coffrets de l'utilisateur.
+ * 401:
+ * description: Jeton manquant ou expiré.
+ */
+router.get(
+  "/reservations/coffrets/me",
+  ...authStack,
+  reservationsController.getMyCoffretsReservations,
+);
+
+/**
+ * @openapi
+ * /api/reservations/{id}:
+ * get:
+ * summary: Récupérer le détail exhaustif d'une réservation standard
+ * tags:
+ * - Reservations
+ * security:
+ * - bearerAuth: []
+ * parameters:
+ * - in: path
+ * name: id
+ * required: true
+ * schema:
+ * type: integer
+ * description: ID de la réservation standard
+ * responses:
+ * 200:
+ * description: Fiche détaillée de la réservation.
+ * 404:
+ * description: Réservation introuvable.
+ */
+router.get("/reservations/:id", ...authStack, reservationsController.getDetail);
+
+/**
+ * @openapi
+ * /api/reservations/coffrets/{id}:
+ * get:
+ * summary: Récupérer le détail d'une réservation de coffret romantique
+ * tags:
+ * - Reservations (Coffrets)
+ * security:
+ * - bearerAuth: []
+ * parameters:
+ * - in: path
+ * name: id
+ * required: true
+ * schema:
+ * type: integer
+ * description: ID de la réservation de coffret
+ * responses:
+ * 200:
+ * description: Fiche détaillée de la réservation du coffret.
+ * 404:
+ * description: Réservation de coffret introuvable.
+ */
+router.get(
+  "/reservations/coffrets/:id",
+  ...authStack,
+  reservationsController.getCoffretReservationDetail,
+);
+
+// ==========================================
 // --- INTERACTION & CYCLE DE VIE ---
 // ==========================================
 
@@ -88,7 +216,11 @@ router.post("/reservations/", ...authStack, reservationsController.create);
  * 400:
  * description: Acteur non spécifié ou statut de transaction non éligible à l'annulation.
  */
-router.post("/reservations/:id/cancel", ...authStack, reservationsController.cancel);
+router.post(
+  "/reservations/:id/cancel",
+  ...authStack,
+  reservationsController.cancel,
+);
 
 /**
  * @openapi
@@ -112,7 +244,11 @@ router.post("/reservations/:id/cancel", ...authStack, reservationsController.can
  * 400:
  * description: Réservation introuvable ou déjà traitée.
  */
-router.patch("/reservations/:id/confirm", ...authStack, reservationsController.confirm);
+router.patch(
+  "/reservations/:id/confirm",
+  ...authStack,
+  reservationsController.confirm,
+);
 
 /**
  * @openapi
@@ -136,7 +272,11 @@ router.patch("/reservations/:id/confirm", ...authStack, reservationsController.c
  * 400:
  * description: Transition d'état invalide.
  */
-router.patch("/reservations/:id/start-trip", ...authStack, reservationsController.startTrip);
+router.patch(
+  "/reservations/:id/start-trip",
+  ...authStack,
+  reservationsController.startTrip,
+);
 
 /**
  * @openapi
@@ -160,7 +300,11 @@ router.patch("/reservations/:id/start-trip", ...authStack, reservationsControlle
  * 400:
  * description: Échec du traitement financier ou ordre d'achèvement hors contexte.
  */
-router.patch("/reservations/:id/complete", ...authStack, reservationsController.completeOrProcess);
+router.patch(
+  "/reservations/:id/complete",
+  ...authStack,
+  reservationsController.completeOrProcess,
+);
 
 /**
  * @openapi
@@ -202,8 +346,11 @@ router.patch("/reservations/:id/complete", ...authStack, reservationsController.
  * 400:
  * description: Corps de requête incomplet ou invalide.
  */
-router.post("/reservations/:id/dispute", ...authStack, reservationsController.openDispute);
-
+router.post(
+  "/reservations/:id/dispute",
+  ...authStack,
+  reservationsController.openDispute,
+);
 
 // ==========================================
 // --- ROUTE ADMIN PRIVILÉGIÉE ---
@@ -251,6 +398,10 @@ router.post("/reservations/:id/dispute", ...authStack, reservationsController.op
  * 403:
  * description: Accès refusé. Rôle d'administration requis.
  */
-router.patch("/reservations/:id/resolve-dispute", ...authStack, reservationsController.resolveDispute);
+router.patch(
+  "/reservations/:id/resolve-dispute",
+  ...authStack,
+  reservationsController.resolveDispute,
+);
 
 export default router;

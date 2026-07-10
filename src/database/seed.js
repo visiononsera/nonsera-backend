@@ -806,209 +806,311 @@ async function seedCompanies() {
   });
 
   const rawCompanies = [
-    // --- BÉNIN ---
+    // ======================================================
+    // 1. RESTAURANTS
+    // ======================================================
     {
       name: "Le Patio Cotonou",
       category: "RESTAURANT",
       city: "Cotonou",
       country: "Benin",
-      desc: "Restaurant chic & Lounge au cœur de Cotonou.",
-      priceEstimation: 12500,
-      announcement: {
-        title: "Dimanche Brunch & Grillades",
-        desc: "Profitez d'un buffet à volonté avec animation live exclusive à partir de 12h.",
-      },
+      desc: "Restaurant gastronomique avec un espace lounge intime idéal pour les rendez-vous en couple.",
+      annonces: [
+        {
+          name: "Formule Brunch Continental",
+          price: 18000,
+          desc: "Un assortiment complet de viennoiseries, fruits tropicaux frais, omelette truffée et jus pressés.",
+          category: "breakfast",
+          image:
+            "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=600&q=80",
+          ambiance: "SALLE_PRINCIPALE",
+          isDeliveryAvailable: true,
+          hasAnimation: true,
+        },
+        {
+          name: "Double Burger Gourmet & Frites",
+          price: 9500,
+          desc: "Steak haché de bœuf de pays, fromage cheddar fondu, sauce barbecue fumée artisanale.",
+          category: "fastfood",
+          image:
+            "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80",
+          ambiance: "SALLE_PRINCIPALE",
+          isDeliveryAvailable: true,
+          hasAnimation: false,
+        },
+        {
+          name: "Duo de Langoustes Grillées",
+          price: 24500,
+          desc: "Langoustes fraîches grillées au beurre persillé, servies avec de l'alloco et de l'attoukpou.",
+          category: "plats",
+          image:
+            "https://images.unsplash.com/photo-1551248429-40975aa4de74?auto=format&fit=crop&w=600&q=80",
+          ambiance: "INTIME",
+          isDeliveryAvailable: false,
+          hasAnimation: true,
+        },
+        {
+          name: "Cocktail Signature 'Nonsera Love'",
+          price: 5000,
+          desc: "Mélange fruité à base de liqueur locale, fruit de la passion fraîchement écrasé et champagne brut.",
+          category: "drinks",
+          image:
+            "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=600&q=80",
+          ambiance: "SEMI_PRIVE",
+          isDeliveryAvailable: false,
+          hasAnimation: false,
+        },
+      ],
     },
-    {
-      name: "Azalaï Hôtel Cotonou",
-      category: "HOTEL",
-      city: "Cotonou",
-      country: "Benin",
-      desc: "Hôtel d'affaires de classe internationale.",
-      priceEstimation: 85000,
-      announcement: {
-        title: "Offre Week-end Détente",
-        desc: "Bénéficiez de -25% sur toutes nos chambres exécutives ce vendredi et samedi.",
-      },
-    },
-    {
-      name: "Le Jardin de Porto-Novo",
-      category: "RESTAURANT",
-      city: "Porto-Novo",
-      country: "Benin",
-      desc: "Cadre verdoyant et cuisine afro-fusion.",
-      priceEstimation: 8000,
-      announcement: {
-        title: "Soirée Découverte Culinaire",
-        desc: "Menu dégustation 3 services à prix réduit tous les mercredis soir.",
-      },
-    },
-    {
-      name: "Hôtel Tata Somba",
-      category: "HOTEL",
-      city: "Natitingou",
-      city_fallback: "Parakou",
-      country: "Benin",
-      desc: "Architecture typique et confort moderne au Nord.",
-      priceEstimation: 45000,
-      announcement: {
-        title: "Étape Safari Pendjari",
-        desc: "Pack nuitée + briefing guide pour votre départ en excursion.",
-      },
-    }, 
-    {
-      name: "Benin Borgou Voyage",
-      category: "TRANSPORT",
-      city: "Parakou",
-      country: "Benin",
-      desc: "Transport interurbain sécurisé et climatisé.",
-      priceEstimation: 9000,
-      announcement: {
-        title: "Nouvelles Lignes Express",
-        desc: "Départs quotidiens Cotonou-Parakou à 06h00 et 13h00 dans des bus ultra-confort.",
-      },
-    },
-
-    // --- CÔTE D'IVOIRE ---
     {
       name: "L'Acoustique Abidjan",
       category: "RESTAURANT",
       city: "Abidjan",
       country: "Cote d'Ivoire",
-      desc: "Gastronomie ivoirienne et cocktails signatures.",
-      priceEstimation: 15000,
-      announcement: {
-        title: "Afterwork Karaoké & Attiéké",
-        desc: "Entrée libre ce jeudi soir, cocktails à moitié prix pour les groupes.",
-      },
+      desc: "L'adresse incontournable d'Abidjan pour la gastronomie ivoirienne modernisée et de grands cocktails.",
+      annonces: [
+        {
+          name: "Kédjénou de Poulet de Brousse",
+          price: 12000,
+          desc: "Traditionnel poulet mijoté à l'étouffée dans son canari de terre cuite, piment doux et herbes locales.",
+          category: "plats",
+          image:
+            "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?auto=format&fit=crop&w=600&q=80",
+          ambiance: "SEMI_PRIVE",
+          isDeliveryAvailable: true,
+          hasAnimation: true,
+        },
+        {
+          name: "Brochettes de Filet de Zébu XXL",
+          price: 11000,
+          desc: "Viande de zébu tendre marinée aux épices kankankan, grillée au feu de bois.",
+          category: "fastfood",
+          image:
+            "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80",
+          ambiance: "SALLE_PRINCIPALE",
+          isDeliveryAvailable: true,
+          hasAnimation: false,
+        },
+        {
+          name: "Mojito Mangue & Gingembre sauvage",
+          price: 4500,
+          desc: "Rhum blanc, menthe fraîche, purée de mangue locale et jus de gingembre dynamiqueisant.",
+          category: "drinks",
+          image:
+            "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80",
+          ambiance: "SALLE_PRINCIPALE",
+          isDeliveryAvailable: false,
+          hasAnimation: true,
+        },
+      ],
+    },
+
+    // ======================================================
+    // 2. HÔTELS
+    // ======================================================
+    {
+      name: "Azalaï Hôtel Cotonou",
+      category: "HOTEL",
+      city: "Cotonou",
+      country: "Benin",
+      desc: "Hôtel d'affaires de classe internationale offrant des suites luxueuses en bord de mer.",
+      annonces: [
+        {
+          name: "Chambre Executive King-Size",
+          price: 85000,
+          desc: "Chambre spacieuse avec grand lit King, espace bureau, salle de bain en marbre et vue imprenable.",
+          category: "standard",
+          image:
+            "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=600&q=80",
+          equipements: ["Wifi", "AC", "TV Canal+", "Coffre-fort", "Bureau"],
+          isRomantique: false,
+        },
+        {
+          name: "Suite Présidentielle Lune de Miel",
+          price: 185000,
+          desc: "Une suite somptueuse avec lit à baldaquin, jacuzzi privé sur le balcon, bouteille de champagne offerte.",
+          category: "suite",
+          image:
+            "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=600&q=80",
+          equipements: [
+            "Wifi",
+            "AC",
+            "Jacuzzi",
+            "Mini-bar",
+            "Terrasse",
+            "Machine Espresso",
+          ],
+          isRomantique: true,
+        },
+      ],
     },
     {
-      name: "Sofitel Ivoire Lux",
+      name: "Sofitel Abidjan Hôtel Ivoire",
       category: "HOTEL",
       city: "Abidjan",
       country: "Cote d'Ivoire",
-      desc: "Le joyau de la lagune Ébrié.",
-      priceEstimation: 140000,
-      announcement: {
-        title: "Accès Piscine & Spa VIP",
-        desc: "Profitez d'une journée de relaxation complète avec formule massage incluse.",
-      },
+      desc: "Le joyau architectural surplombant la lagune Ébrié avec sa piscine géante mythique.",
+      annonces: [
+        {
+          name: "Chambre Deluxe Vue Lagune",
+          price: 135000,
+          desc: "Confort absolu, literie MyBed, baignoire profonde et vue spectaculaire sur la baie de Cocody.",
+          category: "standard",
+          image:
+            "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80",
+          equipements: [
+            "Wifi",
+            "AC",
+            "Baignoire",
+            "Mini-bar",
+            "Service d'étage",
+          ],
+          isRomantique: false,
+        },
+        {
+          name: "Appartement Présidentiel Exclusif",
+          price: 320000,
+          desc: "Grand salon panoramique, cuisine entièrement équipée, conciergerie privée 24h/24.",
+          category: "appartment",
+          image:
+            "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=600&q=80",
+          equipements: [
+            "Wifi",
+            "AC",
+            "Cuisine",
+            "Salon VIP",
+            "Parking sécurisé",
+            "Concierge",
+          ],
+          isRomantique: true,
+        },
+      ],
     },
+
+    // ======================================================
+    // 3. TRANSPORTS
+    // ======================================================
+    {
+      name: "Benin Borgou Voyage",
+      category: "TRANSPORT",
+      city: "Parakou",
+      country: "Benin",
+      desc: "Compagnie de transport interurbain sécurisé de confiance sur l'axe Sud-Nord.",
+      annonces: [
+        {
+          name: "Transfert VVIP Privatisé Cotonou-Parakou",
+          price: 120000,
+          desc: "Trajet privatisé en Berline premium climatisée avec chauffeur professionnel pour un couple.",
+          category: "interurbain",
+          image:
+            "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80",
+          vehicleType: "VIP",
+          nbPlaces: 3,
+        },
+        {
+          name: "Billet Express Climatisé standard",
+          price: 9000,
+          desc: "Place individuelle à bord de nos minibus modernes de 15 places, avec port USB individuel.",
+          category: "bus",
+          image:
+            "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=600&q=80",
+          vehicleType: "MINIBUS",
+          nbPlaces: 15,
+        },
+      ],
+    },
+
+    // ======================================================
+    // 4. ACTIVITÉS
+    // ======================================================
     {
       name: "Yakro Horizon Tour",
       category: "ACTIVITY",
       city: "Yamoussoukro",
       country: "Cote d'Ivoire",
-      desc: "Visites guidées de la Basilique et des lacs aux crocodiles.",
-      priceEstimation: 5000,
-      announcement: {
-        title: "Excursion Découverte Historique",
-        desc: "Réservez votre guide pour le circuit complet de la capitale ce samedi matin.",
-      },
-    },
-    {
-      name: "Gouro Transport Express",
-      category: "TRANSPORT",
-      city: "Bouake",
-      country: "Cote d'Ivoire",
-      desc: "Liaisons directes et régulières Centre-Sud.",
-      priceEstimation: 7000,
-      announcement: {
-        title: "Navettes Spéciales Week-end",
-        desc: "Gagnez du temps avec nos trajets directs Bouaké - Abidjan sans escales.",
-      },
-    },
-    {
-      name: "La Couronne de Bouaké",
-      category: "HOTEL",
-      city: "Bouake",
-      country: "Cote d'Ivoire",
-      desc: "Hôtel calme idéal pour les séjours professionnels.",
-      priceEstimation: 35000,
-      announcement: {
-        title: "Tarif Séminaire Résidentiel",
-        desc: "Réductions appliquées pour les réservations de groupe de plus de 5 chambres.",
-      },
+      desc: "Agence de découverte culturelle et historique de la capitale ivoirienne.",
+      annonces: [
+        {
+          name: "Trek de la Basilique & Lac aux Crocodiles",
+          price: 15000,
+          desc: "Randonnée pédestre culturelle guidée de 3h, parfaite pour s'instruire en couple.",
+          category: "tourisme",
+          image:
+            "https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=600&q=80",
+          activityType: "RANDONNEE",
+          hasAnimation: true,
+        },
+        {
+          name: "Vol Privé en Hélicoptère au-dessus de Yakro",
+          price: 350000,
+          desc: "Survol exceptionnel de la Basilique de Yamoussoukro de 20 minutes pour deux personnes.",
+          category: "premium",
+          image:
+            "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=600&q=80",
+          activityType: "HELICOPTERE",
+          hasAnimation: false,
+        },
+      ],
     },
 
-    // --- TOGO ---
+    // ======================================================
+    // 5. CADEAUX & BEAUTÉ (GIFT, BEAUTY)
+    // ======================================================
     {
-      name: "Le Phénicien Lomé",
-      category: "RESTAURANT",
+      name: "Les Jardins de Vénus",
+      category: "BEAUTY",
       city: "Lome",
       country: "Togo",
-      desc: "Spécialités méditerranéennes et locales en bord de mer.",
-      priceEstimation: 18000,
-      announcement: {
-        title: "Soirée Fruits de Mer",
-        desc: "Arrivage frais du jour, dégustation de homards cuisinés au feu de bois.",
-      },
+      desc: "Spa, hammam, onglerie et espace de massage détente absolue pour couples.",
+      annonces: [
+        {
+          name: "Soin & Massage Duo Intime",
+          price: 45000,
+          desc: "Massage aux huiles chaudes de coco de 1h15 côte à côte, avec jus de fruits rafraîchissants.",
+          category: "bien-etre",
+          image:
+            "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=600&q=80",
+          isRomantique: true,
+          hasAnimation: false,
+        },
+      ],
     },
     {
-      name: "Hôtel 2 Février",
-      category: "HOTEL",
-      city: "Lome",
-      country: "Togo",
-      desc: "L'emblème du luxe et de l'élégance à Lomé.",
-      priceEstimation: 120000,
-      announcement: {
-        title: "Happy Hour Roof-Top",
-        desc: "Venez admirer le coucher de soleil à 360° avec notre DJ résident.",
-      },
-    },
-    {
-      name: "Région Kara Expéditions",
-      category: "ACTIVITY",
-      city: "Kara",
-      country: "Togo",
-      desc: "Randonnées et immersion culturelle en pays Tamberma.",
-      priceEstimation: 25000,
-      announcement: {
-        title: "Randonnée Koutammakou Heritage",
-        desc: "Découvrez les Tata Somba avec nos guides certifiés UNESCO.",
-      },
-    },
-    {
-      name: "Lomé-Atakpamé Inter-Lignes",
-      category: "TRANSPORT",
-      city: "Atakpame",
-      country: "Togo",
-      desc: "Flotte moderne pour vos déplacements régionaux.",
-      priceEstimation: 4500,
-      announcement: {
-        title: "Abonnement Trajet Mensuel",
-        desc: "Simplifiez vos trajets professionnels avec notre nouvelle carte Navigo locale.",
-      },
-    },
-    {
-      name: "Les Cascades d'Atakpamé",
-      category: "ACTIVITY",
-      city: "Atakpame",
-      country: "Togo",
-      desc: "Écotourisme et découverte des hauteurs du Grand Kloto.",
-      priceEstimation: 7500,
-      announcement: {
-        title: "Circuit Trekking Nature",
-        desc: "Randonnée encadrée de 3 heures avec baignade et pique-nique inclus.",
-      },
+      name: "Nonsera Sweet Gift Boutique",
+      category: "GIFT",
+      city: "Cotonou",
+      country: "Benin",
+      desc: "Boutique partenaire spécialisée dans les coffrets surprises romantiques de Nonsera.",
+      annonces: [
+        {
+          name: "Le Coffret Passion d'Afrique",
+          price: 25000,
+          desc: "Un panier garni : Chocolats fins locaux, une rose éternelle parfumée, et carte de vœux personnalisée.",
+          category: "romantique",
+          image:
+            "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=600&q=80",
+          isRomantique: true,
+          isSpecial: true,
+        },
+      ],
     },
   ];
 
   let companyCount = 0;
   let announceCount = 0;
-  for (let idx = 0; idx < rawCompanies.length; idx++) {
-    // Nettoyage de la destination si la ville spécifique au seed n'est pas mappée dans generateCoordinates
-    const raw = rawCompanies[idx];
-    const targetCity = (raw).city_fallback || raw.city;
 
+  for (let idx = 0; idx < rawCompanies.length; idx++) {
+    const raw = rawCompanies[idx];
+    const targetCity = raw.city;
+
+    // Assigner cycliquement un propriétaire issu de la table User
     const owner = activeUsers[idx % activeUsers.length];
     if (!owner) continue;
 
     const coords = generateCoordinates(targetCity);
     const cleanName = raw.name.toLowerCase().replace(/[^a-z0-9]/g, "");
 
-    // Génération d'identifiants uniques pour respecter les contraintes @unique du schéma
-    const fakePhoneNumber = `+2289000${idx.toString().padStart(4, "0")}`;
+    const fakePhoneNumber = `+2299800${idx.toString().padStart(4, "0")}`;
     const fakeEmail = `${cleanName}.${idx}@partner.nonsera.com`;
     const fakeUsername = `${cleanName}_${idx}`;
 
@@ -1017,7 +1119,7 @@ async function seedCompanies() {
 
     try {
       await safeTransaction(async (tx) => {
-        // 1. Création de l'entreprise (Company)
+        // 1. Création de l'entreprise
         const company = await tx.company.create({
           data: {
             name: raw.name,
@@ -1041,7 +1143,6 @@ async function seedCompanies() {
               instagram: `https://instagram.com/${cleanName}`,
               facebook: `https://facebook.com/${cleanName}`,
             },
-            // Table pivot UserCompany
             userCompanies: {
               create: {
                 userId: owner.id,
@@ -1050,43 +1151,50 @@ async function seedCompanies() {
             },
           },
         });
+        
         companyCount++;
 
-        // 2. Création de l'annonce alignée sur le modèle Annonce
-        await tx.annonce.create({
-          data: {
-            name: raw.announcement.title, // Requis 
-            price: raw.priceEstimation, // Requis : Decimal
-            points: Math.floor(raw.priceEstimation * 0.001) || 1, // Points de fidélité générés (ex: 1pt par tranche de 1000)
-            image: enterpriseLogo, // Requis 
-            description: raw.announcement.desc, // Optionnel 
-            category: raw.category, // Optionnel 
-            isAvailable: true,
-            isVerified: true,
-            isSpecial: idx % 3 === 0, // Une annonce sur trois passe en "En vedette / Spécial"
-            expiresIn: 30, // Requis : Int (jours restants)
-            companyId: company.id, // Clé étrangère relationnelle
+        // 2. Création de l'ensemble de ses annonces associées
+        for (let aIdx = 0; aIdx < raw.annonces.length; aIdx++) {
+          const item = raw.annonces[aIdx];
 
-            // Configuration des métadonnées contextuelles selon le type d'activité
-            ambiance: raw.category === "RESTAURANT" ? "SALLE_PRINCIPALE" : null,
-            hasAnimation:
-              raw.category === "RESTAURANT" || raw.category === "ACTIVITY",
-            isDeliveryAvailable: raw.category === "RESTAURANT",
-            isRomantique: raw.category === "HOTEL" && idx % 2 === 0,
-            equipements:
-              raw.category === "HOTEL"
-                ? ["Wifi", "Piscine", "AC", "Parking"]
-                : [],
+          await tx.annonce.create({
+            data: {
+              name: item.name,
+              price: item.price,
+              points: Math.floor(item.price * 0.001) || 1, 
+              image: item.image || enterpriseLogo, 
+              description: item.desc || null,
+              category: item.category || null,
+              isAvailable: true,
+              isVerified: true,
+              isSpecial: aIdx === 0, 
+              expiresIn: 30,
+              companyId: company.id,
 
-            // Transport et Activités spécifiques
-            vehicleType: raw.category === "TRANSPORT" ? "MINIBUS" : null,
-            nbPlaces: raw.category === "TRANSPORT" ? 15 : null,
-          },
-        });
-        announceCount++;
+              // Métadonnées contextuelles
+              ambiance: item.ambiance || null,
+              hasAnimation: item.hasAnimation || false,
+              isDeliveryAvailable: item.isDeliveryAvailable || false,
+              isRomantique: item.isRomantique || false,
+              equipements: item.equipements || [],
+
+              // Transport spécifique
+              vehicleType: item.vehicleType || null,
+              nbPlaces: item.nbPlaces || null,
+
+              // Activité spécifique
+              activityType: item.activityType || null,
+            },
+          });
+          announceCount++;
+        }
       });
     } catch (err) {
-      console.error(`Échec transactionnel pour le business ${raw.name}:`, err);
+      console.error(
+        `Echec de l'injection pour l'établissement "${raw.name}":`,
+        err.message,
+      );
     }
   }
 

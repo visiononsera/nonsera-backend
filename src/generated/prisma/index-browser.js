@@ -226,6 +226,7 @@ exports.Prisma.MatchScalarFieldEnum = {
   isConfirmed: 'isConfirmed',
   type: 'type',
   status: 'status',
+  flameExpiresAt: 'flameExpiresAt',
   giftId: 'giftId',
   purchaseId: 'purchaseId',
   createdAt: 'createdAt',
@@ -234,8 +235,10 @@ exports.Prisma.MatchScalarFieldEnum = {
 
 exports.Prisma.ChatRoomScalarFieldEnum = {
   id: 'id',
+  matchId: 'matchId',
   participantOneId: 'participantOneId',
   participantTwoId: 'participantTwoId',
+  isActive: 'isActive',
   lastMessage: 'lastMessage',
   lastMessageSenderId: 'lastMessageSenderId',
   lastMessageStatus: 'lastMessageStatus',
@@ -247,14 +250,14 @@ exports.Prisma.ChatRoomScalarFieldEnum = {
 
 exports.Prisma.MessageScalarFieldEnum = {
   id: 'id',
-  content: 'content',
-  title: 'title',
-  mediaUrl: 'mediaUrl',
-  type: 'type',
+  matchId: 'matchId',
+  chatRoomId: 'chatRoomId',
   senderId: 'senderId',
+  recipientId: 'recipientId',
+  type: 'type',
+  content: 'content',
   status: 'status',
   isSentByAgent: 'isSentByAgent',
-  chatId: 'chatId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -304,6 +307,45 @@ exports.Prisma.AnnonceScalarFieldEnum = {
   nbPlaces: 'nbPlaces',
   activityType: 'activityType',
   companyId: 'companyId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CoffretScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  images: 'images',
+  price: 'price',
+  durationDays: 'durationDays',
+  isAvailable: 'isAvailable',
+  isVerified: 'isVerified',
+  isSpecial: 'isSpecial',
+  companyId: 'companyId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CoffretItemScalarFieldEnum = {
+  id: 'id',
+  coffretId: 'coffretId',
+  category: 'category',
+  name: 'name',
+  description: 'description',
+  durationHours: 'durationHours',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CoffretReservationScalarFieldEnum = {
+  id: 'id',
+  reference: 'reference',
+  coffretId: 'coffretId',
+  userId: 'userId',
+  startDate: 'startDate',
+  quantity: 'quantity',
+  totalPrice: 'totalPrice',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -567,6 +609,33 @@ exports.Prisma.StarpointWalletScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.EnvelopeWheelScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  prizeAmount: 'prizeAmount',
+  country: 'country',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.EnvelopeWinnerScalarFieldEnum = {
+  id: 'id',
+  envelopeWheelId: 'envelopeWheelId',
+  userId: 'userId',
+  amountWon: 'amountWon',
+  drawnAt: 'drawnAt',
+  city: 'city'
+};
+
+exports.Prisma.CountryProfitabilityScalarFieldEnum = {
+  id: 'id',
+  countryCode: 'countryCode',
+  profitabilityThreshold: 'profitabilityThreshold',
+  currentVolume: 'currentVolume',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -574,6 +643,10 @@ exports.Prisma.SortOrder = {
 
 exports.Prisma.NullableJsonNullValueInput = {
   DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
@@ -632,17 +705,18 @@ exports.ChatLastMessageStatus = exports.$Enums.ChatLastMessageStatus = {
 };
 
 exports.MessageType = exports.$Enums.MessageType = {
-  IMAGE: 'IMAGE',
-  GIFT: 'GIFT',
   TEXT: 'TEXT',
-  CUSTOM: 'CUSTOM'
+  IMAGE: 'IMAGE',
+  AUDIO: 'AUDIO',
+  LINK: 'LINK',
+  EMOJI: 'EMOJI',
+  GIFT: 'GIFT'
 };
 
 exports.MessageStatus = exports.$Enums.MessageStatus = {
-  PENDING: 'PENDING',
-  SENT: 'SENT',
   UNSENT: 'UNSENT',
-  RECEIVED: 'RECEIVED',
+  SENT: 'SENT',
+  DELIVERED: 'DELIVERED',
   READ: 'READ'
 };
 
@@ -690,11 +764,14 @@ exports.ActivityType = exports.$Enums.ActivityType = {
   EVENEMENT_SPECIAL: 'EVENEMENT_SPECIAL'
 };
 
-exports.PurchaseStatus = exports.$Enums.PurchaseStatus = {
-  PENDING: 'PENDING',
-  PROCESSING: 'PROCESSING',
-  RECEIVED: 'RECEIVED',
-  CANCELLED: 'CANCELLED'
+exports.CompanyCategory = exports.$Enums.CompanyCategory = {
+  RESTAURANT: 'RESTAURANT',
+  HOTEL: 'HOTEL',
+  TRANSPORT: 'TRANSPORT',
+  ACTIVITY: 'ACTIVITY',
+  GIFT: 'GIFT',
+  BEAUTY: 'BEAUTY',
+  OTHER: 'OTHER'
 };
 
 exports.ReservationStatus = exports.$Enums.ReservationStatus = {
@@ -703,6 +780,13 @@ exports.ReservationStatus = exports.$Enums.ReservationStatus = {
   PROCESSED: 'PROCESSED',
   CANCELLED: 'CANCELLED',
   LITIGE: 'LITIGE'
+};
+
+exports.PurchaseStatus = exports.$Enums.PurchaseStatus = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  RECEIVED: 'RECEIVED',
+  CANCELLED: 'CANCELLED'
 };
 
 exports.PodiumStatus = exports.$Enums.PodiumStatus = {
@@ -724,16 +808,6 @@ exports.SubscriptionType = exports.$Enums.SubscriptionType = {
   ACTIVITE: 'ACTIVITE',
   CADEAU: 'CADEAU',
   COFFRET: 'COFFRET'
-};
-
-exports.CompanyCategory = exports.$Enums.CompanyCategory = {
-  RESTAURANT: 'RESTAURANT',
-  HOTEL: 'HOTEL',
-  TRANSPORT: 'TRANSPORT',
-  ACTIVITY: 'ACTIVITY',
-  GIFT: 'GIFT',
-  BEAUTY: 'BEAUTY',
-  OTHER: 'OTHER'
 };
 
 exports.RetraitStatus = exports.$Enums.RetraitStatus = {
@@ -763,6 +837,12 @@ exports.TrancheStatus = exports.$Enums.TrancheStatus = {
   EXPIRE: 'EXPIRE'
 };
 
+exports.EnvelopeType = exports.$Enums.EnvelopeType = {
+  DAILY: 'DAILY',
+  MONTHLY: 'MONTHLY',
+  YEARLY: 'YEARLY'
+};
+
 exports.Prisma.ModelName = {
   CurrencyConfig: 'CurrencyConfig',
   User: 'User',
@@ -776,6 +856,9 @@ exports.Prisma.ModelName = {
   Notification: 'Notification',
   Gift: 'Gift',
   Annonce: 'Annonce',
+  Coffret: 'Coffret',
+  CoffretItem: 'CoffretItem',
+  CoffretReservation: 'CoffretReservation',
   Purchase: 'Purchase',
   Reservation: 'Reservation',
   LikedAnnonce: 'LikedAnnonce',
@@ -800,7 +883,10 @@ exports.Prisma.ModelName = {
   UserBlock: 'UserBlock',
   UserReport: 'UserReport',
   WalletTranche: 'WalletTranche',
-  StarpointWallet: 'StarpointWallet'
+  StarpointWallet: 'StarpointWallet',
+  EnvelopeWheel: 'EnvelopeWheel',
+  EnvelopeWinner: 'EnvelopeWinner',
+  CountryProfitability: 'CountryProfitability'
 };
 
 /**

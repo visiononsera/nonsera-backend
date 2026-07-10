@@ -39,18 +39,19 @@ enum MatchType {
 }
 
 enum MessageType {
-  IMAGE
-  GIFT
   TEXT
-  CUSTOM
+  IMAGE
+  AUDIO
+  LINK
+  EMOJI
+  GIFT
 }
 
 enum MessageStatus {
-  PENDING
-  SENT
   UNSENT
-  RECEIVED
-  READ
+  SENT // Un trait gris
+  DELIVERED // Double trait gris
+  READ // Double trait coloré
 }
 
 enum ChatLastMessageStatus {
@@ -186,6 +187,12 @@ enum TrancheStatus {
   EXPIRE
 }
 
+enum EnvelopeType {
+  DAILY
+  MONTHLY
+  YEARLY
+}
+
 // ======================================================
 // CONFIGURATION DEVISES & PAYS
 // ======================================================
@@ -293,9 +300,6 @@ model User {
   initiatedLocks LockedConversation[] @relation("InitiatedLocks")
   receivedLocks  LockedConversation[] @relation("ReceivedLocks")
 
-  chatRoomsAsOne ChatRoom[] @relation("ChatParticipantOne")
-  chatRoomsAsTwo ChatRoom[] @relation("ChatParticipantTwo")
-
   // PODIUM RELATIONS HARMONISÉES
   podiumStarsLed     PodiumStar[]        @relation("UserAsPodiumStar")
   podiumViews        PodiumSpectator[]   @relation("UserAsPodiumSpectator")
@@ -314,7 +318,6 @@ model User {
 
   userCompanies UserCompany[]
   userDmList    DmList[]
-  chatMessages  Message[]
   sessions      UserSession[]
 
   blockedUsers   UserBlock[] @relation("Blocker")
@@ -325,9 +328,16 @@ model User {
 
   targetedAnnonces Annonce[] @relation("AnnonceTargets")
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  deletedAt           DateTime?
+  coffretReservations CoffretReservation[]
+  chatRoomsAsOne      ChatRoom[]           @relation("ChatParticipantOne")
+  chatRoomsAsTwo      ChatRoom[]           @relation("ChatParticipantTwo")
+
+  sentMessages     Message[]        @relation("SentMessages")
+  receivedMessages Message[]        @relation("ReceivedMessages")
+  envelopeWinners  EnvelopeWinner[]
 
   @@index([phoneNumber])
   @@index([role])
@@ -413,17 +423,21 @@ model Match {
   to          User        @relation("MatchReceiver", fields: [toId], references: [id])
   isConfirmed Boolean     @default(false)
   type        MatchType   @default(NORMAL)
-  status      MatchStatus @default(ACTIVE) // Suivi de l'état de la relation (En couple / Rompu)
+  status      MatchStatus @default(ACTIVE)
 
-  // Optionnel : Permet de savoir quel cadeau a déclenché ce match
+  flameExpiresAt DateTime?
+
   giftId Int?
   gift   Gift? @relation(fields: [giftId], references: [id], onDelete: SetNull)
 
   purchaseId Int?
   purchase   Purchase? @relation(fields: [purchaseId], references: [id], onDelete: SetNull)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  chatRoom ChatRoom?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  messages  Message[]
 
   @@index([status])
   @@index([fromId, toId])
@@ -435,12 +449,16 @@ model Match {
 
 model ChatRoom {
   id               Int     @id @default(autoincrement())
+  matchId          Int     @unique // Un seul salon de discussion par couple exclusif
   participantOneId Int
   participantTwoId Int
-  participantOne   User    @relation("ChatParticipantOne", fields: [participantOneId], references: [id])
-  participantTwo   User    @relation("ChatParticipantTwo", fields: [participantTwoId], references: [id])
-  lastMessage      String? @db.VarChar(1000)
+  isActive         Boolean @default(true) // Devient false lors d'un break-up
 
+  participantOne User  @relation("ChatParticipantOne", fields: [participantOneId], references: [id])
+  participantTwo User  @relation("ChatParticipantTwo", fields: [participantTwoId], references: [id])
+  match          Match @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  lastMessage         String?               @db.VarChar(1000)
   lastMessageSenderId Int?
   lastMessageStatus   ChatLastMessageStatus @default(PENDING)
   isSentByAgent       Boolean               @default(false)
@@ -452,25 +470,30 @@ model ChatRoom {
   updatedAt DateTime @updatedAt
 
   @@unique([participantOneId, participantTwoId])
+  @@index([matchId])
 }
 
 model Message {
-  id            Int           @id @default(autoincrement())
-  content       String        @db.VarChar(1000)
-  title         String?
-  mediaUrl      String?
+  id          Int @id @default(autoincrement())
+  matchId     Int // Référence au couple
+  chatRoomId  Int // Référence au salon physique
+  senderId    Int
+  recipientId Int
+
   type          MessageType   @default(TEXT)
-  senderId      Int
-  sender        User          @relation(fields: [senderId], references: [id])
-  status        MessageStatus @default(PENDING)
+  content       String        @db.Text // Texte, URL de l'image/audio, ou ID du cadeau
+  status        MessageStatus @default(SENT)
   isSentByAgent Boolean       @default(false)
-  chatId        Int
-  chatRoom      ChatRoom      @relation(fields: [chatId], references: [id], onDelete: Cascade)
+
+  chatRoom  ChatRoom @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
+  match     Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  sender    User     @relation("SentMessages", fields: [senderId], references: [id])
+  recipient User     @relation("ReceivedMessages", fields: [recipientId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([chatId])
+  @@index([chatRoomId])
   @@index([senderId])
   @@index([createdAt])
 }
@@ -538,15 +561,15 @@ model Annonce {
   ambiance            AmbianceType? @default(SALLE_PRINCIPALE)
   hasAnimation        Boolean       @default(false)
   isDeliveryAvailable Boolean       @default(false)
-  isRomantique        Boolean       @default(false) // "Option romantique (si disponible)" pour Hôtel/Transport/Activités
-  equipements         Json? // "Équipement inclus" pour les Hôtels (ex: Wifi, Piscine, AC)
+  isRomantique        Boolean       @default(false)
+  equipements         Json?
 
   // Spécifique Transport
-  vehicleType VehicleType? // Filtre sous-catégories en survol (Moto, Berline...)
-  nbPlaces    Int? // Nombre de places disponibles
+  vehicleType VehicleType?
+  nbPlaces    Int?
 
   // Spécifique Activités
-  activityType ActivityType? // Sous-catégorie d'activité
+  activityType ActivityType?
 
   companyId Int?
   company   Company? @relation(fields: [companyId], references: [id], onDelete: Cascade)
@@ -567,9 +590,73 @@ model Annonce {
   @@index([activityType])
 }
 
-// ======================================================
-// PURCHASE
-// ======================================================
+// ==========================================
+// MODÈLE : COFFRET ROMANTIQUE (AUTONOME)
+// ==========================================
+model Coffret {
+  id           Int     @id @default(autoincrement())
+  name         String  @db.VarChar(255)
+  description  String  @db.Text
+  images       Json // Tableau d'URLs d'images pour le carrousel [url1, url2, ...]
+  price        Decimal @db.Decimal(18, 2) // Prix unitaire global par personne
+  durationDays Int     @default(2) // Durée globale (ex: 2 pour un week-end)
+  isAvailable  Boolean @default(true)
+  isVerified   Boolean @default(false) // Validation administrative (RG-01)
+  isSpecial    Boolean @default(false) // Pour l'affichage en vedette
+
+  companyId Int
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  items        CoffretItem[]
+  reservations CoffretReservation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isAvailable, isVerified])
+}
+
+// ==========================================
+// COMPOSANTS DE COFFRET (CONTENU TEXTUEL)
+// ==========================================
+model CoffretItem {
+  id        Int     @id @default(autoincrement())
+  coffretId Int
+  coffret   Coffret @relation(fields: [coffretId], references: [id], onDelete: Cascade)
+
+  category      CompanyCategory // RESTAURANT, HOTEL, TRANSPORT, ACTIVITY, GIFT
+  name          String          @db.VarChar(255) // Ex: "Transfert en Berline VIP"
+  description   String?         @db.Text // Ex: "Chauffeur privé de l'aéroport à l'hôtel"
+  durationHours Int? // Durée de l'activité (ne doit pas excéder celle du coffret)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ==========================================
+// RÉSERVATIONS DE COFFRETS
+// ==========================================
+model CoffretReservation {
+  id        Int    @id @default(autoincrement())
+  reference String @unique // Ex: NS-COF-123456
+
+  coffretId Int
+  coffret   Coffret @relation(fields: [coffretId], references: [id], onDelete: Cascade)
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  startDate  DateTime // Date de début d'exécution choisie par le couple
+  quantity   Int               @default(1) // Nombre de personnes
+  totalPrice Decimal           @db.Decimal(18, 2) // Prix calculé après application des RG
+  status     ReservationStatus @default(PENDING) // PENDING, CONFIRMED, PROCESSED, CANCELLED
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([status])
+}
 
 // ======================================================
 // PURCHASE
@@ -869,6 +956,7 @@ model Company {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+  coffrets  Coffret[]
 }
 
 // ======================================================
@@ -1018,4 +1106,38 @@ model StarpointWallet {
 
   points    Decimal  @default(0) @db.Decimal(18, 2)
   updatedAt DateTime @updatedAt
+}
+
+model EnvelopeWheel {
+  id          Int              @id @default(autoincrement())
+  type        EnvelopeType
+  prizeAmount Float // 100, 1000, ou 10000
+  country     String // Filtrage par pays (ex: "BJ")
+  isActive    Boolean          @default(true)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  winners     EnvelopeWinner[]
+
+  @@index([type, country, isActive])
+}
+
+model EnvelopeWinner {
+  id              Int           @id @default(autoincrement())
+  envelopeWheelId Int
+  envelopeWheel   EnvelopeWheel @relation(fields: [envelopeWheelId], references: [id])
+  userId          Int
+  user            User          @relation(fields: [userId], references: [id])
+  amountWon       Float
+  drawnAt         DateTime      @default(now())
+  city            String? // Pour la notification push nationale ("Un utilisateur de [ville]...")
+
+  @@index([drawnAt])
+}
+
+model CountryProfitability {
+  id                     Int      @id @default(autoincrement())
+  countryCode            String   @unique // Code pays en majuscules (ex: "BJ")
+  profitabilityThreshold Decimal  @db.Decimal(18, 2) // Seuil défini par le Manager
+  currentVolume          Decimal  @default(0) @db.Decimal(18, 2) // Compteur glissant incrémenté par debitWallet
+  updatedAt              DateTime @updatedAt
 }

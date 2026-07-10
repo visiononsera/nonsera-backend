@@ -1,13 +1,10 @@
 import prisma from "./prisma.service.js";
-import {
-  CompanyCategory,
-  ReservationStatus,
-} from "../generated/prisma/index.js";
+import { CompanyCategory, ReservationStatus } from "../generated/prisma/index.js";
 import { walletService } from "./wallet.service.js";
 
 export const reservationsService = {
   /**
-   * 1. CRÉATION D'UNE RÉSERVATION STANDARD (Débit unifié via le wallet FIFO)
+   * 1. CRÉATION D'UNE RÉSERVATION (Débit unifié via le wallet FIFO)
    */
   create: async (data) => {
     const annonce = await prisma.annonce.findUnique({
@@ -110,7 +107,7 @@ export const reservationsService = {
   },
 
   /**
-   * 2. RÉCUPÉRATION MULTI-CRITÈRES DES RÉSERVATIONS STANDARD AVEC PAGINATION & FILTRES
+   * 2. RÉCUPÉRATION MULTI-CRITÈRES DES RÉSERVATIONS AVEC PAGINATION & FILTRES
    * Supporte le filtrage par userId, statut, plage de dates et zone géographique.
    */
   getMany: async (filters = {}) => {
@@ -118,8 +115,7 @@ export const reservationsService = {
     const page = filters.page ? parseInt(filters.page) : 1;
     const skip = (page - 1) * limit;
 
-    const { userId, receiverId, status, dateDebut, dateFin, city, country } =
-      filters;
+    const { userId, receiverId, status, dateDebut, dateFin, city, country } = filters;
 
     // Construction dynamique du filtre Prisma WHERE
     const whereCondition = {};
@@ -213,7 +209,7 @@ export const reservationsService = {
   },
 
   /**
-   * 3. HISTORIQUE DES RÉSERVATIONS STANDARD DE L'UTILISATEUR (Wrapper de getMany)
+   * 3. HISTORIQUE DES RÉSERVATIONS DE L'UTILISATEUR (Wrapper de getMany)
    */
   getByUser: async (userId, options = {}) => {
     return await reservationsService.getMany({
@@ -225,7 +221,7 @@ export const reservationsService = {
   },
 
   /**
-   * 4. RÉCUPÉRATION DU DÉTAIL D'UNE RÉSERVATION STANDARD PAR SON ID UNIQUE
+   * 4. RÉCUPÉRATION DU DÉTAIL D'UNE RÉSERVATION PAR SON ID UNIQUE
    */
   getById: async (id) => {
     return await prisma.reservation.findUnique({
@@ -257,7 +253,7 @@ export const reservationsService = {
   },
 
   /**
-   * 5. CONFIRMATION DE LA RÉSERVATION STANDARD (Acceptation par le partenaire)
+   * 5. CONFIRMATION DE LA RÉSERVATION (Acceptation par le partenaire)
    */
   confirm: async (id) => {
     const reservation = await prisma.reservation.findUnique({
@@ -347,14 +343,14 @@ export const reservationsService = {
 
       // 2. Clôturer la réservation au statut final PROCESSED
       return await tx.reservation.update({
-        where: { id: reservation.id },
+        where: { id },
         data: { status: ReservationStatus.PROCESSED },
       });
     });
   },
 
   /**
-   * 8. OUVERTURE D'UN LITIGE STANDARD (Par l'utilisateur ou la compagnie)
+   * 8. OUVERTURE D'UN LITIGE (Par l'utilisateur ou la compagnie)
    */
   openDispute: async (id, openedBy, reason) => {
     const reservation = await prisma.reservation.findUnique({ where: { id } });
@@ -379,7 +375,7 @@ export const reservationsService = {
   },
 
   /**
-   * 9. RÉSOLUTION DU LITIGE STANDARD
+   * 9. RÉSOLUTION DU LITIGE (Arbitrage exclusif Admin)
    */
   resolveDispute: async (id, decision, adminNotes) => {
     const reservation = await prisma.reservation.findUnique({
@@ -455,7 +451,7 @@ export const reservationsService = {
   },
 
   /**
-   * 10. ANNULATION ET REMBOURSEMENT DE RÉSERVATION STANDARD
+   * 10. ANNULATION ET REMBOURSEMENT PAR SOUSTRACTION
    */
   cancel: async (id, actor, reason) => {
     const reservation = await prisma.reservation.findUnique({
@@ -539,128 +535,6 @@ export const reservationsService = {
       data: {
         status: ReservationStatus.CANCELLED,
         litigeReason: reason ?? `Annulée par le profil : ${actor}`,
-      },
-    });
-  },
-
-  // =========================================================================
-  // SECTION RÉSERVATIONS DE COFFRETS (AJOUTS DÉDIÉS AU MODÈLE COFFRETRESERVATION)
-  // =========================================================================
-
-  /**
-   * 11. RÉCUPÉRATION MULTI-CRITÈRES DES RÉSERVATIONS DE COFFRETS
-   * Permet d'historiser et de requêter les réservations de coffret par userId, coffretId, statut, etc.
-   */
-  getManyCoffrets: async (filters = {}) => {
-    const limit = filters.limit ? parseInt(filters.limit) : 20;
-    const page = filters.page ? parseInt(filters.page) : 1;
-    const skip = (page - 1) * limit;
-
-    const { userId, coffretId, status, dateDebut, dateFin } = filters;
-
-    const whereCondition = {};
-
-    if (userId) {
-      whereCondition.userId = parseInt(userId);
-    }
-
-    if (coffretId) {
-      whereCondition.coffretId = parseInt(coffretId);
-    }
-
-    if (status) {
-      whereCondition.status = status;
-    }
-
-    if (dateDebut || dateFin) {
-      whereCondition.startDate = {};
-      if (dateDebut) {
-        whereCondition.startDate.gte = new Date(dateDebut);
-      }
-      if (dateFin) {
-        whereCondition.startDate.lte = new Date(dateFin);
-      }
-    }
-
-    const [reservations, total] = await Promise.all([
-      prisma.coffretReservation.findMany({
-        where: whereCondition,
-        include: {
-          coffret: {
-            include: {
-              company: {
-                select: {
-                  id: true,
-                  name: true,
-                  logo: true,
-                  city: true,
-                  country: true,
-                },
-              },
-              items: true,
-            },
-          },
-          user: {
-            select: {
-              id: true,
-              fullname: true,
-              profilePhoto: true,
-            },
-          },
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
-        take: limit,
-        skip: skip,
-      }),
-      prisma.coffretReservation.count({ where: whereCondition }),
-    ]);
-
-    return {
-      success: true,
-      meta: {
-        total,
-        page,
-        limit,
-        totalPages: Math.ceil(total / limit),
-      },
-      data: reservations,
-    };
-  },
-
-  /**
-   * 12. RÉCUPÉRATION DU DÉTAIL D'UNE RÉSERVATION DE COFFRET PAR SON ID
-   */
-  getCoffretReservationById: async (id) => {
-    return await prisma.coffretReservation.findUnique({
-      where: { id: parseInt(id) },
-      include: {
-        coffret: {
-          include: {
-            company: {
-              select: {
-                id: true,
-                name: true,
-                phoneNumber: true,
-                email: true,
-                logo: true,
-                city: true,
-                country: true,
-                mapAddress: true,
-              },
-            },
-            items: true,
-          },
-        },
-        user: {
-          select: {
-            id: true,
-            fullname: true,
-            profilePhoto: true,
-            phoneNumber: true,
-          },
-        },
       },
     });
   },

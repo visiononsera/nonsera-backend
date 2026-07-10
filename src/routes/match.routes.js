@@ -1,61 +1,41 @@
-import { Router } from 'express';
-import { jwtMiddleware } from '../middlewares/jwt.middleware.js';
-import { loadContext } from '../middlewares/auth.middleware.js';
-import { MatchController } from '../controllers/match.controller.js';
+import { Router } from "express";
+import { MatchController } from "../controllers/match.controller.js";
+import { jwtMiddleware } from "../middlewares/jwt.middleware.js";
+import { loadContext } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 const authStack = [jwtMiddleware, loadContext];
 
 /**
  * @openapi
- * /api/match/{userId}:
+ * /api/matches/status/{userId}:
  * get:
- * summary: Vérifier l'état actuel du couple pour un utilisateur spécifique
+ * summary: Consulter l'état d'engagement relationnel de l'utilisateur (Couple / Célibataire)
  * tags:
- * - Matchs & Interactions
- * security:
- * - bearerAuth: []
+ * - Matchmaking & Couple
  * parameters:
  * - in: path
  * name: userId
  * required: true
  * schema:
  * type: integer
- * description: ID de l'utilisateur dont on vérifie le statut de couple
  * responses:
  * 200:
- * description: Statut de couple récupéré avec succès.
- * content:
- * application/json:
- * schema:
- * type: object
- * properties:
- * success:
- * type: boolean
- * example: true
- * inCouple:
- * type: boolean
- * example: true
- * data:
- * type: object
- * nullable: true
- * description: Détails du match actif si existant.
- * 400:
- * description: ID utilisateur fourni manquant ou invalide.
- * 401:
- * description: Non authentifié.
- * 500:
- * description: Erreur interne du serveur.
+ * description: Statut couple extrait avec succès.
  */
-router.get('/match/:userId', ...authStack, MatchController.checkCoupleStatus);
+router.get(
+  "/matches/status/:userId",
+  ...authStack,
+  MatchController.checkCoupleStatus,
+);
 
 /**
  * @openapi
- * /api/match/gifts/send:
+ * /api/matches/gifts/send:
  * post:
- * summary: Étape 1 - Envoyer ou acheter un cadeau direct / une approche par annonce
+ * summary: Étape 1 - Proposer un cadeau d'approche (Initie la discussion s'il est accepté)
  * tags:
- * - Matchs & Interactions
+ * - Matchmaking (Cadeaux)
  * security:
  * - bearerAuth: []
  * requestBody:
@@ -67,43 +47,31 @@ router.get('/match/:userId', ...authStack, MatchController.checkCoupleStatus);
  * required:
  * - receiverId
  * properties:
- * senderId:
- * type: integer
- * description: ID de l'expéditeur (facultatif si injecté par le token)
- * example: 1
  * receiverId:
  * type: integer
- * description: ID du destinataire ciblé
- * example: 2
  * giftId:
  * type: integer
- * nullable: true
- * description: ID du cadeau virtuel à envoyer (si cadeau simple)
- * example: 12
+ * description: ID du cadeau standard (table Gift)
  * annonceId:
  * type: integer
- * nullable: true
- * description: ID de l'annonce d'entreprise associée (si approche commerciale/sponsoring)
- * example: 45
+ * description: ID du produit/service d'établissement partenaire (table Annonce)
  * responses:
  * 200:
- * description: Proposition d'interaction enregistrée ou envoyée avec succès.
- * 400:
- * description: Erreur de validation (identifiants incorrects ou absence simultanée de giftId et d'annonceId).
- * 401:
- * description: Non authentifié.
- * 500:
- * description: Erreur interne du serveur.
+ * description: Demande d'attention enregistrée, solde bloqué.
  */
-router.post('/match/gifts/send', ...authStack, MatchController.sendDirectGift);
+router.post(
+  "/matches/gifts/send",
+  ...authStack,
+  MatchController.sendDirectGift,
+);
 
 /**
  * @openapi
- * /api/match/gifts/accept:
+ * /api/matches/gifts/accept:
  * post:
- * summary: Étape 2 - Accepter un présent ou une approche (Officialise le couple et ouvre la ChatRoom)
+ * summary: Étape 2 - Accepter l'approche cadeau (Ouvre automatiquement le chat de couple)
  * tags:
- * - Matchs & Interactions
+ * - Matchmaking
  * security:
  * - bearerAuth: []
  * requestBody:
@@ -115,48 +83,35 @@ router.post('/match/gifts/send', ...authStack, MatchController.sendDirectGift);
  * required:
  * - senderId
  * properties:
- * receiverId:
- * type: integer
- * description: ID de l'utilisateur connecté acceptant le cadeau (facultatif si injecté par le token)
- * example: 2
  * senderId:
  * type: integer
- * description: ID de l'expéditeur initial de l'offre
- * example: 1
+ * description: ID de la personne qui a offert le cadeau
  * giftId:
  * type: integer
- * nullable: true
- * description: ID du cadeau reçu
- * example: 12
  * annonceId:
  * type: integer
- * nullable: true
- * description: ID de l'annonce d'entreprise reçue
- * example: 45
  * matchType:
  * type: string
  * default: "NORMAL"
- * enum: [NORMAL, PREMIUM, SPONSORED]
- * description: Type ou niveau de la relation établie
  * responses:
  * 200:
- * description: Présent accepté, statut de couple actif mis à jour et salon privé ouvert.
- * 400:
- * description: Paramètres manquants ou références d'objets invalides.
- * 401:
- * description: Authentification en échec.
- * 500:
- * description: Erreur interne du serveur.
+ * description: Offre acceptée. ChatRoom ouverte et Match actif créé.
  */
-router.post('/match/gifts/accept', ...authStack, MatchController.acceptDirectGift);
+
+
+router.post(
+  "/matches/gifts/accept",
+  ...authStack,
+  MatchController.acceptDirectGift,
+);
 
 /**
  * @openapi
- * /api/match/break:
+ * /api/matches/break:
  * post:
- * summary: Étape 3 - Rompre un match actif (Unmatch)
+ * summary: Rompre définitivement la relation de couple actuelle (Retour en statut célibataire)
  * tags:
- * - Matchs & Interactions
+ * - Matchmaking
  * security:
  * - bearerAuth: []
  * requestBody:
@@ -168,24 +123,13 @@ router.post('/match/gifts/accept', ...authStack, MatchController.acceptDirectGif
  * required:
  * - partnerId
  * properties:
- * userId:
- * type: integer
- * description: ID de l'utilisateur qui rompt le match (facultatif si injecté par le token)
- * example: 1
  * partnerId:
  * type: integer
- * description: ID du partenaire à dissocier
- * example: 2
+ * description: ID du partenaire à unmatch
  * responses:
  * 200:
- * description: Match rompu avec succès. Clôture des droits d'accès aux salons partagés.
- * 400:
- * description: Paramètres invalides ou aucun match actif trouvé entre les deux parties.
- * 401:
- * description: Jeton expiré ou utilisateur non authentifié.
- * 500:
- * description: Erreur lors du traitement de la rupture.
+ * description: Rupture actée, statut de couple éteint.
  */
-router.post('/match/break', ...authStack, MatchController.breakMatch);
+router.post("/matches/break", ...authStack, MatchController.breakMatch);
 
 export default router;

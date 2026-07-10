@@ -1,7 +1,6 @@
 import { companiesService } from "../services/companies.service.js";
 
 export const companiesController = {
-    
   /**
    * Créer une nouvelle entreprise
    */
@@ -88,7 +87,11 @@ export const companiesController = {
         sorting.sortOrder = req.query.sortOrder;
       }
 
-      const companiesData = await companiesService.getMany(filters, pagination, sorting);
+      const companiesData = await companiesService.getMany(
+        filters,
+        pagination,
+        sorting,
+      );
       res.status(200).json({ success: true, ...companiesData });
     } catch (error) {
       res.status(500).json({ success: false, message: error.message });
@@ -96,31 +99,38 @@ export const companiesController = {
   },
 
   /**
-   * Récupérer les entreprises / annonces par proximité (Haversine)
+   * Récupérer l'entreprise la plus procheavec ses annonces (Haversine)
    */
   getByProximity: async (req, res) => {
     try {
       const { latitude, longitude, category, maxDistanceKm } = req.query;
 
       if (!latitude || !longitude) {
-        res.status(400).json({
+        return res.status(400).json({
           success: false,
           message: "Les coordonnées GPS (latitude et longitude) sont requises.",
         });
-        return;
       }
 
       const proximityParams = {
         latitude: parseFloat(latitude),
         longitude: parseFloat(longitude),
-        ...(category !== undefined ? { category } : {}),
-        ...(maxDistanceKm !== undefined ? { maxDistanceKm: parseFloat(maxDistanceKm) } : {}),
+        ...(category ? { category } : {}),
+        ...(maxDistanceKm ? { maxDistanceKm: parseFloat(maxDistanceKm) } : {}),
       };
 
-      const closeCompanies = await companiesService.getAnnoncesByProximity(proximityParams);
-      res.status(200).json({ success: true, data: closeCompanies });
+      const closeCompanies =
+        await companiesService.getCompaniesByProximity(proximityParams);
+
+      return res.status(200).json({
+        success: true,
+        data: closeCompanies,
+      });
     } catch (error) {
-      res.status(500).json({ success: false, message: error.message });
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      });
     }
   },
 
@@ -129,30 +139,39 @@ export const companiesController = {
    */
   verify: async (req, res) => {
     try {
-      const { id } = req.params; 
-      const { approved } = req.body; 
+      const { id } = req.params;
+      const { approved } = req.body;
 
-      const executorId = req.user?.id; 
+      const executorId = req.user?.id;
 
       if (!executorId) {
-        res.status(401).json({ success: false, message: "Utilisateur non authentifié." });
+        res
+          .status(401)
+          .json({ success: false, message: "Utilisateur non authentifié." });
         return;
       }
 
       if (approved === undefined) {
-        res.status(400).json({ success: false, message: "Le statut d'approbation (approved) est requis." });
+        res
+          .status(400)
+          .json({
+            success: false,
+            message: "Le statut d'approbation (approved) est requis.",
+          });
         return;
       }
 
       const verifiedCompany = await companiesService.verify(
         parseInt(executorId),
         parseInt(id),
-        approved === true || approved === "true"
+        approved === true || approved === "true",
       );
 
       res.status(200).json({
         success: true,
-        message: approved ? "Entreprise validée avec succès." : "Entreprise invalidée / suspendue.",
+        message: approved
+          ? "Entreprise validée avec succès."
+          : "Entreprise invalidée / suspendue.",
         data: verifiedCompany,
       });
     } catch (error) {

@@ -218,8 +218,11 @@ export const companiesService = {
     };
   },
 
-  // 5. RECHERCHE PAR GÉOLOCALISATIONS LA PLUS PROCHE (Formule de Haversine intégrée)
-  getAnnoncesByProximity: async (params) => {
+  /**
+   * Récupère UNIQUEMENT l'entreprise (Company) la plus proche de la position GPS
+   * qui possède obligatoirement des annonces actives associées. Retoune null si aucune n'est trouvée.
+   */
+  getCompaniesByProximity: async (params) => {
     const { latitude, longitude, category, maxDistanceKm } = params;
 
     const companies = await prisma.company.findMany({
@@ -228,7 +231,7 @@ export const companiesService = {
         isVerified: true,
         ...(category && { category }),
         annonces: {
-          some: { isAvailable: true },
+          some: { isAvailable: true }, 
         },
       },
       include: {
@@ -238,7 +241,10 @@ export const companiesService = {
       },
     });
 
-    // Application de la formule de Haversine en mémoire
+    if (companies.length === 0) {
+      return null;
+    }
+
     const calculateDistance = (lat1, lon1, lat2, lon2) => {
       const R = 6371; // Rayon de la Terre en kilomètres
       const dLat = ((lat2 - lat1) * Math.PI) / 180;
@@ -253,7 +259,7 @@ export const companiesService = {
       return R * c;
     };
 
-    const sortedCompanies = companies
+    const companiesWithDistance = companies
       .map((company) => {
         const distance = calculateDistance(
           latitude,
@@ -261,14 +267,30 @@ export const companiesService = {
           company.latitude ? Number(company.latitude) : 0,
           company.longitude ? Number(company.longitude) : 0,
         );
-        return { ...company, distanceInKm: parseFloat(distance.toFixed(2)) };
+        return {
+          ...company,
+          distanceInKm: parseFloat(distance.toFixed(2)),
+        };
       })
-      .filter((company) =>
-        maxDistanceKm ? company.distanceInKm <= maxDistanceKm : true,
-      );
+      .filter((company) => {
+        const hasActiveAnnonces =
+          company.annonces && company.annonces.length > 0;
+        const isWithinRange = maxDistanceKm
+          ? company.distanceInKm <= maxDistanceKm
+          : true;
 
-    // Tri par ordre croissant de proximité
-    return sortedCompanies.sort((a, b) => a.distanceInKm - b.distanceInKm);
+        return hasActiveAnnonces && isWithinRange;
+      });
+
+    if (companiesWithDistance.length === 0) {
+      return null;
+    }
+
+    const closestCompany = companiesWithDistance.reduce((closest, current) => {
+      return current.distanceInKm < closest.distanceInKm ? current : closest;
+    });
+
+    return closestCompany;
   },
 
   // 6. WORKFLOW DE VALIDATION / APPROBATION PAR LES ADMINS ET AGENTS

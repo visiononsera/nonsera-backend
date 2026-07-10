@@ -3,7 +3,7 @@ import { ReservationStatus } from "../generated/prisma/index.js";
 
 export const reservationsController = {
   /**
-   * Créer une réservation
+   * Créer une réservation standard
    */
   create: async (req, res) => {
     try {
@@ -26,6 +26,69 @@ export const reservationsController = {
       });
     } catch (error) {
       res.status(400).json({ success: false, message: error.message });
+    }
+  },
+
+  /**
+   * Récupérer toutes les réservations standard de l'utilisateur connecté (avec filtres optionnels)
+   */
+  getMyReservations: async (req, res) => {
+    try {
+      const userId = req.user?.id;
+      if (!userId) {
+        res.status(401).json({ success: false, message: "Utilisateur non authentifié." });
+        return;
+      }
+
+      const { status, dateDebut, dateFin, city, country, page, limit } = req.query;
+
+      const filters = {
+        userId: parseInt(userId),
+        status,
+        dateDebut,
+        dateFin,
+        city,
+        country,
+        page: page ? parseInt(page) : 1,
+        limit: limit ? parseInt(limit) : 20,
+      };
+
+      const result = await reservationsService.getMany(filters);
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json({ success: false, message: error.message });
+    }
+  },
+
+  /**
+   * Récupérer le détail d'une réservation standard par son ID
+   */
+  getDetail: async (req, res) => {
+    try {
+      const userId = req.user?.id;
+      const { id } = req.params;
+
+      if (!userId) {
+        res.status(401).json({ success: false, message: "Utilisateur non authentifié." });
+        return;
+      }
+
+      const reservation = await reservationsService.getById(parseInt(id));
+
+      if (!reservation) {
+        res.status(404).json({ success: false, message: "Réservation introuvable." });
+        return;
+      }
+
+      // Sécurité : Seul l'auteur de la réservation, le destinataire ou un administrateur peut la lire
+      if (reservation.userId !== parseInt(userId) && reservation.receiverId !== parseInt(userId) && req.user?.role !== "ADMIN") {
+        res.status(403).json({ success: false, message: "Vous n'êtes pas autorisé à accéder à cette réservation." });
+        return;
+      }
+
+      res.status(200).json({ success: true, data: reservation });
+    } catch (error) {
+      res.status(500).json({ success: false, message: error.message });
     }
   },
 
@@ -141,7 +204,7 @@ export const reservationsController = {
   },
 
   /**
-   * Annuler une réservation
+   * Annuler une réservation standard
    */
   cancel: async (req, res) => {
     try {
@@ -161,6 +224,71 @@ export const reservationsController = {
       });
     } catch (error) {
       res.status(400).json({ success: false, message: error.message });
+    }
+  },
+
+  // =========================================================================
+  // SECTION RÉSERVATIONS DE COFFRETS
+  // =========================================================================
+
+  /**
+   * Récupérer toutes les réservations de coffrets de l'utilisateur connecté
+   */
+  getMyCoffretsReservations: async (req, res) => {
+    try {
+      const userId = req.user?.id;
+      if (!userId) {
+        res.status(401).json({ success: false, message: "Utilisateur non authentifié." });
+        return;
+      }
+
+      const { status, dateDebut, dateFin, page, limit } = req.query;
+
+      const filters = {
+        userId: parseInt(userId),
+        status,
+        dateDebut,
+        dateFin,
+        page: page ? parseInt(page) : 1,
+        limit: limit ? parseInt(limit) : 20,
+      };
+
+      const result = await reservationsService.getManyCoffrets(filters);
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json({ success: false, message: error.message });
+    }
+  },
+
+  /**
+   * Récupérer le détail complet d'une réservation de coffret par son ID
+   */
+  getCoffretReservationDetail: async (req, res) => {
+    try {
+      const userId = req.user?.id;
+      const { id } = req.params;
+
+      if (!userId) {
+        res.status(401).json({ success: false, message: "Utilisateur non authentifié." });
+        return;
+      }
+
+      const reservation = await reservationsService.getCoffretReservationById(parseInt(id));
+
+      if (!reservation) {
+        res.status(404).json({ success: false, message: "Réservation de coffret introuvable." });
+        return;
+      }
+
+      // Sécurité : Seul l'acheteur ou un admin peut consulter cette réservation
+      if (reservation.userId !== parseInt(userId) && req.user?.role !== "ADMIN") {
+        res.status(403).json({ success: false, message: "Non autorisé à accéder à cette réservation." });
+        return;
+      }
+
+      res.status(200).json({ success: true, data: reservation });
+    } catch (error) {
+      res.status(500).json({ success: false, message: error.message });
     }
   },
 };
