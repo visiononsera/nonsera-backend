@@ -2,7 +2,7 @@ import prisma from "../services/prisma.service.js";
 
 export const globalSearch = async (req, res) => {
   try {
-    const { query, countryCode } = req.query;
+    const { query, country } = req.query; // On attend le nom du pays en clair (ex: Benin, Togo)
     const currentUserId = req.user?.id;
 
     // Règle métier : Minimum 4 caractères
@@ -14,54 +14,60 @@ export const globalSearch = async (req, res) => {
     }
 
     const searchString = String(query).trim();
-    const userCountry = countryCode ? String(countryCode).toUpperCase() : null;
+    // Normalisation du pays pour éviter les problèmes de casse
+    const targetCountry = country ? String(country).trim().toLowerCase() : null;
 
-    // 2. Utilisateurs Célibataires
+    // 1. Récupération des Utilisateurs Célibataires (sans match ACTIVE en cours)
     const dbUsers = await prisma.user.findMany({
       where: {
         id: { not: currentUserId },
         role: "USER",
         isCompleted: true,
         isBanned: false,
+        // Un utilisateur est célibataire s'il n'a AUCUN match ACTIVE (émis ou reçu)
+        MatchSender: {
+          none: { status: "ACTIVE" }
+        },
+        MatchReceiver: {
+          none: { status: "ACTIVE" }
+        },
+        // Recherche textuelle
         OR: [
           { fullname: { contains: searchString, mode: "insensitive" } },
           { username: { contains: searchString, mode: "insensitive" } },
         ],
       },
-      select: {
-        id: true,
-        fullname: true,
-        username: true,
-        profilePhoto: true,
-        country: true,
-        city: true,
-        birthday: true,
-      },
+      // Pas de select restrictif pour tout charger. On nettoiera le passCode juste après.
     });
 
-    // 3. Partenaires Commerciaux
+    // Nettoyage des données sensibles des utilisateurs
+    const cleanUsers = dbUsers.map(user => {
+      const { passCode, coins, ...secureUser } = user; // Ajuste selon le nom exact de ton champ sensible
+      return secureUser;
+    });
+
+    // 2. Partenaires Commerciaux + Toutes leurs annonces actives
     const dbCompanies = await prisma.company.findMany({
       where: {
         deletedAt: null,
+        isVerified: true,
         category: {
-          in: ["RESTAURANT", "HOTEL", "ACTIVITY", "OTHER"], 
+          in: ["RESTAURANT", "HOTEL", "ACTIVITY", "OTHER", "BEAUTY", "GIFT"], 
         },
         OR: [
+          { name: { contains: searchString, mode: "insensitive" } },
           { username: { contains: searchString, mode: "insensitive" } },
           { description: { contains: searchString, mode: "insensitive" } },
         ],
       },
-      select: {
-        id: true,
-        username: true,
-        logo: true,
-        category: true,
-        country: true,
-        city: true,
+      include: {
+        annonces: {
+          where: { isAvailable: true },
+        },
       },
     });
 
-    // 4. Codes Promo / Annonces 
+    // 3. Codes Promo / Annonces + Informations de l'établissement complet
     const dbAnnonces = await prisma.annonce.findMany({
       where: {
         isAvailable: true,
@@ -74,64 +80,55 @@ export const globalSearch = async (req, res) => {
         ],
       },
       include: {
-        company: {
-          select: {
-            country: true,
-            city: true,
-          },
-        },
+        company: true,
       },
     });
 
-    // 5. Règle métier : Ordonnancement par Pays 
+    // 4. Algorithme d'ordonnancement par Pays (Texte complet)
     const sortWithCountryPriority = (list, countryKey) => {
-      if (!userCountry) return list;
+      if (!targetCountry) return list;
       return list.sort((a, b) => {
-        const aIsLocal = a[countryKey]?.toUpperCase() === userCountry;
-        const bIsLocal = b[countryKey]?.toUpperCase() === userCountry;
+        const aIsLocal = a[countryKey]?.toLowerCase() === targetCountry;
+        const bIsLocal = b[countryKey]?.toLowerCase() === targetCountry;
         return aIsLocal === bIsLocal ? 0 : aIsLocal ? -1 : 1;
       });
     };
 
-    const sortedUsers = sortWithCountryPriority(dbUsers, "country");
+    const sortedUsers = sortWithCountryPriority(cleanUsers, "country");
     const sortedCompanies = sortWithCountryPriority(dbCompanies, "country");
 
-    // Pour les annonces, le pays est extrait de la relation avec la Company
-    const sortedAnnonces = !userCountry
+    const sortedAnnonces = !targetCountry
       ? dbAnnonces
       : dbAnnonces.sort((a, b) => {
-          const aIsLocal = a.company?.country?.toUpperCase() === userCountry;
-          const bIsLocal = b.company?.country?.toUpperCase() === userCountry;
+          const aIsLocal = a.company?.country?.toLowerCase() === targetCountry;
+          const bIsLocal = b.company?.country?.toLowerCase() === targetCountry;
           return aIsLocal === bIsLocal ? 0 : aIsLocal ? -1 : 1;
         });
 
-    // 6. Formatage de la réponse unifiée
+    // 5. Formatage de la réponse unifiée
     return res.status(200).json({
       success: true,
       data: {
         users: sortedUsers.map((u) => ({
-          id: u.id,
+          ...u,
           type: "USER",
           title: u.fullname || u.username,
           subtitle: u.city ? `${u.city}, ${u.country}` : u.country,
-          avatar: u.profilePhoto,
-          isLocalCountry: u.country?.toUpperCase() === userCountry,
+          isLocalCountry: u.country?.toLowerCase() === targetCountry,
         })),
         partners: sortedCompanies.map((c) => ({
-          id: c.id,
+          ...c,
           type: "PARTNER",
-          title: c.username || "Partenaire",
+          title: c.name || c.username,
           subtitle: c.city ? `${c.city}, ${c.country}` : c.country,
-          category: c.category, 
-          isLocalCountry: c.country?.toUpperCase() === userCountry,
+          isLocalCountry: c.country?.toLowerCase() === targetCountry,
         })),
         promos: sortedAnnonces.map((a) => ({
-          id: a.id,
+          ...a,
           type: "PROMO",
           title: a.name,
-          subtitle: `${a.price} | ${a.description?.substring(0, 60)}...`,
-          avatar: a.image,
-          isLocalCountry: a.company?.country?.toUpperCase() === userCountry,
+          subtitle: a.description,
+          isLocalCountry: a.company?.country?.toLowerCase() === targetCountry,
         })),
       },
     });
