@@ -1,541 +1,355 @@
 import prisma from "./prisma.service.js";
-import { CompanyCategory, ReservationStatus } from "../generated/prisma/index.js";
 import { walletService } from "./wallet.service.js";
 
-export const reservationsService = {
+export const coffretsService = {
+  
+  // ==========================================
+  // 1. GESTION ADMINISTRATIVE (ADMIN ONLY)
+  // ==========================================
+
   /**
-   * 1. CRÉATION D'UNE RÉSERVATION (Débit unifié via le wallet FIFO)
+   * Validation administrative d'un coffret (RG-01).
+   * Rend le coffret visible aux yeux des clients.
    */
-  create: async (data) => {
-    const annonce = await prisma.annonce.findUnique({
-      where: { id: data.annonceId },
-      include: { company: true },
+  verifyCoffret: async (coffretId, isVerified = true) => {
+    return await prisma.coffret.update({
+      where: { id: coffretId },
+      data: { isVerified },
+      include: { items: true }
+    });
+  },
+
+  // ==========================================
+  // 2. ESPACE CLIENT & VISIBILITÉ PUBLIQUE
+  // ==========================================
+
+  getAvailableCoffrets: async ({ latitude, longitude, searchQuery, maxDistanceKm = 50 }) => {
+    const whereCondition = {
+      isAvailable: true,
+      isVerified: true,
+    };
+
+    if (searchQuery) {
+      whereCondition.OR = [
+        { name: { contains: searchQuery, mode: "insensitive" } },
+        { description: { contains: searchQuery, mode: "insensitive" } },
+        { company: { city: { contains: searchQuery, mode: "insensitive" } } },
+        { company: { country: { contains: searchQuery, mode: "insensitive" } } },
+      ];
+    }
+
+    let coffrets = await prisma.coffret.findMany({
+      where: whereCondition,
+      include: {
+        company: true,
+        items: true,
+      },
+      orderBy: {
+        isSpecial: "desc", 
+      },
     });
 
-    if (!annonce) throw new Error("L'annonce spécifiée n'existe pas.");
-    if (!annonce.isAvailable)
-      throw new Error("Cette annonce n'est plus disponible.");
-    if (!annonce.company)
-      throw new Error("L'annonce n'est rattachée à aucune entreprise valide.");
+    if (latitude !== undefined && longitude !== undefined) {
+      coffrets = coffrets
+        .map((coffret) => {
+          if (!coffret.company.latitude || !coffret.company.longitude) {
+            return { ...coffret, distanceKm: null };
+          }
+          const R = 6371;
+          const dLat = ((parseFloat(coffret.company.latitude) - latitude) * Math.PI) / 180;
+          const dLon = ((parseFloat(coffret.company.longitude) - longitude) * Math.PI) / 180;
+          const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos((latitude * Math.PI) / 180) *
+              Math.cos((parseFloat(coffret.company.latitude) * Math.PI) / 180) *
+              Math.sin(dLon / 2) *
+              Math.sin(dLon / 2);
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+          const distanceKm = R * c;
 
-    const companyCategory = annonce.company.category;
-    const quantity = data.quantity ?? 1;
-
-    // --- VALIDATIONS PAR CATÉGORIE ---
-    if (companyCategory === CompanyCategory.TRANSPORT) {
-      if (!data.startLatitude || !data.startLongitude) {
-        throw new Error(
-          "Les coordonnées GPS de départ sont obligatoires pour un trajet.",
-        );
-      }
-      if (annonce.nbPlaces !== null && annonce.nbPlaces < quantity) {
-        throw new Error("Nombre de places insuffisantes pour ce trajet.");
-      }
-    }
-
-    if (companyCategory === CompanyCategory.HOTEL && !data.endDate) {
-      throw new Error(
-        "La date de fin est obligatoire pour réserver une chambre d'Hôtel.",
-      );
-    }
-
-    // --- CALCUL DU PRIX ---
-    let basePrice = Number(annonce.price);
-    if (companyCategory === CompanyCategory.HOTEL && data.endDate) {
-      const diffTime = Math.abs(
-        new Date(data.endDate).getTime() - new Date(data.startDate).getTime(),
-      );
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      basePrice = basePrice * (diffDays > 0 ? diffDays : 1);
-    }
-
-    const totalPrice = basePrice * quantity;
-    const reference = `RES-${new Date().toISOString().slice(0, 10).replace(/-/g, "")}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
-
-    // --- INITIATION DE LA TRANSACTION ---
-    return await prisma.$transaction(async (tx) => {
-      // Utilisation du débit FIFO unifié
-      await walletService.debitWallet(
-        data.userId,
-        totalPrice,
-        `Réservation ${reference} - ${annonce.name}`,
-        tx, // Partage de la transaction Prisma active
-      );
-
-      // Si c'est un transport, on décrémente les places
-      if (
-        companyCategory === CompanyCategory.TRANSPORT &&
-        annonce.nbPlaces !== null
-      ) {
-        await tx.annonce.update({
-          where: { id: annonce.id },
-          data: { nbPlaces: { decrement: quantity } },
+          return { ...coffret, distanceKm };
+        })
+        .filter((c) => c.distanceKm === null || c.distanceKm <= maxDistanceKm)
+        .sort((a, b) => {
+          if (a.distanceKm === null) return 1;
+          if (b.distanceKm === null) return -1;
+          return a.distanceKm - b.distanceKm;
         });
+    }
+
+    return coffrets;
+  },
+
+  getCoffretById: async (id) => {
+    return await prisma.coffret.findFirst({
+      where: {
+        id: parseInt(id),
+        isAvailable: true,
+        isVerified: true,
+      },
+      include: {
+        company: true,
+        items: true,
+      },
+    });
+  },
+
+  // ==========================================
+  // 3. WORKFLOW RÉSERVATION & ANNULATION
+  // ==========================================
+
+  createReservation: async (userId, coffretId, startDate, quantity) => {
+    return await prisma.$transaction(async (tx) => {
+      const coffret = await tx.coffret.findUnique({
+        where: { id: coffretId },
+      });
+
+      if (!coffret || !coffret.isAvailable || !coffret.isVerified) {
+        throw new Error("Ce coffret n'est pas ou plus disponible.");
       }
 
-      // Création du record de réservation
-      return await tx.reservation.create({
+      // RÈGLE : Le prix est unitaire. La réduction de 10% s'applique à partir d'une qte >= 2.
+      let basePrice = parseFloat(coffret.price) * quantity;
+      let finalPrice = basePrice;
+      if (quantity >= 2) {
+        finalPrice = basePrice * 0.9;
+      }
+
+      const reference = `NS-COF-${Math.floor(100000 + Math.random() * 900000)}`;
+
+      try {
+        await walletService.debitWallet(
+          userId,
+          finalPrice,
+          `Réservation Coffret Romantique - Réf: ${reference}`,
+          tx
+        );
+      } catch (walletError) {
+        if (walletError.message.includes("insuffisant")) {
+          throw new Error("SOLDE_INSUFFISANT");
+        }
+        throw walletError;
+      }
+
+      const reservation = await tx.coffretReservation.create({
         data: {
           reference,
-          userId: data.userId,
-          receiverId: data.receiverId ?? null,
-          annonceId: data.annonceId,
-          startDate: new Date(data.startDate),
-          endDate: data.endDate ? new Date(data.endDate) : null,
-          totalPrice,
+          coffretId,
+          userId,
+          startDate: new Date(startDate),
           quantity,
-          status: ReservationStatus.PENDING,
-          isDelivery: data.isDelivery ?? false,
-          deliveryAddress: data.deliveryAddress ?? null,
-          deliveryPhone: data.deliveryPhone ?? null,
-          startLatitude: data.startLatitude ?? null,
-          startLongitude: data.startLongitude ?? null,
-          endLatitude: data.endLatitude ?? null,
-          endLongitude: data.endLongitude ?? null,
-          startAddressText: data.startAddressText ?? null,
-          cancellationDeadline:
-            companyCategory === CompanyCategory.HOTEL
-              ? new Date(
-                  new Date(data.startDate).getTime() - 24 * 60 * 60 * 1000,
-                ) // 24h avant pour Hôtel
-              : new Date(
-                  new Date(data.startDate).getTime() - 2 * 60 * 60 * 1000,
-                ), // 2h par défaut (Resto, Activité...)
+          totalPrice: finalPrice,
+          status: "CONFIRMED",
         },
       });
+
+      // Prolongation de la flamme à 15 jours si en couple actif
+      const userMatch = await tx.match.findFirst({
+        where: {
+          status: "ACTIVE",
+          OR: [{ fromId: userId }, { toId: userId }],
+        },
+      });
+
+      if (userMatch) {
+        const fifteenDaysFromNow = new Date();
+        fifteenDaysFromNow.setDate(fifteenDaysFromNow.getDate() + 15);
+
+        await tx.match.update({
+          where: { id: userMatch.id },
+          data: { flameExpiresAt: fifteenDaysFromNow },
+        });
+      }
+
+      await tx.company.update({
+        where: { id: coffret.companyId },
+        data: { balance: { increment: finalPrice } },
+      });
+
+      return reservation;
     });
   },
 
-  /**
-   * 2. RÉCUPÉRATION MULTI-CRITÈRES DES RÉSERVATIONS AVEC PAGINATION & FILTRES
-   * Supporte le filtrage par userId, statut, plage de dates et zone géographique.
-   */
-  getMany: async (filters = {}) => {
-    const limit = filters.limit ? parseInt(filters.limit) : 20;
-    const page = filters.page ? parseInt(filters.page) : 1;
-    const skip = (page - 1) * limit;
+  cancelCoffretBooking: async (userId, reservationId) => {
+    return await prisma.$transaction(async (tx) => {
+      const reservation = await tx.coffretReservation.findFirst({
+        where: { id: reservationId, userId },
+        include: { coffret: true },
+      });
 
-    const { userId, receiverId, status, dateDebut, dateFin, city, country } = filters;
+      if (!reservation) throw new Error("Réservation introuvable.");
+      if (reservation.status === "CANCELLED") throw new Error("Cette réservation est déjà annulée.");
 
-    // Construction dynamique du filtre Prisma WHERE
-    const whereCondition = {};
+      const now = new Date();
+      const startDate = new Date(reservation.startDate);
+      const timeDifferenceHours = (startDate.getTime() - now.getTime()) / (1000 * 60 * 60);
 
-    if (userId) {
-      whereCondition.userId = parseInt(userId);
-    }
+      let refundProcessed = false;
+      let message = "";
 
-    if (receiverId) {
-      whereCondition.receiverId = parseInt(receiverId);
-    }
+      if (timeDifferenceHours >= 72) {
+        refundProcessed = true;
+        const refundAmount = parseFloat(reservation.totalPrice);
 
-    if (status) {
-      whereCondition.status = status;
-    }
+        await tx.walletTranche.create({
+          data: {
+            userId,
+            trancheId: `REF-${Date.now()}`,
+            type: "AJUSTEMENT",
+            principalInitial: refundAmount,
+            principalRestant: refundAmount,
+            bonusTotal: 0, bonusRestant: 0, bonusDebloque: 0, bonusBloque: 0,
+            statut: "ACTIVE",
+            description: `Remboursement automatique (Annulation > 72h) - Coffret Réf: ${reservation.reference}`,
+          },
+        });
 
-    // Filtre sur plage de dates d'exécution
-    if (dateDebut || dateFin) {
-      whereCondition.startDate = {};
-      if (dateDebut) {
-        whereCondition.startDate.gte = new Date(dateDebut);
+        const summary = await walletService.getWalletSummary(userId, tx);
+        await tx.user.update({
+          where: { id: userId },
+          data: { coins: summary.soldeTotalUtilisable },
+        });
+
+        await tx.company.update({
+          where: { id: reservation.coffret.companyId },
+          data: { balance: { decrement: refundAmount } },
+        });
+
+        message = "Réservation annulée avec succès et remboursée.";
+      } else {
+        message = "Réservation annulée sans remboursement (Délai des 72h dépassé).";
       }
-      if (dateFin) {
-        whereCondition.startDate.lte = new Date(dateFin);
-      }
-    }
 
-    // Filtre géographique délégué à l'adresse de l'entreprise émettrice de l'annonce
-    if (city || country) {
-      whereCondition.annonce = {
-        company: {
-          ...(city && { city: { equals: city, mode: "insensitive" } }),
-          ...(country && { country: { equals: country, mode: "insensitive" } }),
+      // ANTI-FRAUDE / ANTI-ENTRETIEN FLAMME FICTIF :
+      // Si la réservation est annulée, on réduit la flamme pour pénaliser la triche.
+      const userMatch = await tx.match.findFirst({
+        where: {
+          status: "ACTIVE",
+          OR: [{ fromId: userId }, { toId: userId }],
         },
+      });
+
+      if (userMatch && userMatch.flameExpiresAt) {
+        const currentExpiration = new Date(userMatch.flameExpiresAt);
+        // On retire 15 jours (ou on remet à 'now') pour annuler l'effet du boost fictif.
+        currentExpiration.setDate(currentExpiration.getDate() - 15);
+        
+        // Sécurité : Si le retrait repasse sous la date actuelle, on force l'expiration immédiate ou à 'now'
+        const newExpiration = currentExpiration < now ? now : currentExpiration;
+
+        await tx.match.update({
+          where: { id: userMatch.id },
+          data: { flameExpiresAt: newExpiration },
+        });
+      }
+
+      const updatedReservation = await tx.coffretReservation.update({
+        where: { id: reservationId },
+        data: { status: "CANCELLED" },
+      });
+
+      const finalSummary = await walletService.getWalletSummary(userId, tx);
+
+      return {
+        message,
+        reservation: updatedReservation,
+        refundProcessed,
+        updatedCoins: finalSummary.soldeTotalUtilisable,
       };
-    }
+    });
+  },
 
-    // Requêtes parallèles pour optimiser le temps de réponse
-    const [reservations, total] = await Promise.all([
-      prisma.reservation.findMany({
-        where: whereCondition,
-        include: {
-          annonce: {
-            include: {
-              company: {
-                select: {
-                  id: true,
-                  name: true,
-                  category: true,
-                  logo: true,
-                  city: true,
-                  country: true,
-                },
-              },
-            },
-          },
-          receiver: {
-            select: {
-              id: true,
-              fullname: true,
-              profilePhoto: true,
-            },
-          },
-          user: {
-            select: {
-              id: true,
-              fullname: true,
-              profilePhoto: true,
-            },
-          },
-        },
-        orderBy: {
-          createdAt: "desc", // Les plus récentes d'abord
-        },
-        take: limit,
-        skip: skip,
-      }),
-      prisma.reservation.count({ where: whereCondition }),
-    ]);
+  // ==========================================
+  // 4. CRUD PAR L'ENTREPRISE PARTENAIRE
+  // ==========================================
 
-    return {
-      success: true,
-      meta: {
-        total,
-        page,
-        limit,
-        totalPages: Math.ceil(total / limit),
+  createCoffretByCompany: async (companyId, coffretData, items = []) => {
+    return await prisma.coffret.create({
+      data: {
+        name: coffretData.name,
+        description: coffretData.description,
+        images: coffretData.images, // JSON (Tableau d'URLs)
+        price: parseFloat(coffretData.price),
+        durationDays: parseInt(coffretData.durationDays || 2),
+        isAvailable: coffretData.isAvailable !== undefined ? coffretData.isAvailable : true,
+        isSpecial: coffretData.isSpecial !== undefined ? coffretData.isSpecial : false,
+        isVerified: false, // Repasse systématiquement à false pour validation admin
+        companyId: companyId,
+        items: {
+          create: items.map(item => ({
+            category: item.category,
+            name: item.name,
+            description: item.description,
+            durationHours: item.durationHours ? parseInt(item.durationHours) : null,
+          }))
+        }
       },
-      data: reservations,
-    };
-  },
-
-  /**
-   * 3. HISTORIQUE DES RÉSERVATIONS DE L'UTILISATEUR (Wrapper de getMany)
-   */
-  getByUser: async (userId, options = {}) => {
-    return await reservationsService.getMany({
-      userId,
-      status: options.status,
-      page: options.page,
-      limit: options.limit,
+      include: { items: true },
     });
   },
 
-  /**
-   * 4. RÉCUPÉRATION DU DÉTAIL D'UNE RÉSERVATION PAR SON ID UNIQUE
-   */
-  getById: async (id) => {
-    return await prisma.reservation.findUnique({
-      where: { id: parseInt(id) },
-      include: {
-        annonce: {
-          include: {
-            company: true,
-          },
-        },
-        receiver: {
-          select: {
-            id: true,
-            fullname: true,
-            profilePhoto: true,
-            phoneNumber: true,
-          },
-        },
-        user: {
-          select: {
-            id: true,
-            fullname: true,
-            profilePhoto: true,
-            phoneNumber: true,
-          },
-        },
-      },
-    });
-  },
-
-  /**
-   * 5. CONFIRMATION DE LA RÉSERVATION (Acceptation par le partenaire)
-   */
-  confirm: async (id) => {
-    const reservation = await prisma.reservation.findUnique({
-      where: { id },
-      include: { annonce: { include: { company: true } } },
+  updateCoffretByCompany: async (coffretId, companyId, updatedData, items = null) => {
+    const existingCoffret = await prisma.coffret.findFirst({
+      where: { id: coffretId, companyId },
     });
 
-    if (!reservation) throw new Error("Réservation introuvable.");
-    if (reservation.status !== ReservationStatus.PENDING) {
-      throw new Error(
-        `Action impossible. Statut actuel : ${reservation.status}`,
-      );
+    if (!existingCoffret) {
+      throw new Error("Action non autorisée ou coffret introuvable.");
     }
-
-    const companyCategory = reservation.annonce.company?.category;
-
-    // Étape 1 : Passer le statut global à CONFIRMED
-    const updatedReservation = await prisma.reservation.update({
-      where: { id },
-      data: { status: ReservationStatus.CONFIRMED },
-    });
-
-    // Étape 2 : Encaissement immédiat pour Hôtel, Resto et Activité.
-    // Pour le Transport, les fonds restent bloqués en séquestre jusqu'à la fin de la course.
-    if (companyCategory !== CompanyCategory.TRANSPORT) {
-      return await reservationsService.completeOrProcess(id);
-    }
-
-    return updatedReservation;
-  },
-
-  /**
-   * 6. LANCER LE TRIP / COURSE (Spécifique au Transport)
-   */
-  startTrip: async (id) => {
-    const reservation = await prisma.reservation.findUnique({
-      where: { id },
-      include: { annonce: { include: { company: true } } },
-    });
-
-    if (!reservation) throw new Error("Réservation introuvable.");
-    if (reservation.annonce.company?.category !== CompanyCategory.TRANSPORT) {
-      throw new Error(
-        "Cette action est réservée pour le suivi des trajets de Transport.",
-      );
-    }
-    if (reservation.status !== ReservationStatus.CONFIRMED) {
-      throw new Error(
-        "La course ne peut démarrer que si la réservation est confirmée.",
-      );
-    }
-
-    return { success: true, message: "Le voyage a commencé.", reservation };
-  },
-
-  /**
-   * 7. PRESTATION TERMINÉE & LIQUIDATION DE LA BALANCE PARTENAIRE
-   */
-  completeOrProcess: async (id) => {
-    const reservation = await prisma.reservation.findUnique({
-      where: { id },
-      include: { annonce: { include: { company: true } } },
-    });
-
-    if (!reservation) throw new Error("Réservation introuvable.");
-
-    if (
-      !(
-        reservation.status === ReservationStatus.CONFIRMED ||
-        reservation.status === ReservationStatus.PENDING
-      )
-    ) {
-      throw new Error(
-        "Seule une réservation en cours ou confirmée peut être finalisée.",
-      );
-    }
-
-    const company = reservation.annonce.company;
-    if (!company) throw new Error("Entreprise introuvable.");
 
     return await prisma.$transaction(async (tx) => {
-      // 1. Créditer la balance réelle de la Company
-      await tx.company.update({
-        where: { id: company.id },
-        data: { balance: { increment: Number(reservation.totalPrice) } },
-      });
+      if (items !== null) {
+        // Suppression et réinsertion des sous-annonces / items
+        await tx.coffretItem.deleteMany({ where: { coffretId } });
+      }
 
-      // 2. Clôturer la réservation au statut final PROCESSED
-      return await tx.reservation.update({
-        where: { id },
-        data: { status: ReservationStatus.PROCESSED },
-      });
-    });
-  },
-
-  /**
-   * 8. OUVERTURE D'UN LITIGE (Par l'utilisateur ou la compagnie)
-   */
-  openDispute: async (id, openedBy, reason) => {
-    const reservation = await prisma.reservation.findUnique({ where: { id } });
-    if (!reservation) throw new Error("Réservation introuvable.");
-
-    if (
-      reservation.status === ReservationStatus.CANCELLED ||
-      reservation.status === ReservationStatus.PROCESSED
-    ) {
-      throw new Error(
-        "Impossible d'ouvrir un litige sur une réservation déjà clôturée.",
-      );
-    }
-
-    return await prisma.reservation.update({
-      where: { id },
-      data: {
-        status: ReservationStatus.LITIGE,
-        litigeReason: `Litige ouvert par le ${openedBy}. Motif : ${reason}`,
-      },
-    });
-  },
-
-  /**
-   * 9. RÉSOLUTION DU LITIGE (Arbitrage exclusif Admin)
-   */
-  resolveDispute: async (id, decision, adminNotes) => {
-    const reservation = await prisma.reservation.findUnique({
-      where: { id },
-      include: { annonce: { include: { company: true } } },
-    });
-
-    if (!reservation) throw new Error("Réservation introuvable.");
-    if (reservation.status !== ReservationStatus.LITIGE) {
-      throw new Error("Cette réservation n'est pas marquée en litige.");
-    }
-
-    // Option A : Remboursement intégral du client
-    if (decision === "REFUND_CLIENT") {
-      let historicalTrancheId = `REF-LITIGE-${Date.now()}`;
-
-      await prisma.$transaction(async (tx) => {
-        if (
-          reservation.annonce.company?.category === CompanyCategory.TRANSPORT &&
-          reservation.annonce.nbPlaces !== null
-        ) {
-          await tx.annonce.update({
-            where: { id: reservation.annonceId },
-            data: { nbPlaces: { increment: reservation.quantity } },
-          });
-        }
-
-        const historicalDebit = await tx.walletTranche.findFirst({
-          where: {
-            userId: reservation.userId,
-            description: { contains: reservation.reference },
-          },
-        });
-        if (historicalDebit) historicalTrancheId = historicalDebit.trancheId;
-      });
-
-      await walletService.refundWallet(
-        reservation.userId,
-        historicalTrancheId,
-        Number(reservation.totalPrice),
-        `Remboursement arbitrage litige : ${adminNotes}`,
-      );
-
-      return await prisma.reservation.update({
-        where: { id },
+      return await tx.coffret.update({
+        where: { id: coffretId },
         data: {
-          status: ReservationStatus.CANCELLED,
-          litigeReason: `Tranché par Admin (Remboursement Client). Notes : ${adminNotes}`,
+          name: updatedData.name,
+          description: updatedData.description,
+          images: updatedData.images,
+          price: updatedData.price ? parseFloat(updatedData.price) : undefined,
+          durationDays: updatedData.durationDays ? parseInt(updatedData.durationDays) : undefined,
+          isAvailable: updatedData.isAvailable,
+          isSpecial: updatedData.isSpecial,
+          isVerified: false, // Modification = Nécessite une nouvelle validation de l'admin
+          ...(items !== null ? {
+            items: {
+              create: items.map(item => ({
+                category: item.category,
+                name: item.name,
+                description: item.description,
+                durationHours: item.durationHours ? parseInt(item.durationHours) : null,
+              }))
+            }
+          } : {}),
         },
+        include: { items: true },
       });
-    }
-
-    // Option B : Transfert forcé des fonds vers la compagnie
-    if (decision === "PAY_COMPANY") {
-      const company = reservation.annonce.company;
-      if (!company) throw new Error("Entreprise introuvable.");
-
-      await prisma.$transaction(async (tx) => {
-        await tx.company.update({
-          where: { id: company.id },
-          data: { balance: { increment: Number(reservation.totalPrice) } },
-        });
-      });
-
-      return await prisma.reservation.update({
-        where: { id },
-        data: {
-          status: ReservationStatus.PROCESSED,
-          litigeReason: `Tranché par Admin (Versement Partenaire). Notes : ${adminNotes}`,
-        },
-      });
-    }
+    });
   },
 
-  /**
-   * 10. ANNULATION ET REMBOURSEMENT PAR SOUSTRACTION
-   */
-  cancel: async (id, actor, reason) => {
-    const reservation = await prisma.reservation.findUnique({
-      where: { id },
-      include: { annonce: { include: { company: true } } },
+  deleteCoffretByCompany: async (coffretId, companyId) => {
+    const existingCoffret = await prisma.coffret.findFirst({
+      where: { id: coffretId, companyId },
     });
 
-    if (!reservation) throw new Error("Réservation introuvable.");
-    if (
-      reservation.status === ReservationStatus.CANCELLED ||
-      reservation.status === ReservationStatus.PROCESSED
-    ) {
-      throw new Error("Cette réservation est déjà clôturée ou annulée.");
-    }
-    if (reservation.status === ReservationStatus.LITIGE) {
-      throw new Error(
-        "Un litige est en cours sur cette réservation. Utilisez l'arbitrage Admin.",
-      );
+    if (!existingCoffret) {
+      throw new Error("Action non autorisée ou coffret introuvable.");
     }
 
-    let shouldRefund = false;
-
-    if (actor === "COMPANY") {
-      shouldRefund = true;
-    } else if (actor === "USER") {
-      if (reservation.status === ReservationStatus.PENDING) {
-        shouldRefund = true;
-      } else if (reservation.status === ReservationStatus.CONFIRMED) {
-        if (
-          !reservation.cancellationDeadline ||
-          new Date() <= new Date(reservation.cancellationDeadline)
-        ) {
-          shouldRefund = true;
-        } else {
-          throw new Error(
-            "Le délai de rétractation gratuite pour cette réservation est dépassé.",
-          );
-        }
-      }
-    }
-
-    let historicalTrancheId = `REF-FALLBACK-${Date.now()}`;
-
-    // Étape 1 : Libération des verrous et stocks dans la transaction principale
-    await prisma.$transaction(async (tx) => {
-      if (
-        reservation.annonce.company?.category === CompanyCategory.TRANSPORT &&
-        reservation.annonce.nbPlaces !== null
-      ) {
-        await tx.annonce.update({
-          where: { id: reservation.annonceId },
-          data: { nbPlaces: { increment: reservation.quantity } },
-        });
-      }
-
-      const historicalDebit = await tx.walletTranche.findFirst({
-        where: {
-          userId: reservation.userId,
-          description: { contains: reservation.reference },
-        },
-      });
-
-      if (historicalDebit) {
-        historicalTrancheId = historicalDebit.trancheId;
-      }
+    return await prisma.$transaction(async (tx) => {
+      await tx.coffretItem.deleteMany({ where: { coffretId } });
+      return await tx.coffret.delete({ where: { id: coffretId } });
     });
+  },
 
-    // Étape 2 : Appel isolé à refundWallet
-    if (shouldRefund && reservation.totalPrice) {
-      await walletService.refundWallet(
-        reservation.userId,
-        historicalTrancheId,
-        Number(reservation.totalPrice),
-        `Annulation réservation ${reservation.reference}`,
-      );
-    }
-
-    // Étape 3 : Mutation de statut finale
-    return await prisma.reservation.update({
-      where: { id },
-      data: {
-        status: ReservationStatus.CANCELLED,
-        litigeReason: reason ?? `Annulée par le profil : ${actor}`,
-      },
+  getCompanyCatalog: async (companyId) => {
+    return await prisma.coffret.findMany({
+      where: { companyId },
+      include: { items: true },
+      orderBy: { createdAt: "desc" },
     });
   },
 };

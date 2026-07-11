@@ -1,6 +1,6 @@
 import prisma from './prisma.service.js'
 
-export class EnvelopeService {
+export class EnveloppeService {
   /**
    * Calcule le statut d'éligibilité d'un utilisateur pour les 3 types de roues
    */

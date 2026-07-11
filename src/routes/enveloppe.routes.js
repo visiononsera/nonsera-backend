@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { EnvelopeController } from "../controllers/enveloppe.controller.js";
+import { EnveloppeController } from "../controllers/enveloppe.controller.js";
 import { jwtMiddleware } from "../middlewares/jwt.middleware.js";
 import { loadContext } from "../middlewares/auth.middleware.js";  
 

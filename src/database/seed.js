@@ -1480,6 +1480,180 @@ async function seedWallets() {
     );
   }
 }
+
+// ======================================================
+// SEED COFFRETS ROMANTIQUES (WITH ITEMS)
+// ======================================================
+async function seedCoffrets() {
+  console.log("Démarrage de l'injection des Coffrets Romantiques et de leurs sous-éléments...");
+
+  // 1. Récupération des entreprises créées pour lier les coffrets de manière cohérente
+  const companies = await prisma.company.findMany({
+    select: { id: true, name: true, city: true }
+  });
+
+  if (companies.length === 0) {
+    console.error("⚠️ Impossible d'injecter les coffrets : aucune entreprise trouvée en base.");
+    return;
+  }
+
+  const patioCotonou = companies.find(c => c.name.includes("Patio Cotonou"));
+  const acoustiqueAbidjan = companies.find(c => c.name.includes("Acoustique Abidjan"));
+  const azalaiCotonou = companies.find(c => c.name.includes("Azalaï Hôtel"));
+  const sofitelAbidjan = companies.find(c => c.name.includes("Sofitel Abidjan"));
+  const borgouParakou = companies.find(c => c.name.includes("Benin Borgou Voyage"));
+
+  const rawCoffrets = [
+    // ------------------------------------------------------
+    // COFFRET 1 : Évasion Royale à Cotonou (Azalaï Hôtel)
+    // ------------------------------------------------------
+    {
+      name: "Évasion Royale & Volupté",
+      description: "Un week-end d'exception conçu pour raviver l'étincelle. Logement haut de gamme, dîner aux chandelles et transfert privé inclus.",
+      price: 145000.00, // Prix unitaire global par personne
+      durationDays: 2,
+      isAvailable: true,
+      isVerified: true, // Directement validé pour le seed
+      isSpecial: true,
+      companyId: azalaiCotonou?.id || companies[0].id,
+      images: [
+        "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1551248429-40975aa4de74?auto=format&fit=crop&w=800&q=80"
+      ],
+      items: [
+        {
+          category: "HOTEL",
+          name: "Nuit en Suite Présidentielle Lune de Miel",
+          description: "Dormez dans un confort absolu avec lit à baldaquin et jacuzzi privatif sur le balcon.",
+          durationHours: 24
+        },
+        {
+          category: "RESTAURANT",
+          name: "Dîner Gastronomique Duo",
+          description: "Menu dégustation en 4 services avec bouteille de champagne incluse, servi sur table intimiste.",
+          durationHours: 3
+        },
+        {
+          category: "TRANSPORT",
+          name: "Chauffeur Privé Premium",
+          description: "Prise en charge à votre domicile en berline noire VIP climatisée pour le trajet aller-retour.",
+          durationHours: 2
+        }
+      ]
+    },
+
+    // ------------------------------------------------------
+    // COFFRET 2 : Sérénité Lagunaire à Abidjan (Sofitel)
+    // ------------------------------------------------------
+    {
+      name: "Sérénité & Romance Ébrié",
+      description: "Prenez de la hauteur au-dessus de la lagune. Le luxe ultime d'Abidjan réuni dans une expérience mémorable de 3 jours.",
+      price: 210000.00,
+      durationDays: 3,
+      isAvailable: true,
+      isVerified: true,
+      isSpecial: false,
+      companyId: sofitelAbidjan?.id || companies[0].id,
+      images: [
+        "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?auto=format&fit=crop&w=800&q=80"
+      ],
+      items: [
+        {
+          category: "HOTEL",
+          name: "Chambre Deluxe Vue Lagune",
+          description: "Baignoire profonde, literie signature et vue panoramique spectaculaire sur la baie de Cocody.",
+          durationHours: 48
+        },
+        {
+          category: "RESTAURANT",
+          name: "Dîner aux chandelles à L'Acoustique",
+          description: "Mise en avant des saveurs ivoiriennes revisitées par un chef étoilé.",
+          durationHours: 4
+        },
+        {
+          category: "ACTIVITY",
+          name: "Accès VIP Espace Spa & Bien-être",
+          description: "Massage relaxant d'une heure en cabine duo suivi d'un accès libre au hammam et à la piscine olympique.",
+          durationHours: 3
+        }
+      ]
+    },
+
+    // ------------------------------------------------------
+    // COFFRET 3 : Douceur Gastronomique à Cotonou (Le Patio)
+    // ------------------------------------------------------
+    {
+      name: "Instants Secrets & Gastronomie",
+      description: "Une journée et une soirée dédiées aux couples épicuriens à la recherche d'une intimité gourmande.",
+      price: 45000.00,
+      durationDays: 1,
+      isAvailable: true,
+      isVerified: true,
+      isSpecial: true,
+      companyId: patioCotonou?.id || companies[0].id,
+      images: [
+        "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=800&q=80"
+      ],
+      items: [
+        {
+          category: "RESTAURANT",
+          name: "Dégustation Premium Duo de Langoustes",
+          description: "Service exclusif en zone d'ambiance INTIME avec cocktail signature 'Nonsera Love' offert.",
+          durationHours: 3
+        },
+        {
+          category: "GIFT",
+          name: "Boîte Surprise de douceurs fines",
+          description: "Remise d'un écrin de chocolats fins et macarons artisanaux en fin de repas.",
+          durationHours: 1
+        }
+      ]
+    }
+  ];
+
+  let coffretCount = 0;
+  let itemCount = 0;
+
+  for (const raw of rawCoffrets) {
+    try {
+      await safeTransaction(async (tx) => {
+        const createdCoffret = await tx.coffret.create({
+          data: {
+            name: raw.name,
+            description: raw.description,
+            price: raw.price,
+            durationDays: raw.durationDays,
+            isAvailable: raw.isAvailable,
+            isVerified: raw.isVerified,
+            isSpecial: raw.isSpecial,
+            images: raw.images, 
+            companyId: raw.companyId,
+            items: {
+              create: raw.items.map(item => ({
+                category: item.category,
+                name: item.name,
+                description: item.description,
+                durationHours: item.durationHours
+              }))
+            }
+          }
+        });
+
+        coffretCount++;
+        itemCount += raw.items.length;
+      });
+    } catch (err) {
+      console.error(`Échec de l'injection du coffret "${raw.name}":`, err.message);
+    }
+  }
+
+  console.log(`Bilan Coffrets : ${coffretCount} coffrets autonomes insérés.`);
+  console.log(`Bilan Éléments de Coffrets : ${itemCount} sous-items associés configurés.`);
+}
+
 // ======================================================
 // MAIN
 // ======================================================
@@ -1489,7 +1663,7 @@ async function main() {
   }
 
   console.log("========================================");
-  console.log("Début du seeding global (Staff + Clients + Wallets)");
+  console.log("Début du seeding global");
   console.log("========================================");
 
   await seedCurrencies();

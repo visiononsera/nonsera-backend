@@ -1,18 +1,18 @@
 import prisma from "../services/prisma.service.js";
-import { EnvelopeService } from "../services/enveloppe.service.js";
+import { EnveloppeService } from "../services/enveloppe.service.js";
 
-export class EnvelopeController {
+export class EnveloppeController {
   /**
    * Récupère l'état d'éligibilité de l'utilisateur pour les 3 types de roues
    * Sert à afficher le cadenas, la roue débloquée ou la barre de progression
-   * GET /api/envelopes/eligibility
+   * GET /api/Enveloppes/eligibility
    */
   static async getEligibility(req, res, next) {
     try {
       const userId = req.user.id; // Injecté par ton middleware d'authentification
       const userCountry = req.user.country || "BJ"; // Fallback par défaut
 
-      const eligibility = await EnvelopeService.getUserEligibility(userId, userCountry);
+      const eligibility = await EnveloppeService.getUserEligibility(userId, userCountry);
 
       return res.status(200).json({
         success: true,
@@ -26,7 +26,7 @@ export class EnvelopeController {
   /**
    * Récupère l'historique des derniers gagnants (tous pays confondus ou filtré)
    * Affiche le texte dynamique global : "username + montant + date"
-   * GET /api/envelopes/recent-winners
+   * GET /api/Enveloppes/recent-winners
    */
   static async getRecentWinners(req, res, next) {
     try {
