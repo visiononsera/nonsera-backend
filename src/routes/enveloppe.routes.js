@@ -7,9 +7,9 @@ const router = Router();
 const authStack = [jwtMiddleware, loadContext];
 
 // Route pour l'état d'éligibilité et les barres de progression
-router.get("/envelopes/eligibility", ...authStack, EnvelopeController.getEligibility);
+router.get("/envelopes/eligibility", ...authStack, EnveloppeController.getEligibility);
 
 // Route publique/partagée pour le fil de défilement des derniers gagnants
-router.get("/envelopes/recent-winners", ...authStack, EnvelopeController.getRecentWinners);
+router.get("/envelopes/recent-winners", ...authStack, EnveloppeController.getRecentWinners);
 
 export default router;
