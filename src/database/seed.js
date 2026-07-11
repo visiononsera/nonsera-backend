@@ -1489,7 +1489,7 @@ async function main() {
   }
 
   console.log("========================================");
-  console.log("🚀 Début du seeding global (Staff + Clients + Wallets)");
+  console.log("Début du seeding global (Staff + Clients + Wallets)");
   console.log("========================================");
 
   await seedCurrencies();
@@ -1499,6 +1499,7 @@ async function main() {
   await seedCountries();
   await seedCompanies();
   await seedWallets();
+  await seedGifts();
   console.log("========================================");
   console.log("Fin complète et réussie du processus de seeding");
   console.log("========================================");

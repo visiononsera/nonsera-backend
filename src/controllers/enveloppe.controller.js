@@ -1,5 +1,5 @@
 import prisma from "../services/prisma.service.js";
-import { EnvelopeService } from "../services/envelope.service.js";
+import { EnvelopeService } from "../services/enveloppe.service.js";
 
 export class EnvelopeController {
   /**
