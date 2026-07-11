@@ -14,35 +14,29 @@ export const globalSearch = async (req, res) => {
     }
 
     const searchString = String(query).trim();
-    // Normalisation du pays pour éviter les problèmes de casse
     const targetCountry = country ? String(country).trim().toLowerCase() : null;
 
-    // 1. Récupération des Utilisateurs Célibataires (sans match ACTIVE en cours)
     const dbUsers = await prisma.user.findMany({
       where: {
         id: { not: currentUserId },
         role: "USER",
         isCompleted: true,
         isBanned: false,
-        // Un utilisateur est célibataire s'il n'a AUCUN match ACTIVE (émis ou reçu)
         MatchSender: {
           none: { status: "ACTIVE" }
         },
         MatchReceiver: {
           none: { status: "ACTIVE" }
         },
-        // Recherche textuelle
         OR: [
           { fullname: { contains: searchString, mode: "insensitive" } },
           { username: { contains: searchString, mode: "insensitive" } },
         ],
       },
-      // Pas de select restrictif pour tout charger. On nettoiera le passCode juste après.
     });
 
-    // Nettoyage des données sensibles des utilisateurs
     const cleanUsers = dbUsers.map(user => {
-      const { passCode, coins, ...secureUser } = user; // Ajuste selon le nom exact de ton champ sensible
+      const { passCode, coins, ...secureUser } = user;
       return secureUser;
     });
 

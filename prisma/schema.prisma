@@ -119,6 +119,7 @@ enum ReservationStatus {
   PENDING
   CONFIRMED
   PROCESSED
+  ON_TRIP
   CANCELLED
   LITIGE
 }

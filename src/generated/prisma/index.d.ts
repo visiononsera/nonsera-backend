@@ -373,6 +373,7 @@ export const ReservationStatus: {
   PENDING: 'PENDING',
   CONFIRMED: 'CONFIRMED',
   PROCESSED: 'PROCESSED',
+  ON_TRIP: 'ON_TRIP',
   CANCELLED: 'CANCELLED',
   LITIGE: 'LITIGE'
 };

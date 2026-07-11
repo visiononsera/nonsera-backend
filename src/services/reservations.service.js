@@ -310,6 +310,11 @@ export const reservationsService = {
       );
     }
 
+    const updatedReservation = await prisma.reservation.update({
+      where: { id },
+      data: { status: ReservationStatus.ON_TRIP },
+    });
+
     return { success: true, message: "Le voyage a commencé.", reservation };
   },
 
@@ -325,13 +330,22 @@ export const reservationsService = {
     if (!reservation) throw new Error("Réservation introuvable.");
 
     if (
-      !(
-        reservation.status === ReservationStatus.CONFIRMED ||
-        reservation.status === ReservationStatus.PENDING
+      (
+        reservation.status === ReservationStatus.CANCELLED ||
+        reservation.status === ReservationStatus.LITIGE ||
+        reservation.status === ReservationStatus.PROCESSED
       )
     ) {
       throw new Error(
         "Seule une réservation en cours ou confirmée peut être finalisée.",
+      );
+    }
+
+    if (reservation.annonce.company?.category == CompanyCategory.TRANSPORT &&
+      reservation.status === ReservationStatus.CONFIRMED
+    ) {
+      throw new Error(
+        "Cette action est réservée aux trajets de Transport en cours",
       );
     }
 
