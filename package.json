@@ -9,7 +9,7 @@
   "author": "breality.",
   "type": "module",
   "main": "server.js",
-   "engines": {
+  "engines": {
     "node": "22.x"
   },
   "scripts": {
@@ -32,6 +32,7 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "firebase-admin": "^14.1.0",
     "glob": "^13.0.6",
     "helmet": "^8.2.0",
     "jsonwebtoken": "^9.0.3",

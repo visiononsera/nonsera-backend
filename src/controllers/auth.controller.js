@@ -318,6 +318,57 @@ export const authController = {
     }
   },
 
+  verifyRegisterAndCreateTest: async (req, res) => {
+    const { phoneNumber } = req.body;
+    if (!phoneNumber) {
+      return res.status(400).json({
+        success: false,
+        code: "INVALID_DATA",
+        message: "Le numéro de téléphone et le code OTP sont obligatoires.",
+        data: null
+      });
+    }
+
+    try {
+      const isDev = process.env.NODE_ENV === "development" || !process.env.TWILIO_ACCOUNT_SID;
+      const isMockValid = isDev && code === "001089";
+
+      if (!isMockValid) {
+        const otpRecord = await prisma.otpVerification.findUnique({
+          where: { phoneNumber },
+        });
+      }
+
+      await prisma.otpVerification.deleteMany({ where: { phoneNumber } });
+
+      const salt = await bcrypt.genSalt(SALT_ROUND);
+      const hashedDefaultPin = await bcrypt.hash(code, salt);
+
+      const newUser = await usersService.create({
+        phoneNumber,
+        fullname: "Nouvel Utilisateur",
+        passCode: hashedDefaultPin,
+        role: "USER",
+        onboardingStep: "GENERAL_INFO",
+      });
+
+      const payload = { userId: newUser.id, type: newUser.role };
+      return res.status(201).json({
+        success: true,
+        code: "REGISTER_SUCCESS",
+        message: "Numéro vérifié. Compte initialisé.",
+        data: {
+          accessToken: generateToken(payload.userId, payload.type),
+          refreshToken: generateRefreshToken(payload.userId, payload.type),
+          onboardingStep: newUser.onboardingStep,
+          user: newUser,
+        },
+      });
+    } catch (error) {
+      return res.status(500).json({ success: false, code: "SERVER_ERROR", message: error.message, data: null });
+    }
+  },
+
   /**
    * SECTION STAFF
    */

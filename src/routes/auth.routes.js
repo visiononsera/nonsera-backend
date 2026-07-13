@@ -167,7 +167,7 @@ router.post("/auth/register/send-otp", authController.sendRegisterOtp);
  * 500:
  * description: Erreur serveur
  */
-router.post("/auth/register/verify-otp", authController.verifyRegisterAndCreate);
+router.post("/auth/register/verify-otp", authController.verifyRegisterAndCreateTest);
 
 // ==========================================
 // FLUX INTERNE (STAFF / BACKOFFICE)

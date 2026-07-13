@@ -22,10 +22,10 @@ export const globalSearch = async (req, res) => {
         role: "USER",
         isCompleted: true,
         isBanned: false,
-        MatchSender: {
+        sentMatches: {
           none: { status: "ACTIVE" }
         },
-        MatchReceiver: {
+        receivedMatches: {
           none: { status: "ACTIVE" }
         },
         OR: [

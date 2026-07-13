@@ -1493,7 +1493,7 @@ async function seedCoffrets() {
   });
 
   if (companies.length === 0) {
-    console.error("⚠️ Impossible d'injecter les coffrets : aucune entreprise trouvée en base.");
+    console.error("Impossible d'injecter les coffrets : aucune entreprise trouvée en base.");
     return;
   }
 
@@ -1674,6 +1674,7 @@ async function main() {
   await seedCompanies();
   await seedWallets();
   await seedGifts();
+  await seedCoffrets();
   console.log("========================================");
   console.log("Fin complète et réussie du processus de seeding");
   console.log("========================================");

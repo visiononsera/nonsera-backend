@@ -19,6 +19,7 @@ yarn-error.log*
 
 # Fichiers générés par Prisma (Sauf si vous contrôlez finement l'emplacement)
 /generated/prisma
+/src/config/firebase-service-account.json
 
 # Divers OS
 .DS_Store

@@ -285,7 +285,7 @@ export class MatchService {
           where: { id: activeMatch.id },
           data: {
             status: "BROKEN",
-            flameExpiresAt: null, // Extinction du chrono de couple
+            flameExpiresAt: null, 
           },
         }),
         tx.chatRoom.updateMany({
