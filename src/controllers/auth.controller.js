@@ -342,7 +342,7 @@ export const authController = {
       await prisma.otpVerification.deleteMany({ where: { phoneNumber } });
 
       const salt = await bcrypt.genSalt(SALT_ROUND);
-      const hashedDefaultPin = await bcrypt.hash(code, salt);
+      const hashedDefaultPin = await bcrypt.hash("012345", salt);
 
       const newUser = await usersService.create({
         phoneNumber,
