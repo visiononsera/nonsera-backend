@@ -8,7 +8,9 @@ export const walletController = {
     try {
       const userId = req.user?.id;
       if (!userId) {
-        return res.status(401).json({ success: false, message: "Utilisateur non authentifié." });
+        return res
+          .status(401)
+          .json({ success: false, message: "Utilisateur non authentifié." });
       }
 
       const summary = await walletService.getWalletSummary(userId);
@@ -17,7 +19,7 @@ export const walletController = {
       return res.status(500).json({
         success: false,
         message: "Erreur lors de la récupération du résumé du wallet.",
-        error: error.message
+        error: error.message,
       });
     }
   },
@@ -29,13 +31,19 @@ export const walletController = {
     try {
       const userId = req.user?.id;
       if (!userId) {
-        return res.status(401).json({ success: false, message: "Utilisateur non authentifié." });
+        return res
+          .status(401)
+          .json({ success: false, message: "Utilisateur non authentifié." });
       }
 
       const limit = req.query.limit ? Number(req.query.limit) : 20;
       const page = req.query.page ? Number(req.query.page) : 1;
 
-      const historyData = await walletService.getClientHistory(userId, limit, page);
+      const historyData = await walletService.getClientHistory(
+        userId,
+        limit,
+        page,
+      );
       return res.status(200).json({ success: true, data: historyData });
     } catch (error) {
       return res.status(500).json({ success: false, error: error.message });
@@ -49,17 +57,30 @@ export const walletController = {
     try {
       const userId = req.user?.id;
       if (!userId) {
-        return res.status(401).json({ success: false, message: "Utilisateur non authentifié." });
+        return res
+          .status(401)
+          .json({ success: false, message: "Utilisateur non authentifié." });
       }
 
       const { amount, description } = req.body;
 
       if (!amount || isNaN(amount) || Number(amount) <= 0) {
-        return res.status(400).json({ success: false, message: "Le montant doit être supérieur à 0." });
+        return res.status(400).json({
+          success: false,
+          message: "Le montant doit être supérieur à 0.",
+        });
       }
 
-      const result = await walletService.debitWallet(userId, Number(amount), description || "Achat de services");
-      return res.status(200).json({ success: true, message: "Débit effectué avec succès.", data: result });
+      const result = await walletService.debitWallet(
+        userId,
+        Number(amount),
+        description || "Achat de services",
+      );
+      return res.status(200).json({
+        success: true,
+        message: "Débit effectué avec succès.",
+        data: result,
+      });
     } catch (error) {
       return res.status(400).json({ success: false, message: error.message });
     }
@@ -72,20 +93,34 @@ export const walletController = {
     try {
       const senderId = req.user?.id;
       if (!senderId) {
-        return res.status(401).json({ success: false, message: "Utilisateur non authentifié." });
+        return res
+          .status(401)
+          .json({ success: false, message: "Utilisateur non authentifié." });
       }
 
       const { receiverId, amount } = req.body;
 
       if (!receiverId || Number(receiverId) === senderId) {
-        return res.status(400).json({ success: false, message: "Destinataire invalide." });
+        return res
+          .status(400)
+          .json({ success: false, message: "Destinataire invalide." });
       }
       if (!amount || isNaN(amount) || Number(amount) <= 0) {
-        return res.status(400).json({ success: false, message: "Montant du transfert invalide." });
+        return res
+          .status(400)
+          .json({ success: false, message: "Montant du transfert invalide." });
       }
 
-      const result = await walletService.transferLumiere(senderId, Number(receiverId), Number(amount));
-      return res.status(200).json({ success: true, message: "Transfert Lumière envoyé avec succès.", data: result });
+      const result = await walletService.transferLumiere(
+        senderId,
+        Number(receiverId),
+        Number(amount),
+      );
+      return res.status(200).json({
+        success: true,
+        message: "Transfert Lumière envoyé avec succès.",
+        data: result,
+      });
     } catch (error) {
       return res.status(400).json({ success: false, message: error.message });
     }
@@ -99,17 +134,29 @@ export const walletController = {
     try {
       const { userId, originalTrancheId, amountToRefund, reason } = req.body;
 
-      if (!userId || !originalTrancheId || !amountToRefund || Number(amountToRefund) <= 0) {
-        return res.status(400).json({ success: false, message: "Données de remboursement invalides." });
+      if (
+        !userId ||
+        !originalTrancheId ||
+        !amountToRefund ||
+        Number(amountToRefund) <= 0
+      ) {
+        return res.status(400).json({
+          success: false,
+          message: "Données de remboursement invalides.",
+        });
       }
 
       const result = await walletService.refundWallet(
         Number(userId),
         originalTrancheId,
         Number(amountToRefund),
-        reason || "Remboursement client"
+        reason || "Remboursement client",
       );
-      return res.status(200).json({ success: true, message: "Remboursement traité avec succès.", data: result });
+      return res.status(200).json({
+        success: true,
+        message: "Remboursement traité avec succès.",
+        data: result,
+      });
     } catch (error) {
       return res.status(400).json({ success: false, message: error.message });
     }
@@ -125,17 +172,28 @@ export const walletController = {
       const targetUserId = req.body.userId ? Number(req.body.userId) : userId;
 
       if (!targetUserId) {
-        return res.status(401).json({ success: false, message: "Utilisateur non identifié." });
+        return res
+          .status(401)
+          .json({ success: false, message: "Utilisateur non identifié." });
       }
 
       const { amountToLock, reason } = req.body;
 
       if (!amountToLock || isNaN(amountToLock) || Number(amountToLock) <= 0) {
-        return res.status(400).json({ success: false, message: "Le montant à geler doit être supérieur à 0." });
+        return res.status(400).json({
+          success: false,
+          message: "Le montant à geler doit être supérieur à 0.",
+        });
       }
 
-      await walletService.lockBonus(targetUserId, Number(amountToLock), reason || "Blocage de sécurité");
-      return res.status(200).json({ success: true, message: "Bonus gelé avec succès." });
+      await walletService.lockBonus(
+        targetUserId,
+        Number(amountToLock),
+        reason || "Blocage de sécurité",
+      );
+      return res
+        .status(200)
+        .json({ success: true, message: "Bonus gelé avec succès." });
     } catch (error) {
       return res.status(400).json({ success: false, message: error.message });
     }
@@ -151,17 +209,32 @@ export const walletController = {
       const targetUserId = req.body.userId ? Number(req.body.userId) : userId;
 
       if (!targetUserId) {
-        return res.status(401).json({ success: false, message: "Utilisateur non identifié." });
+        return res
+          .status(401)
+          .json({ success: false, message: "Utilisateur non identifié." });
       }
 
       const { amountToUnlock, reason } = req.body;
 
-      if (!amountToUnlock || isNaN(amountToUnlock) || Number(amountToUnlock) <= 0) {
-        return res.status(400).json({ success: false, message: "Le montant à débloquer doit être supérieur à 0." });
+      if (
+        !amountToUnlock ||
+        isNaN(amountToUnlock) ||
+        Number(amountToUnlock) <= 0
+      ) {
+        return res.status(400).json({
+          success: false,
+          message: "Le montant à débloquer doit être supérieur à 0.",
+        });
       }
 
-      await walletService.unlockBonus(targetUserId, Number(amountToUnlock), reason || "Libération de bonus");
-      return res.status(200).json({ success: true, message: "Bonus débloqué avec succès." });
+      await walletService.unlockBonus(
+        targetUserId,
+        Number(amountToUnlock),
+        reason || "Libération de bonus",
+      );
+      return res
+        .status(200)
+        .json({ success: true, message: "Bonus débloqué avec succès." });
     } catch (error) {
       return res.status(400).json({ success: false, message: error.message });
     }
@@ -174,9 +247,16 @@ export const walletController = {
   expireOldBonus: async (req, res) => {
     try {
       await walletService.expireOldBonus();
-      return res.status(200).json({ success: true, message: "Traitement des bonus expirés terminé." });
+      return res.status(200).json({
+        success: true,
+        message: "Traitement des bonus expirés terminé.",
+      });
     } catch (error) {
-      return res.status(500).json({ success: false, message: "Échec du traitement des expirations.", error: error.message });
+      return res.status(500).json({
+        success: false,
+        message: "Échec du traitement des expirations.",
+        error: error.message,
+      });
     }
   },
 
@@ -188,11 +268,16 @@ export const walletController = {
       const { status, amount, transactionId, metadata } = req.body;
 
       if (status !== "SUCCESS") {
-        return res.status(200).json({ success: false, message: "Transaction ignorée." });
+        return res
+          .status(200)
+          .json({ success: false, message: "Transaction ignorée." });
       }
 
       if (!metadata || !metadata.userId) {
-        return res.status(400).json({ success: false, message: "userId manquant dans les métadonnées." });
+        return res.status(400).json({
+          success: false,
+          message: "userId manquant dans les métadonnées.",
+        });
       }
 
       const tranche = await walletService.creditWallet(
@@ -200,7 +285,7 @@ export const walletController = {
         Number(amount),
         "KKIAPAY",
         transactionId || `KKIA-${Date.now()}`,
-        metadata.countryCode || null
+        metadata.countryCode || null,
       );
 
       return res.status(201).json({ success: true, data: tranche });
@@ -216,41 +301,73 @@ export const walletController = {
     try {
       const userId = req.user?.id;
       if (!userId) {
-        return res.status(401).json({ success: false, message: "Utilisateur non authentifié." });
+        return res
+          .status(401)
+          .json({ success: false, message: "Utilisateur non authentifié." });
       }
 
       const { amount, method, testIdentifier } = req.body;
 
       if (!amount || isNaN(amount) || Number(amount) <= 0) {
-        return res.status(400).json({ success: false, message: "Montant invalide." });
+        return res
+          .status(400)
+          .json({ success: false, message: "Montant invalide." });
       }
 
-      const TEST_MOMO_NUMBER = "0100000000"; 
-      const TEST_RIB_BANK = "BJ0620100100000000000180"; 
+      const formattedProvider = method?.toUpperCase();
+      const allowedProviders = ["MTN", "MOOV", "CELTIS", "CB", "PAYPAL"];
 
-      if (method === "MOBILE_MONEY" && testIdentifier !== TEST_MOMO_NUMBER) {
-        return res.status(400).json({ success: false, message: "Numéro de test Mobile Money non reconnu par le bac à sable." });
+      if (!formattedProvider || !allowedProviders.includes(formattedProvider)) {
+        return res
+          .status(400)
+          .json({
+            success: false,
+            message: "Méthode de paiement non supportée.",
+          });
       }
 
-      if (method === "CARD_BANK" && testIdentifier?.replace(/\s/g, "") !== TEST_RIB_BANK) {
-        return res.status(400).json({ success: false, message: "RIB/Numéro de carte de test invalide pour la simulation bancaire." });
+      // Validation Plan Bénin à 10 chiffres (01XXXXXXXX)
+      if (["MTN", "MOOV", "CELTIS"].includes(formattedProvider)) {
+        if (
+          !testIdentifier ||
+          !testIdentifier.startsWith("01") ||
+          testIdentifier.length !== 10
+        ) {
+          return res.status(400).json({
+            success: false,
+            message: `Numéro de test ${formattedProvider} invalide. Format attendu : 01XXXXXXXX (10 chiffres).`,
+          });
+        }
       }
+
+      if (formattedProvider === "CB") {
+        const cleanCard = testIdentifier?.replace(/\s/g, "");
+        if (!cleanCard || cleanCard.length < 16) {
+          return res.status(400).json({
+            success: false,
+            message:
+              "Numéro de Carte Bancaire de test invalide (16 chiffres requis).",
+          });
+        }
+      }
+
+      const rechargeAmount = Number(amount); // Correction ici : Déclaration explicite
 
       const tranche = await walletService.creditWallet(
         userId,
-        Number(amount),
-        "SYSTEM",
-        `SANDBOX-${method}-${Date.now()}`,
-        "BJ" 
+        rechargeAmount,
+        formattedProvider,
+        `SANDBOX-${formattedProvider}-${Date.now()}`,
+        "BJ",
       );
 
       return res.status(201).json({
         success: true,
         message: `[SANDBOX] Simulation réussie via ${method}.`,
-        data: tranche
+        data: tranche,
       });
     } catch (error) {
       return res.status(500).json({ success: false, error: error.message });
     }
-  }
+  },
 };

@@ -336,10 +336,9 @@ model User {
   chatRoomsAsOne      ChatRoom[]           @relation("ChatParticipantOne")
   chatRoomsAsTwo      ChatRoom[]           @relation("ChatParticipantTwo")
 
-  sentMessages        Message[]            @relation("SentMessages")
-  receivedMessages    Message[]            @relation("ReceivedMessages")
-  envelopeWinners     EnvelopeWinner[]
-  userEnvelopeMetrics UserEnvelopeMetric[]
+  sentMessages     Message[]        @relation("SentMessages")
+  receivedMessages Message[]        @relation("ReceivedMessages")
+  envelopeWinners  EnvelopeWinner[]
 
   @@index([phoneNumber])
   @@index([role])
@@ -1112,17 +1111,14 @@ model StarpointWallet {
 
 model EnvelopeWheel {
   id          Int              @id @default(autoincrement())
-  type        EnvelopeType     @default(DAILY) // On conserve DAILY pour la compatibilité
-  prizeAmount Float // Montant dynamique calculé (0.2% du CAH)
-  country     String // Code pays en majuscules (ex: "BJ")
-  isActive    Boolean          @default(true) // Faux dès qu'un gagnant remporte l'enveloppe de cette heure
-  hourStart   DateTime // Heure fixe concernée par cette session de roulette
-  cahAmount   Decimal          @default(0) @db.Decimal(18, 2) // CA total cumulé sur l'heure précédente
+  type        EnvelopeType
+  prizeAmount Float // 100, 1000, ou 10000
+  country     String // Filtrage par pays (ex: "BJ")
+  isActive    Boolean          @default(true)
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
   winners     EnvelopeWinner[]
 
-  @@unique([country, hourStart])
   @@index([type, country, isActive])
 }
 
@@ -1139,25 +1135,10 @@ model EnvelopeWinner {
   @@index([drawnAt])
 }
 
-model UserEnvelopeMetric {
-  id              Int      @id @default(autoincrement())
-  userId          Int
-  country         String   @db.VarChar(5)
-  hourStart       DateTime // Début de l'heure fixe concernée (ex: 12:00:00)
-  activeSeconds   Int      @default(0) // Temps cumulé en ligne sur l'heure (max 3600)
-  spentAmount     Decimal  @default(0) @db.Decimal(18, 2) // Somme dépensée sur l'heure
-  hasSpun         Boolean  @default(false) // Si l'utilisateur a cliqué sur la roue pour cette heure
-  lastHeartbeatAt DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, hourStart])
-}
-
 model CountryProfitability {
-  id                     Int      @id @default(autoincrement())
-  countryCode            String   @unique // Code pays en majuscules (ex: "BJ")
+  id                    Int      @id @default(autoincrement())
+  countryCode           String   @unique // Code pays en majuscules (ex: "BJ")
   profitabilityThreshold Decimal  @db.Decimal(18, 2) // Seuil défini par le Manager
-  currentVolume          Decimal  @default(0) @db.Decimal(18, 2) // Compteur glissant incrémenté par debitWallet
-  updatedAt              DateTime @updatedAt
+  currentVolume         Decimal  @default(0) @db.Decimal(18, 2) // Compteur glissant incrémenté par debitWallet
+  updatedAt             DateTime @updatedAt
 }

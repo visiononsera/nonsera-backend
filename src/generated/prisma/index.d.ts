@@ -224,6 +224,11 @@ export type EnvelopeWheel = $Result.DefaultSelection<Prisma.$EnvelopeWheelPayloa
  */
 export type EnvelopeWinner = $Result.DefaultSelection<Prisma.$EnvelopeWinnerPayload>
 /**
+ * Model UserEnvelopeMetric
+ * 
+ */
+export type UserEnvelopeMetric = $Result.DefaultSelection<Prisma.$UserEnvelopeMetricPayload>
+/**
  * Model CountryProfitability
  * 
  */
@@ -1116,6 +1121,16 @@ export class PrismaClient<
   get envelopeWinner(): Prisma.EnvelopeWinnerDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.userEnvelopeMetric`: Exposes CRUD operations for the **UserEnvelopeMetric** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserEnvelopeMetrics
+    * const userEnvelopeMetrics = await prisma.userEnvelopeMetric.findMany()
+    * ```
+    */
+  get userEnvelopeMetric(): Prisma.UserEnvelopeMetricDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.countryProfitability`: Exposes CRUD operations for the **CountryProfitability** model.
     * Example usage:
     * ```ts
@@ -1600,6 +1615,7 @@ export namespace Prisma {
     StarpointWallet: 'StarpointWallet',
     EnvelopeWheel: 'EnvelopeWheel',
     EnvelopeWinner: 'EnvelopeWinner',
+    UserEnvelopeMetric: 'UserEnvelopeMetric',
     CountryProfitability: 'CountryProfitability'
   };
 
@@ -1616,7 +1632,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "currencyConfig" | "user" | "otpVerification" | "userSession" | "permission" | "videoSession" | "match" | "chatRoom" | "message" | "notification" | "gift" | "annonce" | "coffret" | "coffretItem" | "coffretReservation" | "purchase" | "reservation" | "likedAnnonce" | "dmList" | "socketMapping" | "lockedConversation" | "podium" | "podiumStar" | "podiumSpectator" | "podiumTransaction" | "starOfTheDay" | "starOfTheMonth" | "starOfTheYear" | "country" | "city" | "subscription" | "company" | "userCompany" | "companySubscription" | "accountDelete" | "retrait" | "userBlock" | "userReport" | "walletTranche" | "starpointWallet" | "envelopeWheel" | "envelopeWinner" | "countryProfitability"
+      modelProps: "currencyConfig" | "user" | "otpVerification" | "userSession" | "permission" | "videoSession" | "match" | "chatRoom" | "message" | "notification" | "gift" | "annonce" | "coffret" | "coffretItem" | "coffretReservation" | "purchase" | "reservation" | "likedAnnonce" | "dmList" | "socketMapping" | "lockedConversation" | "podium" | "podiumStar" | "podiumSpectator" | "podiumTransaction" | "starOfTheDay" | "starOfTheMonth" | "starOfTheYear" | "country" | "city" | "subscription" | "company" | "userCompany" | "companySubscription" | "accountDelete" | "retrait" | "userBlock" | "userReport" | "walletTranche" | "starpointWallet" | "envelopeWheel" | "envelopeWinner" | "userEnvelopeMetric" | "countryProfitability"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4728,6 +4744,80 @@ export namespace Prisma {
           }
         }
       }
+      UserEnvelopeMetric: {
+        payload: Prisma.$UserEnvelopeMetricPayload<ExtArgs>
+        fields: Prisma.UserEnvelopeMetricFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserEnvelopeMetricFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserEnvelopeMetricPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserEnvelopeMetricFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserEnvelopeMetricPayload>
+          }
+          findFirst: {
+            args: Prisma.UserEnvelopeMetricFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserEnvelopeMetricPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserEnvelopeMetricFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserEnvelopeMetricPayload>
+          }
+          findMany: {
+            args: Prisma.UserEnvelopeMetricFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserEnvelopeMetricPayload>[]
+          }
+          create: {
+            args: Prisma.UserEnvelopeMetricCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserEnvelopeMetricPayload>
+          }
+          createMany: {
+            args: Prisma.UserEnvelopeMetricCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserEnvelopeMetricCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserEnvelopeMetricPayload>[]
+          }
+          delete: {
+            args: Prisma.UserEnvelopeMetricDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserEnvelopeMetricPayload>
+          }
+          update: {
+            args: Prisma.UserEnvelopeMetricUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserEnvelopeMetricPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserEnvelopeMetricDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserEnvelopeMetricUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserEnvelopeMetricUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserEnvelopeMetricPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserEnvelopeMetricUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserEnvelopeMetricPayload>
+          }
+          aggregate: {
+            args: Prisma.UserEnvelopeMetricAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserEnvelopeMetric>
+          }
+          groupBy: {
+            args: Prisma.UserEnvelopeMetricGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserEnvelopeMetricGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserEnvelopeMetricCountArgs<ExtArgs>
+            result: $Utils.Optional<UserEnvelopeMetricCountAggregateOutputType> | number
+          }
+        }
+      }
       CountryProfitability: {
         payload: Prisma.$CountryProfitabilityPayload<ExtArgs>
         fields: Prisma.CountryProfitabilityFieldRefs
@@ -4952,6 +5042,7 @@ export namespace Prisma {
     starpointWallet?: StarpointWalletOmit
     envelopeWheel?: EnvelopeWheelOmit
     envelopeWinner?: EnvelopeWinnerOmit
+    userEnvelopeMetric?: UserEnvelopeMetricOmit
     countryProfitability?: CountryProfitabilityOmit
   }
 
@@ -5068,6 +5159,7 @@ export namespace Prisma {
     sentMessages: number
     receivedMessages: number
     envelopeWinners: number
+    userEnvelopeMetrics: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5106,6 +5198,7 @@ export namespace Prisma {
     sentMessages?: boolean | UserCountOutputTypeCountSentMessagesArgs
     receivedMessages?: boolean | UserCountOutputTypeCountReceivedMessagesArgs
     envelopeWinners?: boolean | UserCountOutputTypeCountEnvelopeWinnersArgs
+    userEnvelopeMetrics?: boolean | UserCountOutputTypeCountUserEnvelopeMetricsArgs
   }
 
   // Custom InputTypes
@@ -5362,6 +5455,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountEnvelopeWinnersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EnvelopeWinnerWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountUserEnvelopeMetricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserEnvelopeMetricWhereInput
   }
 
 
@@ -7513,6 +7613,7 @@ export namespace Prisma {
     sentMessages?: boolean | User$sentMessagesArgs<ExtArgs>
     receivedMessages?: boolean | User$receivedMessagesArgs<ExtArgs>
     envelopeWinners?: boolean | User$envelopeWinnersArgs<ExtArgs>
+    userEnvelopeMetrics?: boolean | User$userEnvelopeMetricsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -7712,6 +7813,7 @@ export namespace Prisma {
     sentMessages?: boolean | User$sentMessagesArgs<ExtArgs>
     receivedMessages?: boolean | User$receivedMessagesArgs<ExtArgs>
     envelopeWinners?: boolean | User$envelopeWinnersArgs<ExtArgs>
+    userEnvelopeMetrics?: boolean | User$userEnvelopeMetricsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7769,6 +7871,7 @@ export namespace Prisma {
       sentMessages: Prisma.$MessagePayload<ExtArgs>[]
       receivedMessages: Prisma.$MessagePayload<ExtArgs>[]
       envelopeWinners: Prisma.$EnvelopeWinnerPayload<ExtArgs>[]
+      userEnvelopeMetrics: Prisma.$UserEnvelopeMetricPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -8252,6 +8355,7 @@ export namespace Prisma {
     sentMessages<T extends User$sentMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$sentMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     receivedMessages<T extends User$receivedMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$receivedMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     envelopeWinners<T extends User$envelopeWinnersArgs<ExtArgs> = {}>(args?: Subset<T, User$envelopeWinnersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EnvelopeWinnerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    userEnvelopeMetrics<T extends User$userEnvelopeMetricsArgs<ExtArgs> = {}>(args?: Subset<T, User$userEnvelopeMetricsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserEnvelopeMetricPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9679,6 +9783,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: EnvelopeWinnerScalarFieldEnum | EnvelopeWinnerScalarFieldEnum[]
+  }
+
+  /**
+   * User.userEnvelopeMetrics
+   */
+  export type User$userEnvelopeMetricsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserEnvelopeMetric
+     */
+    select?: UserEnvelopeMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserEnvelopeMetric
+     */
+    omit?: UserEnvelopeMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserEnvelopeMetricInclude<ExtArgs> | null
+    where?: UserEnvelopeMetricWhereInput
+    orderBy?: UserEnvelopeMetricOrderByWithRelationInput | UserEnvelopeMetricOrderByWithRelationInput[]
+    cursor?: UserEnvelopeMetricWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserEnvelopeMetricScalarFieldEnum | UserEnvelopeMetricScalarFieldEnum[]
   }
 
   /**
@@ -54156,11 +54284,13 @@ export namespace Prisma {
   export type EnvelopeWheelAvgAggregateOutputType = {
     id: number | null
     prizeAmount: number | null
+    cahAmount: Decimal | null
   }
 
   export type EnvelopeWheelSumAggregateOutputType = {
     id: number | null
     prizeAmount: number | null
+    cahAmount: Decimal | null
   }
 
   export type EnvelopeWheelMinAggregateOutputType = {
@@ -54169,6 +54299,8 @@ export namespace Prisma {
     prizeAmount: number | null
     country: string | null
     isActive: boolean | null
+    hourStart: Date | null
+    cahAmount: Decimal | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -54179,6 +54311,8 @@ export namespace Prisma {
     prizeAmount: number | null
     country: string | null
     isActive: boolean | null
+    hourStart: Date | null
+    cahAmount: Decimal | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -54189,6 +54323,8 @@ export namespace Prisma {
     prizeAmount: number
     country: number
     isActive: number
+    hourStart: number
+    cahAmount: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -54198,11 +54334,13 @@ export namespace Prisma {
   export type EnvelopeWheelAvgAggregateInputType = {
     id?: true
     prizeAmount?: true
+    cahAmount?: true
   }
 
   export type EnvelopeWheelSumAggregateInputType = {
     id?: true
     prizeAmount?: true
+    cahAmount?: true
   }
 
   export type EnvelopeWheelMinAggregateInputType = {
@@ -54211,6 +54349,8 @@ export namespace Prisma {
     prizeAmount?: true
     country?: true
     isActive?: true
+    hourStart?: true
+    cahAmount?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -54221,6 +54361,8 @@ export namespace Prisma {
     prizeAmount?: true
     country?: true
     isActive?: true
+    hourStart?: true
+    cahAmount?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -54231,6 +54373,8 @@ export namespace Prisma {
     prizeAmount?: true
     country?: true
     isActive?: true
+    hourStart?: true
+    cahAmount?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -54328,6 +54472,8 @@ export namespace Prisma {
     prizeAmount: number
     country: string
     isActive: boolean
+    hourStart: Date
+    cahAmount: Decimal
     createdAt: Date
     updatedAt: Date
     _count: EnvelopeWheelCountAggregateOutputType | null
@@ -54357,6 +54503,8 @@ export namespace Prisma {
     prizeAmount?: boolean
     country?: boolean
     isActive?: boolean
+    hourStart?: boolean
+    cahAmount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     winners?: boolean | EnvelopeWheel$winnersArgs<ExtArgs>
@@ -54369,6 +54517,8 @@ export namespace Prisma {
     prizeAmount?: boolean
     country?: boolean
     isActive?: boolean
+    hourStart?: boolean
+    cahAmount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["envelopeWheel"]>
@@ -54379,6 +54529,8 @@ export namespace Prisma {
     prizeAmount?: boolean
     country?: boolean
     isActive?: boolean
+    hourStart?: boolean
+    cahAmount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["envelopeWheel"]>
@@ -54389,11 +54541,13 @@ export namespace Prisma {
     prizeAmount?: boolean
     country?: boolean
     isActive?: boolean
+    hourStart?: boolean
+    cahAmount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type EnvelopeWheelOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "prizeAmount" | "country" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["envelopeWheel"]>
+  export type EnvelopeWheelOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "prizeAmount" | "country" | "isActive" | "hourStart" | "cahAmount" | "createdAt" | "updatedAt", ExtArgs["result"]["envelopeWheel"]>
   export type EnvelopeWheelInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     winners?: boolean | EnvelopeWheel$winnersArgs<ExtArgs>
     _count?: boolean | EnvelopeWheelCountOutputTypeDefaultArgs<ExtArgs>
@@ -54412,6 +54566,8 @@ export namespace Prisma {
       prizeAmount: number
       country: string
       isActive: boolean
+      hourStart: Date
+      cahAmount: Prisma.Decimal
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["envelopeWheel"]>
@@ -54843,6 +54999,8 @@ export namespace Prisma {
     readonly prizeAmount: FieldRef<"EnvelopeWheel", 'Float'>
     readonly country: FieldRef<"EnvelopeWheel", 'String'>
     readonly isActive: FieldRef<"EnvelopeWheel", 'Boolean'>
+    readonly hourStart: FieldRef<"EnvelopeWheel", 'DateTime'>
+    readonly cahAmount: FieldRef<"EnvelopeWheel", 'Decimal'>
     readonly createdAt: FieldRef<"EnvelopeWheel", 'DateTime'>
     readonly updatedAt: FieldRef<"EnvelopeWheel", 'DateTime'>
   }
@@ -56407,6 +56565,1154 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: EnvelopeWinnerInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserEnvelopeMetric
+   */
+
+  export type AggregateUserEnvelopeMetric = {
+    _count: UserEnvelopeMetricCountAggregateOutputType | null
+    _avg: UserEnvelopeMetricAvgAggregateOutputType | null
+    _sum: UserEnvelopeMetricSumAggregateOutputType | null
+    _min: UserEnvelopeMetricMinAggregateOutputType | null
+    _max: UserEnvelopeMetricMaxAggregateOutputType | null
+  }
+
+  export type UserEnvelopeMetricAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    activeSeconds: number | null
+    spentAmount: Decimal | null
+  }
+
+  export type UserEnvelopeMetricSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    activeSeconds: number | null
+    spentAmount: Decimal | null
+  }
+
+  export type UserEnvelopeMetricMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    country: string | null
+    hourStart: Date | null
+    activeSeconds: number | null
+    spentAmount: Decimal | null
+    hasSpun: boolean | null
+    lastHeartbeatAt: Date | null
+  }
+
+  export type UserEnvelopeMetricMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    country: string | null
+    hourStart: Date | null
+    activeSeconds: number | null
+    spentAmount: Decimal | null
+    hasSpun: boolean | null
+    lastHeartbeatAt: Date | null
+  }
+
+  export type UserEnvelopeMetricCountAggregateOutputType = {
+    id: number
+    userId: number
+    country: number
+    hourStart: number
+    activeSeconds: number
+    spentAmount: number
+    hasSpun: number
+    lastHeartbeatAt: number
+    _all: number
+  }
+
+
+  export type UserEnvelopeMetricAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    activeSeconds?: true
+    spentAmount?: true
+  }
+
+  export type UserEnvelopeMetricSumAggregateInputType = {
+    id?: true
+    userId?: true
+    activeSeconds?: true
+    spentAmount?: true
+  }
+
+  export type UserEnvelopeMetricMinAggregateInputType = {
+    id?: true
+    userId?: true
+    country?: true
+    hourStart?: true
+    activeSeconds?: true
+    spentAmount?: true
+    hasSpun?: true
+    lastHeartbeatAt?: true
+  }
+
+  export type UserEnvelopeMetricMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    country?: true
+    hourStart?: true
+    activeSeconds?: true
+    spentAmount?: true
+    hasSpun?: true
+    lastHeartbeatAt?: true
+  }
+
+  export type UserEnvelopeMetricCountAggregateInputType = {
+    id?: true
+    userId?: true
+    country?: true
+    hourStart?: true
+    activeSeconds?: true
+    spentAmount?: true
+    hasSpun?: true
+    lastHeartbeatAt?: true
+    _all?: true
+  }
+
+  export type UserEnvelopeMetricAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserEnvelopeMetric to aggregate.
+     */
+    where?: UserEnvelopeMetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserEnvelopeMetrics to fetch.
+     */
+    orderBy?: UserEnvelopeMetricOrderByWithRelationInput | UserEnvelopeMetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserEnvelopeMetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserEnvelopeMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserEnvelopeMetrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserEnvelopeMetrics
+    **/
+    _count?: true | UserEnvelopeMetricCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserEnvelopeMetricAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserEnvelopeMetricSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserEnvelopeMetricMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserEnvelopeMetricMaxAggregateInputType
+  }
+
+  export type GetUserEnvelopeMetricAggregateType<T extends UserEnvelopeMetricAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserEnvelopeMetric]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserEnvelopeMetric[P]>
+      : GetScalarType<T[P], AggregateUserEnvelopeMetric[P]>
+  }
+
+
+
+
+  export type UserEnvelopeMetricGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserEnvelopeMetricWhereInput
+    orderBy?: UserEnvelopeMetricOrderByWithAggregationInput | UserEnvelopeMetricOrderByWithAggregationInput[]
+    by: UserEnvelopeMetricScalarFieldEnum[] | UserEnvelopeMetricScalarFieldEnum
+    having?: UserEnvelopeMetricScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserEnvelopeMetricCountAggregateInputType | true
+    _avg?: UserEnvelopeMetricAvgAggregateInputType
+    _sum?: UserEnvelopeMetricSumAggregateInputType
+    _min?: UserEnvelopeMetricMinAggregateInputType
+    _max?: UserEnvelopeMetricMaxAggregateInputType
+  }
+
+  export type UserEnvelopeMetricGroupByOutputType = {
+    id: number
+    userId: number
+    country: string
+    hourStart: Date
+    activeSeconds: number
+    spentAmount: Decimal
+    hasSpun: boolean
+    lastHeartbeatAt: Date
+    _count: UserEnvelopeMetricCountAggregateOutputType | null
+    _avg: UserEnvelopeMetricAvgAggregateOutputType | null
+    _sum: UserEnvelopeMetricSumAggregateOutputType | null
+    _min: UserEnvelopeMetricMinAggregateOutputType | null
+    _max: UserEnvelopeMetricMaxAggregateOutputType | null
+  }
+
+  type GetUserEnvelopeMetricGroupByPayload<T extends UserEnvelopeMetricGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserEnvelopeMetricGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserEnvelopeMetricGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserEnvelopeMetricGroupByOutputType[P]>
+            : GetScalarType<T[P], UserEnvelopeMetricGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserEnvelopeMetricSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    country?: boolean
+    hourStart?: boolean
+    activeSeconds?: boolean
+    spentAmount?: boolean
+    hasSpun?: boolean
+    lastHeartbeatAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userEnvelopeMetric"]>
+
+  export type UserEnvelopeMetricSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    country?: boolean
+    hourStart?: boolean
+    activeSeconds?: boolean
+    spentAmount?: boolean
+    hasSpun?: boolean
+    lastHeartbeatAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userEnvelopeMetric"]>
+
+  export type UserEnvelopeMetricSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    country?: boolean
+    hourStart?: boolean
+    activeSeconds?: boolean
+    spentAmount?: boolean
+    hasSpun?: boolean
+    lastHeartbeatAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userEnvelopeMetric"]>
+
+  export type UserEnvelopeMetricSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    country?: boolean
+    hourStart?: boolean
+    activeSeconds?: boolean
+    spentAmount?: boolean
+    hasSpun?: boolean
+    lastHeartbeatAt?: boolean
+  }
+
+  export type UserEnvelopeMetricOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "country" | "hourStart" | "activeSeconds" | "spentAmount" | "hasSpun" | "lastHeartbeatAt", ExtArgs["result"]["userEnvelopeMetric"]>
+  export type UserEnvelopeMetricInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserEnvelopeMetricIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserEnvelopeMetricIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $UserEnvelopeMetricPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserEnvelopeMetric"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      country: string
+      hourStart: Date
+      activeSeconds: number
+      spentAmount: Prisma.Decimal
+      hasSpun: boolean
+      lastHeartbeatAt: Date
+    }, ExtArgs["result"]["userEnvelopeMetric"]>
+    composites: {}
+  }
+
+  type UserEnvelopeMetricGetPayload<S extends boolean | null | undefined | UserEnvelopeMetricDefaultArgs> = $Result.GetResult<Prisma.$UserEnvelopeMetricPayload, S>
+
+  type UserEnvelopeMetricCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserEnvelopeMetricFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserEnvelopeMetricCountAggregateInputType | true
+    }
+
+  export interface UserEnvelopeMetricDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserEnvelopeMetric'], meta: { name: 'UserEnvelopeMetric' } }
+    /**
+     * Find zero or one UserEnvelopeMetric that matches the filter.
+     * @param {UserEnvelopeMetricFindUniqueArgs} args - Arguments to find a UserEnvelopeMetric
+     * @example
+     * // Get one UserEnvelopeMetric
+     * const userEnvelopeMetric = await prisma.userEnvelopeMetric.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserEnvelopeMetricFindUniqueArgs>(args: SelectSubset<T, UserEnvelopeMetricFindUniqueArgs<ExtArgs>>): Prisma__UserEnvelopeMetricClient<$Result.GetResult<Prisma.$UserEnvelopeMetricPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserEnvelopeMetric that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserEnvelopeMetricFindUniqueOrThrowArgs} args - Arguments to find a UserEnvelopeMetric
+     * @example
+     * // Get one UserEnvelopeMetric
+     * const userEnvelopeMetric = await prisma.userEnvelopeMetric.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserEnvelopeMetricFindUniqueOrThrowArgs>(args: SelectSubset<T, UserEnvelopeMetricFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserEnvelopeMetricClient<$Result.GetResult<Prisma.$UserEnvelopeMetricPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserEnvelopeMetric that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserEnvelopeMetricFindFirstArgs} args - Arguments to find a UserEnvelopeMetric
+     * @example
+     * // Get one UserEnvelopeMetric
+     * const userEnvelopeMetric = await prisma.userEnvelopeMetric.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserEnvelopeMetricFindFirstArgs>(args?: SelectSubset<T, UserEnvelopeMetricFindFirstArgs<ExtArgs>>): Prisma__UserEnvelopeMetricClient<$Result.GetResult<Prisma.$UserEnvelopeMetricPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserEnvelopeMetric that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserEnvelopeMetricFindFirstOrThrowArgs} args - Arguments to find a UserEnvelopeMetric
+     * @example
+     * // Get one UserEnvelopeMetric
+     * const userEnvelopeMetric = await prisma.userEnvelopeMetric.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserEnvelopeMetricFindFirstOrThrowArgs>(args?: SelectSubset<T, UserEnvelopeMetricFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserEnvelopeMetricClient<$Result.GetResult<Prisma.$UserEnvelopeMetricPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserEnvelopeMetrics that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserEnvelopeMetricFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserEnvelopeMetrics
+     * const userEnvelopeMetrics = await prisma.userEnvelopeMetric.findMany()
+     * 
+     * // Get first 10 UserEnvelopeMetrics
+     * const userEnvelopeMetrics = await prisma.userEnvelopeMetric.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userEnvelopeMetricWithIdOnly = await prisma.userEnvelopeMetric.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserEnvelopeMetricFindManyArgs>(args?: SelectSubset<T, UserEnvelopeMetricFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserEnvelopeMetricPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserEnvelopeMetric.
+     * @param {UserEnvelopeMetricCreateArgs} args - Arguments to create a UserEnvelopeMetric.
+     * @example
+     * // Create one UserEnvelopeMetric
+     * const UserEnvelopeMetric = await prisma.userEnvelopeMetric.create({
+     *   data: {
+     *     // ... data to create a UserEnvelopeMetric
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserEnvelopeMetricCreateArgs>(args: SelectSubset<T, UserEnvelopeMetricCreateArgs<ExtArgs>>): Prisma__UserEnvelopeMetricClient<$Result.GetResult<Prisma.$UserEnvelopeMetricPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserEnvelopeMetrics.
+     * @param {UserEnvelopeMetricCreateManyArgs} args - Arguments to create many UserEnvelopeMetrics.
+     * @example
+     * // Create many UserEnvelopeMetrics
+     * const userEnvelopeMetric = await prisma.userEnvelopeMetric.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserEnvelopeMetricCreateManyArgs>(args?: SelectSubset<T, UserEnvelopeMetricCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserEnvelopeMetrics and returns the data saved in the database.
+     * @param {UserEnvelopeMetricCreateManyAndReturnArgs} args - Arguments to create many UserEnvelopeMetrics.
+     * @example
+     * // Create many UserEnvelopeMetrics
+     * const userEnvelopeMetric = await prisma.userEnvelopeMetric.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserEnvelopeMetrics and only return the `id`
+     * const userEnvelopeMetricWithIdOnly = await prisma.userEnvelopeMetric.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserEnvelopeMetricCreateManyAndReturnArgs>(args?: SelectSubset<T, UserEnvelopeMetricCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserEnvelopeMetricPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserEnvelopeMetric.
+     * @param {UserEnvelopeMetricDeleteArgs} args - Arguments to delete one UserEnvelopeMetric.
+     * @example
+     * // Delete one UserEnvelopeMetric
+     * const UserEnvelopeMetric = await prisma.userEnvelopeMetric.delete({
+     *   where: {
+     *     // ... filter to delete one UserEnvelopeMetric
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserEnvelopeMetricDeleteArgs>(args: SelectSubset<T, UserEnvelopeMetricDeleteArgs<ExtArgs>>): Prisma__UserEnvelopeMetricClient<$Result.GetResult<Prisma.$UserEnvelopeMetricPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserEnvelopeMetric.
+     * @param {UserEnvelopeMetricUpdateArgs} args - Arguments to update one UserEnvelopeMetric.
+     * @example
+     * // Update one UserEnvelopeMetric
+     * const userEnvelopeMetric = await prisma.userEnvelopeMetric.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserEnvelopeMetricUpdateArgs>(args: SelectSubset<T, UserEnvelopeMetricUpdateArgs<ExtArgs>>): Prisma__UserEnvelopeMetricClient<$Result.GetResult<Prisma.$UserEnvelopeMetricPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserEnvelopeMetrics.
+     * @param {UserEnvelopeMetricDeleteManyArgs} args - Arguments to filter UserEnvelopeMetrics to delete.
+     * @example
+     * // Delete a few UserEnvelopeMetrics
+     * const { count } = await prisma.userEnvelopeMetric.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserEnvelopeMetricDeleteManyArgs>(args?: SelectSubset<T, UserEnvelopeMetricDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserEnvelopeMetrics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserEnvelopeMetricUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserEnvelopeMetrics
+     * const userEnvelopeMetric = await prisma.userEnvelopeMetric.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserEnvelopeMetricUpdateManyArgs>(args: SelectSubset<T, UserEnvelopeMetricUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserEnvelopeMetrics and returns the data updated in the database.
+     * @param {UserEnvelopeMetricUpdateManyAndReturnArgs} args - Arguments to update many UserEnvelopeMetrics.
+     * @example
+     * // Update many UserEnvelopeMetrics
+     * const userEnvelopeMetric = await prisma.userEnvelopeMetric.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserEnvelopeMetrics and only return the `id`
+     * const userEnvelopeMetricWithIdOnly = await prisma.userEnvelopeMetric.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserEnvelopeMetricUpdateManyAndReturnArgs>(args: SelectSubset<T, UserEnvelopeMetricUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserEnvelopeMetricPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserEnvelopeMetric.
+     * @param {UserEnvelopeMetricUpsertArgs} args - Arguments to update or create a UserEnvelopeMetric.
+     * @example
+     * // Update or create a UserEnvelopeMetric
+     * const userEnvelopeMetric = await prisma.userEnvelopeMetric.upsert({
+     *   create: {
+     *     // ... data to create a UserEnvelopeMetric
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserEnvelopeMetric we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserEnvelopeMetricUpsertArgs>(args: SelectSubset<T, UserEnvelopeMetricUpsertArgs<ExtArgs>>): Prisma__UserEnvelopeMetricClient<$Result.GetResult<Prisma.$UserEnvelopeMetricPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserEnvelopeMetrics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserEnvelopeMetricCountArgs} args - Arguments to filter UserEnvelopeMetrics to count.
+     * @example
+     * // Count the number of UserEnvelopeMetrics
+     * const count = await prisma.userEnvelopeMetric.count({
+     *   where: {
+     *     // ... the filter for the UserEnvelopeMetrics we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserEnvelopeMetricCountArgs>(
+      args?: Subset<T, UserEnvelopeMetricCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserEnvelopeMetricCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserEnvelopeMetric.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserEnvelopeMetricAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserEnvelopeMetricAggregateArgs>(args: Subset<T, UserEnvelopeMetricAggregateArgs>): Prisma.PrismaPromise<GetUserEnvelopeMetricAggregateType<T>>
+
+    /**
+     * Group by UserEnvelopeMetric.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserEnvelopeMetricGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserEnvelopeMetricGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserEnvelopeMetricGroupByArgs['orderBy'] }
+        : { orderBy?: UserEnvelopeMetricGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserEnvelopeMetricGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserEnvelopeMetricGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserEnvelopeMetric model
+   */
+  readonly fields: UserEnvelopeMetricFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserEnvelopeMetric.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserEnvelopeMetricClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserEnvelopeMetric model
+   */
+  interface UserEnvelopeMetricFieldRefs {
+    readonly id: FieldRef<"UserEnvelopeMetric", 'Int'>
+    readonly userId: FieldRef<"UserEnvelopeMetric", 'Int'>
+    readonly country: FieldRef<"UserEnvelopeMetric", 'String'>
+    readonly hourStart: FieldRef<"UserEnvelopeMetric", 'DateTime'>
+    readonly activeSeconds: FieldRef<"UserEnvelopeMetric", 'Int'>
+    readonly spentAmount: FieldRef<"UserEnvelopeMetric", 'Decimal'>
+    readonly hasSpun: FieldRef<"UserEnvelopeMetric", 'Boolean'>
+    readonly lastHeartbeatAt: FieldRef<"UserEnvelopeMetric", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserEnvelopeMetric findUnique
+   */
+  export type UserEnvelopeMetricFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserEnvelopeMetric
+     */
+    select?: UserEnvelopeMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserEnvelopeMetric
+     */
+    omit?: UserEnvelopeMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserEnvelopeMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which UserEnvelopeMetric to fetch.
+     */
+    where: UserEnvelopeMetricWhereUniqueInput
+  }
+
+  /**
+   * UserEnvelopeMetric findUniqueOrThrow
+   */
+  export type UserEnvelopeMetricFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserEnvelopeMetric
+     */
+    select?: UserEnvelopeMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserEnvelopeMetric
+     */
+    omit?: UserEnvelopeMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserEnvelopeMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which UserEnvelopeMetric to fetch.
+     */
+    where: UserEnvelopeMetricWhereUniqueInput
+  }
+
+  /**
+   * UserEnvelopeMetric findFirst
+   */
+  export type UserEnvelopeMetricFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserEnvelopeMetric
+     */
+    select?: UserEnvelopeMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserEnvelopeMetric
+     */
+    omit?: UserEnvelopeMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserEnvelopeMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which UserEnvelopeMetric to fetch.
+     */
+    where?: UserEnvelopeMetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserEnvelopeMetrics to fetch.
+     */
+    orderBy?: UserEnvelopeMetricOrderByWithRelationInput | UserEnvelopeMetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserEnvelopeMetrics.
+     */
+    cursor?: UserEnvelopeMetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserEnvelopeMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserEnvelopeMetrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserEnvelopeMetrics.
+     */
+    distinct?: UserEnvelopeMetricScalarFieldEnum | UserEnvelopeMetricScalarFieldEnum[]
+  }
+
+  /**
+   * UserEnvelopeMetric findFirstOrThrow
+   */
+  export type UserEnvelopeMetricFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserEnvelopeMetric
+     */
+    select?: UserEnvelopeMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserEnvelopeMetric
+     */
+    omit?: UserEnvelopeMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserEnvelopeMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which UserEnvelopeMetric to fetch.
+     */
+    where?: UserEnvelopeMetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserEnvelopeMetrics to fetch.
+     */
+    orderBy?: UserEnvelopeMetricOrderByWithRelationInput | UserEnvelopeMetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserEnvelopeMetrics.
+     */
+    cursor?: UserEnvelopeMetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserEnvelopeMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserEnvelopeMetrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserEnvelopeMetrics.
+     */
+    distinct?: UserEnvelopeMetricScalarFieldEnum | UserEnvelopeMetricScalarFieldEnum[]
+  }
+
+  /**
+   * UserEnvelopeMetric findMany
+   */
+  export type UserEnvelopeMetricFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserEnvelopeMetric
+     */
+    select?: UserEnvelopeMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserEnvelopeMetric
+     */
+    omit?: UserEnvelopeMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserEnvelopeMetricInclude<ExtArgs> | null
+    /**
+     * Filter, which UserEnvelopeMetrics to fetch.
+     */
+    where?: UserEnvelopeMetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserEnvelopeMetrics to fetch.
+     */
+    orderBy?: UserEnvelopeMetricOrderByWithRelationInput | UserEnvelopeMetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserEnvelopeMetrics.
+     */
+    cursor?: UserEnvelopeMetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserEnvelopeMetrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserEnvelopeMetrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserEnvelopeMetrics.
+     */
+    distinct?: UserEnvelopeMetricScalarFieldEnum | UserEnvelopeMetricScalarFieldEnum[]
+  }
+
+  /**
+   * UserEnvelopeMetric create
+   */
+  export type UserEnvelopeMetricCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserEnvelopeMetric
+     */
+    select?: UserEnvelopeMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserEnvelopeMetric
+     */
+    omit?: UserEnvelopeMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserEnvelopeMetricInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserEnvelopeMetric.
+     */
+    data: XOR<UserEnvelopeMetricCreateInput, UserEnvelopeMetricUncheckedCreateInput>
+  }
+
+  /**
+   * UserEnvelopeMetric createMany
+   */
+  export type UserEnvelopeMetricCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserEnvelopeMetrics.
+     */
+    data: UserEnvelopeMetricCreateManyInput | UserEnvelopeMetricCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserEnvelopeMetric createManyAndReturn
+   */
+  export type UserEnvelopeMetricCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserEnvelopeMetric
+     */
+    select?: UserEnvelopeMetricSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserEnvelopeMetric
+     */
+    omit?: UserEnvelopeMetricOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserEnvelopeMetrics.
+     */
+    data: UserEnvelopeMetricCreateManyInput | UserEnvelopeMetricCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserEnvelopeMetricIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserEnvelopeMetric update
+   */
+  export type UserEnvelopeMetricUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserEnvelopeMetric
+     */
+    select?: UserEnvelopeMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserEnvelopeMetric
+     */
+    omit?: UserEnvelopeMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserEnvelopeMetricInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserEnvelopeMetric.
+     */
+    data: XOR<UserEnvelopeMetricUpdateInput, UserEnvelopeMetricUncheckedUpdateInput>
+    /**
+     * Choose, which UserEnvelopeMetric to update.
+     */
+    where: UserEnvelopeMetricWhereUniqueInput
+  }
+
+  /**
+   * UserEnvelopeMetric updateMany
+   */
+  export type UserEnvelopeMetricUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserEnvelopeMetrics.
+     */
+    data: XOR<UserEnvelopeMetricUpdateManyMutationInput, UserEnvelopeMetricUncheckedUpdateManyInput>
+    /**
+     * Filter which UserEnvelopeMetrics to update
+     */
+    where?: UserEnvelopeMetricWhereInput
+    /**
+     * Limit how many UserEnvelopeMetrics to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserEnvelopeMetric updateManyAndReturn
+   */
+  export type UserEnvelopeMetricUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserEnvelopeMetric
+     */
+    select?: UserEnvelopeMetricSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserEnvelopeMetric
+     */
+    omit?: UserEnvelopeMetricOmit<ExtArgs> | null
+    /**
+     * The data used to update UserEnvelopeMetrics.
+     */
+    data: XOR<UserEnvelopeMetricUpdateManyMutationInput, UserEnvelopeMetricUncheckedUpdateManyInput>
+    /**
+     * Filter which UserEnvelopeMetrics to update
+     */
+    where?: UserEnvelopeMetricWhereInput
+    /**
+     * Limit how many UserEnvelopeMetrics to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserEnvelopeMetricIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserEnvelopeMetric upsert
+   */
+  export type UserEnvelopeMetricUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserEnvelopeMetric
+     */
+    select?: UserEnvelopeMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserEnvelopeMetric
+     */
+    omit?: UserEnvelopeMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserEnvelopeMetricInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserEnvelopeMetric to update in case it exists.
+     */
+    where: UserEnvelopeMetricWhereUniqueInput
+    /**
+     * In case the UserEnvelopeMetric found by the `where` argument doesn't exist, create a new UserEnvelopeMetric with this data.
+     */
+    create: XOR<UserEnvelopeMetricCreateInput, UserEnvelopeMetricUncheckedCreateInput>
+    /**
+     * In case the UserEnvelopeMetric was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserEnvelopeMetricUpdateInput, UserEnvelopeMetricUncheckedUpdateInput>
+  }
+
+  /**
+   * UserEnvelopeMetric delete
+   */
+  export type UserEnvelopeMetricDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserEnvelopeMetric
+     */
+    select?: UserEnvelopeMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserEnvelopeMetric
+     */
+    omit?: UserEnvelopeMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserEnvelopeMetricInclude<ExtArgs> | null
+    /**
+     * Filter which UserEnvelopeMetric to delete.
+     */
+    where: UserEnvelopeMetricWhereUniqueInput
+  }
+
+  /**
+   * UserEnvelopeMetric deleteMany
+   */
+  export type UserEnvelopeMetricDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserEnvelopeMetrics to delete
+     */
+    where?: UserEnvelopeMetricWhereInput
+    /**
+     * Limit how many UserEnvelopeMetrics to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserEnvelopeMetric without action
+   */
+  export type UserEnvelopeMetricDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserEnvelopeMetric
+     */
+    select?: UserEnvelopeMetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserEnvelopeMetric
+     */
+    omit?: UserEnvelopeMetricOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserEnvelopeMetricInclude<ExtArgs> | null
   }
 
 
@@ -58081,6 +59387,8 @@ export namespace Prisma {
     prizeAmount: 'prizeAmount',
     country: 'country',
     isActive: 'isActive',
+    hourStart: 'hourStart',
+    cahAmount: 'cahAmount',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -58098,6 +59406,20 @@ export namespace Prisma {
   };
 
   export type EnvelopeWinnerScalarFieldEnum = (typeof EnvelopeWinnerScalarFieldEnum)[keyof typeof EnvelopeWinnerScalarFieldEnum]
+
+
+  export const UserEnvelopeMetricScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    country: 'country',
+    hourStart: 'hourStart',
+    activeSeconds: 'activeSeconds',
+    spentAmount: 'spentAmount',
+    hasSpun: 'hasSpun',
+    lastHeartbeatAt: 'lastHeartbeatAt'
+  };
+
+  export type UserEnvelopeMetricScalarFieldEnum = (typeof UserEnvelopeMetricScalarFieldEnum)[keyof typeof UserEnvelopeMetricScalarFieldEnum]
 
 
   export const CountryProfitabilityScalarFieldEnum: {
@@ -58735,6 +60057,7 @@ export namespace Prisma {
     sentMessages?: MessageListRelationFilter
     receivedMessages?: MessageListRelationFilter
     envelopeWinners?: EnvelopeWinnerListRelationFilter
+    userEnvelopeMetrics?: UserEnvelopeMetricListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -58825,6 +60148,7 @@ export namespace Prisma {
     sentMessages?: MessageOrderByRelationAggregateInput
     receivedMessages?: MessageOrderByRelationAggregateInput
     envelopeWinners?: EnvelopeWinnerOrderByRelationAggregateInput
+    userEnvelopeMetrics?: UserEnvelopeMetricOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -58918,6 +60242,7 @@ export namespace Prisma {
     sentMessages?: MessageListRelationFilter
     receivedMessages?: MessageListRelationFilter
     envelopeWinners?: EnvelopeWinnerListRelationFilter
+    userEnvelopeMetrics?: UserEnvelopeMetricListRelationFilter
   }, "id" | "phoneNumber" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -61963,6 +63288,8 @@ export namespace Prisma {
     prizeAmount?: FloatFilter<"EnvelopeWheel"> | number
     country?: StringFilter<"EnvelopeWheel"> | string
     isActive?: BoolFilter<"EnvelopeWheel"> | boolean
+    hourStart?: DateTimeFilter<"EnvelopeWheel"> | Date | string
+    cahAmount?: DecimalFilter<"EnvelopeWheel"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"EnvelopeWheel"> | Date | string
     updatedAt?: DateTimeFilter<"EnvelopeWheel"> | Date | string
     winners?: EnvelopeWinnerListRelationFilter
@@ -61974,6 +63301,8 @@ export namespace Prisma {
     prizeAmount?: SortOrder
     country?: SortOrder
     isActive?: SortOrder
+    hourStart?: SortOrder
+    cahAmount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     winners?: EnvelopeWinnerOrderByRelationAggregateInput
@@ -61981,6 +63310,7 @@ export namespace Prisma {
 
   export type EnvelopeWheelWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    country_hourStart?: EnvelopeWheelCountryHourStartCompoundUniqueInput
     AND?: EnvelopeWheelWhereInput | EnvelopeWheelWhereInput[]
     OR?: EnvelopeWheelWhereInput[]
     NOT?: EnvelopeWheelWhereInput | EnvelopeWheelWhereInput[]
@@ -61988,10 +63318,12 @@ export namespace Prisma {
     prizeAmount?: FloatFilter<"EnvelopeWheel"> | number
     country?: StringFilter<"EnvelopeWheel"> | string
     isActive?: BoolFilter<"EnvelopeWheel"> | boolean
+    hourStart?: DateTimeFilter<"EnvelopeWheel"> | Date | string
+    cahAmount?: DecimalFilter<"EnvelopeWheel"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFilter<"EnvelopeWheel"> | Date | string
     updatedAt?: DateTimeFilter<"EnvelopeWheel"> | Date | string
     winners?: EnvelopeWinnerListRelationFilter
-  }, "id">
+  }, "id" | "country_hourStart">
 
   export type EnvelopeWheelOrderByWithAggregationInput = {
     id?: SortOrder
@@ -61999,6 +63331,8 @@ export namespace Prisma {
     prizeAmount?: SortOrder
     country?: SortOrder
     isActive?: SortOrder
+    hourStart?: SortOrder
+    cahAmount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: EnvelopeWheelCountOrderByAggregateInput
@@ -62017,6 +63351,8 @@ export namespace Prisma {
     prizeAmount?: FloatWithAggregatesFilter<"EnvelopeWheel"> | number
     country?: StringWithAggregatesFilter<"EnvelopeWheel"> | string
     isActive?: BoolWithAggregatesFilter<"EnvelopeWheel"> | boolean
+    hourStart?: DateTimeWithAggregatesFilter<"EnvelopeWheel"> | Date | string
+    cahAmount?: DecimalWithAggregatesFilter<"EnvelopeWheel"> | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeWithAggregatesFilter<"EnvelopeWheel"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"EnvelopeWheel"> | Date | string
   }
@@ -62084,6 +63420,79 @@ export namespace Prisma {
     amountWon?: FloatWithAggregatesFilter<"EnvelopeWinner"> | number
     drawnAt?: DateTimeWithAggregatesFilter<"EnvelopeWinner"> | Date | string
     city?: StringNullableWithAggregatesFilter<"EnvelopeWinner"> | string | null
+  }
+
+  export type UserEnvelopeMetricWhereInput = {
+    AND?: UserEnvelopeMetricWhereInput | UserEnvelopeMetricWhereInput[]
+    OR?: UserEnvelopeMetricWhereInput[]
+    NOT?: UserEnvelopeMetricWhereInput | UserEnvelopeMetricWhereInput[]
+    id?: IntFilter<"UserEnvelopeMetric"> | number
+    userId?: IntFilter<"UserEnvelopeMetric"> | number
+    country?: StringFilter<"UserEnvelopeMetric"> | string
+    hourStart?: DateTimeFilter<"UserEnvelopeMetric"> | Date | string
+    activeSeconds?: IntFilter<"UserEnvelopeMetric"> | number
+    spentAmount?: DecimalFilter<"UserEnvelopeMetric"> | Decimal | DecimalJsLike | number | string
+    hasSpun?: BoolFilter<"UserEnvelopeMetric"> | boolean
+    lastHeartbeatAt?: DateTimeFilter<"UserEnvelopeMetric"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type UserEnvelopeMetricOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    country?: SortOrder
+    hourStart?: SortOrder
+    activeSeconds?: SortOrder
+    spentAmount?: SortOrder
+    hasSpun?: SortOrder
+    lastHeartbeatAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type UserEnvelopeMetricWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId_hourStart?: UserEnvelopeMetricUserIdHourStartCompoundUniqueInput
+    AND?: UserEnvelopeMetricWhereInput | UserEnvelopeMetricWhereInput[]
+    OR?: UserEnvelopeMetricWhereInput[]
+    NOT?: UserEnvelopeMetricWhereInput | UserEnvelopeMetricWhereInput[]
+    userId?: IntFilter<"UserEnvelopeMetric"> | number
+    country?: StringFilter<"UserEnvelopeMetric"> | string
+    hourStart?: DateTimeFilter<"UserEnvelopeMetric"> | Date | string
+    activeSeconds?: IntFilter<"UserEnvelopeMetric"> | number
+    spentAmount?: DecimalFilter<"UserEnvelopeMetric"> | Decimal | DecimalJsLike | number | string
+    hasSpun?: BoolFilter<"UserEnvelopeMetric"> | boolean
+    lastHeartbeatAt?: DateTimeFilter<"UserEnvelopeMetric"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_hourStart">
+
+  export type UserEnvelopeMetricOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    country?: SortOrder
+    hourStart?: SortOrder
+    activeSeconds?: SortOrder
+    spentAmount?: SortOrder
+    hasSpun?: SortOrder
+    lastHeartbeatAt?: SortOrder
+    _count?: UserEnvelopeMetricCountOrderByAggregateInput
+    _avg?: UserEnvelopeMetricAvgOrderByAggregateInput
+    _max?: UserEnvelopeMetricMaxOrderByAggregateInput
+    _min?: UserEnvelopeMetricMinOrderByAggregateInput
+    _sum?: UserEnvelopeMetricSumOrderByAggregateInput
+  }
+
+  export type UserEnvelopeMetricScalarWhereWithAggregatesInput = {
+    AND?: UserEnvelopeMetricScalarWhereWithAggregatesInput | UserEnvelopeMetricScalarWhereWithAggregatesInput[]
+    OR?: UserEnvelopeMetricScalarWhereWithAggregatesInput[]
+    NOT?: UserEnvelopeMetricScalarWhereWithAggregatesInput | UserEnvelopeMetricScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"UserEnvelopeMetric"> | number
+    userId?: IntWithAggregatesFilter<"UserEnvelopeMetric"> | number
+    country?: StringWithAggregatesFilter<"UserEnvelopeMetric"> | string
+    hourStart?: DateTimeWithAggregatesFilter<"UserEnvelopeMetric"> | Date | string
+    activeSeconds?: IntWithAggregatesFilter<"UserEnvelopeMetric"> | number
+    spentAmount?: DecimalWithAggregatesFilter<"UserEnvelopeMetric"> | Decimal | DecimalJsLike | number | string
+    hasSpun?: BoolWithAggregatesFilter<"UserEnvelopeMetric"> | boolean
+    lastHeartbeatAt?: DateTimeWithAggregatesFilter<"UserEnvelopeMetric"> | Date | string
   }
 
   export type CountryProfitabilityWhereInput = {
@@ -62291,6 +63700,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -62378,6 +63788,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -62464,6 +63875,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -62551,6 +63963,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -65638,10 +67051,12 @@ export namespace Prisma {
   }
 
   export type EnvelopeWheelCreateInput = {
-    type: $Enums.EnvelopeType
+    type?: $Enums.EnvelopeType
     prizeAmount: number
     country: string
     isActive?: boolean
+    hourStart: Date | string
+    cahAmount?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     winners?: EnvelopeWinnerCreateNestedManyWithoutEnvelopeWheelInput
@@ -65649,10 +67064,12 @@ export namespace Prisma {
 
   export type EnvelopeWheelUncheckedCreateInput = {
     id?: number
-    type: $Enums.EnvelopeType
+    type?: $Enums.EnvelopeType
     prizeAmount: number
     country: string
     isActive?: boolean
+    hourStart: Date | string
+    cahAmount?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
     winners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutEnvelopeWheelInput
@@ -65663,6 +67080,8 @@ export namespace Prisma {
     prizeAmount?: FloatFieldUpdateOperationsInput | number
     country?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    hourStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    cahAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     winners?: EnvelopeWinnerUpdateManyWithoutEnvelopeWheelNestedInput
@@ -65674,6 +67093,8 @@ export namespace Prisma {
     prizeAmount?: FloatFieldUpdateOperationsInput | number
     country?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    hourStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    cahAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     winners?: EnvelopeWinnerUncheckedUpdateManyWithoutEnvelopeWheelNestedInput
@@ -65681,10 +67102,12 @@ export namespace Prisma {
 
   export type EnvelopeWheelCreateManyInput = {
     id?: number
-    type: $Enums.EnvelopeType
+    type?: $Enums.EnvelopeType
     prizeAmount: number
     country: string
     isActive?: boolean
+    hourStart: Date | string
+    cahAmount?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -65694,6 +67117,8 @@ export namespace Prisma {
     prizeAmount?: FloatFieldUpdateOperationsInput | number
     country?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    hourStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    cahAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -65704,6 +67129,8 @@ export namespace Prisma {
     prizeAmount?: FloatFieldUpdateOperationsInput | number
     country?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    hourStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    cahAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -65764,6 +67191,79 @@ export namespace Prisma {
     amountWon?: FloatFieldUpdateOperationsInput | number
     drawnAt?: DateTimeFieldUpdateOperationsInput | Date | string
     city?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserEnvelopeMetricCreateInput = {
+    country: string
+    hourStart: Date | string
+    activeSeconds?: number
+    spentAmount?: Decimal | DecimalJsLike | number | string
+    hasSpun?: boolean
+    lastHeartbeatAt?: Date | string
+    user: UserCreateNestedOneWithoutUserEnvelopeMetricsInput
+  }
+
+  export type UserEnvelopeMetricUncheckedCreateInput = {
+    id?: number
+    userId: number
+    country: string
+    hourStart: Date | string
+    activeSeconds?: number
+    spentAmount?: Decimal | DecimalJsLike | number | string
+    hasSpun?: boolean
+    lastHeartbeatAt?: Date | string
+  }
+
+  export type UserEnvelopeMetricUpdateInput = {
+    country?: StringFieldUpdateOperationsInput | string
+    hourStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeSeconds?: IntFieldUpdateOperationsInput | number
+    spentAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    hasSpun?: BoolFieldUpdateOperationsInput | boolean
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutUserEnvelopeMetricsNestedInput
+  }
+
+  export type UserEnvelopeMetricUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    country?: StringFieldUpdateOperationsInput | string
+    hourStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeSeconds?: IntFieldUpdateOperationsInput | number
+    spentAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    hasSpun?: BoolFieldUpdateOperationsInput | boolean
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserEnvelopeMetricCreateManyInput = {
+    id?: number
+    userId: number
+    country: string
+    hourStart: Date | string
+    activeSeconds?: number
+    spentAmount?: Decimal | DecimalJsLike | number | string
+    hasSpun?: boolean
+    lastHeartbeatAt?: Date | string
+  }
+
+  export type UserEnvelopeMetricUpdateManyMutationInput = {
+    country?: StringFieldUpdateOperationsInput | string
+    hourStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeSeconds?: IntFieldUpdateOperationsInput | number
+    spentAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    hasSpun?: BoolFieldUpdateOperationsInput | boolean
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserEnvelopeMetricUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    country?: StringFieldUpdateOperationsInput | string
+    hourStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeSeconds?: IntFieldUpdateOperationsInput | number
+    spentAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    hasSpun?: BoolFieldUpdateOperationsInput | boolean
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CountryProfitabilityCreateInput = {
@@ -66247,6 +67747,12 @@ export namespace Prisma {
     none?: EnvelopeWinnerWhereInput
   }
 
+  export type UserEnvelopeMetricListRelationFilter = {
+    every?: UserEnvelopeMetricWhereInput
+    some?: UserEnvelopeMetricWhereInput
+    none?: UserEnvelopeMetricWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -66353,6 +67859,10 @@ export namespace Prisma {
   }
 
   export type EnvelopeWinnerOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserEnvelopeMetricOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -68968,12 +70478,19 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type EnvelopeWheelCountryHourStartCompoundUniqueInput = {
+    country: string
+    hourStart: Date | string
+  }
+
   export type EnvelopeWheelCountOrderByAggregateInput = {
     id?: SortOrder
     type?: SortOrder
     prizeAmount?: SortOrder
     country?: SortOrder
     isActive?: SortOrder
+    hourStart?: SortOrder
+    cahAmount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -68981,6 +70498,7 @@ export namespace Prisma {
   export type EnvelopeWheelAvgOrderByAggregateInput = {
     id?: SortOrder
     prizeAmount?: SortOrder
+    cahAmount?: SortOrder
   }
 
   export type EnvelopeWheelMaxOrderByAggregateInput = {
@@ -68989,6 +70507,8 @@ export namespace Prisma {
     prizeAmount?: SortOrder
     country?: SortOrder
     isActive?: SortOrder
+    hourStart?: SortOrder
+    cahAmount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -68999,6 +70519,8 @@ export namespace Prisma {
     prizeAmount?: SortOrder
     country?: SortOrder
     isActive?: SortOrder
+    hourStart?: SortOrder
+    cahAmount?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -69006,6 +70528,7 @@ export namespace Prisma {
   export type EnvelopeWheelSumOrderByAggregateInput = {
     id?: SortOrder
     prizeAmount?: SortOrder
+    cahAmount?: SortOrder
   }
 
   export type EnumEnvelopeTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -69078,6 +70601,58 @@ export namespace Prisma {
     envelopeWheelId?: SortOrder
     userId?: SortOrder
     amountWon?: SortOrder
+  }
+
+  export type UserEnvelopeMetricUserIdHourStartCompoundUniqueInput = {
+    userId: number
+    hourStart: Date | string
+  }
+
+  export type UserEnvelopeMetricCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    country?: SortOrder
+    hourStart?: SortOrder
+    activeSeconds?: SortOrder
+    spentAmount?: SortOrder
+    hasSpun?: SortOrder
+    lastHeartbeatAt?: SortOrder
+  }
+
+  export type UserEnvelopeMetricAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    activeSeconds?: SortOrder
+    spentAmount?: SortOrder
+  }
+
+  export type UserEnvelopeMetricMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    country?: SortOrder
+    hourStart?: SortOrder
+    activeSeconds?: SortOrder
+    spentAmount?: SortOrder
+    hasSpun?: SortOrder
+    lastHeartbeatAt?: SortOrder
+  }
+
+  export type UserEnvelopeMetricMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    country?: SortOrder
+    hourStart?: SortOrder
+    activeSeconds?: SortOrder
+    spentAmount?: SortOrder
+    hasSpun?: SortOrder
+    lastHeartbeatAt?: SortOrder
+  }
+
+  export type UserEnvelopeMetricSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    activeSeconds?: SortOrder
+    spentAmount?: SortOrder
   }
 
   export type CountryProfitabilityCountOrderByAggregateInput = {
@@ -69419,6 +70994,13 @@ export namespace Prisma {
     connect?: EnvelopeWinnerWhereUniqueInput | EnvelopeWinnerWhereUniqueInput[]
   }
 
+  export type UserEnvelopeMetricCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserEnvelopeMetricCreateWithoutUserInput, UserEnvelopeMetricUncheckedCreateWithoutUserInput> | UserEnvelopeMetricCreateWithoutUserInput[] | UserEnvelopeMetricUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserEnvelopeMetricCreateOrConnectWithoutUserInput | UserEnvelopeMetricCreateOrConnectWithoutUserInput[]
+    createMany?: UserEnvelopeMetricCreateManyUserInputEnvelope
+    connect?: UserEnvelopeMetricWhereUniqueInput | UserEnvelopeMetricWhereUniqueInput[]
+  }
+
   export type UserUncheckedCreateNestedManyWithoutAssignedAgentInput = {
     create?: XOR<UserCreateWithoutAssignedAgentInput, UserUncheckedCreateWithoutAssignedAgentInput> | UserCreateWithoutAssignedAgentInput[] | UserUncheckedCreateWithoutAssignedAgentInput[]
     connectOrCreate?: UserCreateOrConnectWithoutAssignedAgentInput | UserCreateOrConnectWithoutAssignedAgentInput[]
@@ -69678,6 +71260,13 @@ export namespace Prisma {
     connectOrCreate?: EnvelopeWinnerCreateOrConnectWithoutUserInput | EnvelopeWinnerCreateOrConnectWithoutUserInput[]
     createMany?: EnvelopeWinnerCreateManyUserInputEnvelope
     connect?: EnvelopeWinnerWhereUniqueInput | EnvelopeWinnerWhereUniqueInput[]
+  }
+
+  export type UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserEnvelopeMetricCreateWithoutUserInput, UserEnvelopeMetricUncheckedCreateWithoutUserInput> | UserEnvelopeMetricCreateWithoutUserInput[] | UserEnvelopeMetricUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserEnvelopeMetricCreateOrConnectWithoutUserInput | UserEnvelopeMetricCreateOrConnectWithoutUserInput[]
+    createMany?: UserEnvelopeMetricCreateManyUserInputEnvelope
+    connect?: UserEnvelopeMetricWhereUniqueInput | UserEnvelopeMetricWhereUniqueInput[]
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -70256,6 +71845,20 @@ export namespace Prisma {
     deleteMany?: EnvelopeWinnerScalarWhereInput | EnvelopeWinnerScalarWhereInput[]
   }
 
+  export type UserEnvelopeMetricUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserEnvelopeMetricCreateWithoutUserInput, UserEnvelopeMetricUncheckedCreateWithoutUserInput> | UserEnvelopeMetricCreateWithoutUserInput[] | UserEnvelopeMetricUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserEnvelopeMetricCreateOrConnectWithoutUserInput | UserEnvelopeMetricCreateOrConnectWithoutUserInput[]
+    upsert?: UserEnvelopeMetricUpsertWithWhereUniqueWithoutUserInput | UserEnvelopeMetricUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserEnvelopeMetricCreateManyUserInputEnvelope
+    set?: UserEnvelopeMetricWhereUniqueInput | UserEnvelopeMetricWhereUniqueInput[]
+    disconnect?: UserEnvelopeMetricWhereUniqueInput | UserEnvelopeMetricWhereUniqueInput[]
+    delete?: UserEnvelopeMetricWhereUniqueInput | UserEnvelopeMetricWhereUniqueInput[]
+    connect?: UserEnvelopeMetricWhereUniqueInput | UserEnvelopeMetricWhereUniqueInput[]
+    update?: UserEnvelopeMetricUpdateWithWhereUniqueWithoutUserInput | UserEnvelopeMetricUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserEnvelopeMetricUpdateManyWithWhereWithoutUserInput | UserEnvelopeMetricUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserEnvelopeMetricScalarWhereInput | UserEnvelopeMetricScalarWhereInput[]
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -70780,6 +72383,20 @@ export namespace Prisma {
     update?: EnvelopeWinnerUpdateWithWhereUniqueWithoutUserInput | EnvelopeWinnerUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: EnvelopeWinnerUpdateManyWithWhereWithoutUserInput | EnvelopeWinnerUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: EnvelopeWinnerScalarWhereInput | EnvelopeWinnerScalarWhereInput[]
+  }
+
+  export type UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserEnvelopeMetricCreateWithoutUserInput, UserEnvelopeMetricUncheckedCreateWithoutUserInput> | UserEnvelopeMetricCreateWithoutUserInput[] | UserEnvelopeMetricUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserEnvelopeMetricCreateOrConnectWithoutUserInput | UserEnvelopeMetricCreateOrConnectWithoutUserInput[]
+    upsert?: UserEnvelopeMetricUpsertWithWhereUniqueWithoutUserInput | UserEnvelopeMetricUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserEnvelopeMetricCreateManyUserInputEnvelope
+    set?: UserEnvelopeMetricWhereUniqueInput | UserEnvelopeMetricWhereUniqueInput[]
+    disconnect?: UserEnvelopeMetricWhereUniqueInput | UserEnvelopeMetricWhereUniqueInput[]
+    delete?: UserEnvelopeMetricWhereUniqueInput | UserEnvelopeMetricWhereUniqueInput[]
+    connect?: UserEnvelopeMetricWhereUniqueInput | UserEnvelopeMetricWhereUniqueInput[]
+    update?: UserEnvelopeMetricUpdateWithWhereUniqueWithoutUserInput | UserEnvelopeMetricUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserEnvelopeMetricUpdateManyWithWhereWithoutUserInput | UserEnvelopeMetricUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserEnvelopeMetricScalarWhereInput | UserEnvelopeMetricScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutSessionsInput = {
@@ -72762,6 +74379,20 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutEnvelopeWinnersInput, UserUpdateWithoutEnvelopeWinnersInput>, UserUncheckedUpdateWithoutEnvelopeWinnersInput>
   }
 
+  export type UserCreateNestedOneWithoutUserEnvelopeMetricsInput = {
+    create?: XOR<UserCreateWithoutUserEnvelopeMetricsInput, UserUncheckedCreateWithoutUserEnvelopeMetricsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserEnvelopeMetricsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutUserEnvelopeMetricsNestedInput = {
+    create?: XOR<UserCreateWithoutUserEnvelopeMetricsInput, UserUncheckedCreateWithoutUserEnvelopeMetricsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUserEnvelopeMetricsInput
+    upsert?: UserUpsertWithoutUserEnvelopeMetricsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserEnvelopeMetricsInput, UserUpdateWithoutUserEnvelopeMetricsInput>, UserUncheckedUpdateWithoutUserEnvelopeMetricsInput>
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -73553,6 +75184,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssignedUsersInput = {
@@ -73639,6 +75271,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssignedUsersInput = {
@@ -73729,6 +75362,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssignedAgentInput = {
@@ -73815,6 +75449,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssignedAgentInput = {
@@ -75061,6 +76696,35 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserEnvelopeMetricCreateWithoutUserInput = {
+    country: string
+    hourStart: Date | string
+    activeSeconds?: number
+    spentAmount?: Decimal | DecimalJsLike | number | string
+    hasSpun?: boolean
+    lastHeartbeatAt?: Date | string
+  }
+
+  export type UserEnvelopeMetricUncheckedCreateWithoutUserInput = {
+    id?: number
+    country: string
+    hourStart: Date | string
+    activeSeconds?: number
+    spentAmount?: Decimal | DecimalJsLike | number | string
+    hasSpun?: boolean
+    lastHeartbeatAt?: Date | string
+  }
+
+  export type UserEnvelopeMetricCreateOrConnectWithoutUserInput = {
+    where: UserEnvelopeMetricWhereUniqueInput
+    create: XOR<UserEnvelopeMetricCreateWithoutUserInput, UserEnvelopeMetricUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserEnvelopeMetricCreateManyUserInputEnvelope = {
+    data: UserEnvelopeMetricCreateManyUserInput | UserEnvelopeMetricCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutAssignedUsersInput = {
     update: XOR<UserUpdateWithoutAssignedUsersInput, UserUncheckedUpdateWithoutAssignedUsersInput>
     create: XOR<UserCreateWithoutAssignedUsersInput, UserUncheckedCreateWithoutAssignedUsersInput>
@@ -75155,6 +76819,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedUsersInput = {
@@ -75241,6 +76906,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithWhereUniqueWithoutAssignedAgentInput = {
@@ -76406,6 +78072,36 @@ export namespace Prisma {
     city?: StringNullableFilter<"EnvelopeWinner"> | string | null
   }
 
+  export type UserEnvelopeMetricUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserEnvelopeMetricWhereUniqueInput
+    update: XOR<UserEnvelopeMetricUpdateWithoutUserInput, UserEnvelopeMetricUncheckedUpdateWithoutUserInput>
+    create: XOR<UserEnvelopeMetricCreateWithoutUserInput, UserEnvelopeMetricUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserEnvelopeMetricUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserEnvelopeMetricWhereUniqueInput
+    data: XOR<UserEnvelopeMetricUpdateWithoutUserInput, UserEnvelopeMetricUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserEnvelopeMetricUpdateManyWithWhereWithoutUserInput = {
+    where: UserEnvelopeMetricScalarWhereInput
+    data: XOR<UserEnvelopeMetricUpdateManyMutationInput, UserEnvelopeMetricUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserEnvelopeMetricScalarWhereInput = {
+    AND?: UserEnvelopeMetricScalarWhereInput | UserEnvelopeMetricScalarWhereInput[]
+    OR?: UserEnvelopeMetricScalarWhereInput[]
+    NOT?: UserEnvelopeMetricScalarWhereInput | UserEnvelopeMetricScalarWhereInput[]
+    id?: IntFilter<"UserEnvelopeMetric"> | number
+    userId?: IntFilter<"UserEnvelopeMetric"> | number
+    country?: StringFilter<"UserEnvelopeMetric"> | string
+    hourStart?: DateTimeFilter<"UserEnvelopeMetric"> | Date | string
+    activeSeconds?: IntFilter<"UserEnvelopeMetric"> | number
+    spentAmount?: DecimalFilter<"UserEnvelopeMetric"> | Decimal | DecimalJsLike | number | string
+    hasSpun?: BoolFilter<"UserEnvelopeMetric"> | boolean
+    lastHeartbeatAt?: DateTimeFilter<"UserEnvelopeMetric"> | Date | string
+  }
+
   export type UserCreateWithoutSessionsInput = {
     phoneNumber: string
     passCode?: string | null
@@ -76489,6 +78185,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -76575,6 +78272,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -76676,6 +78374,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -76762,6 +78461,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutPermissionsInput = {
@@ -76847,6 +78547,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPermissionsInput = {
@@ -76933,6 +78634,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPermissionsInput = {
@@ -77039,6 +78741,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutVideoSessionInput = {
@@ -77125,6 +78828,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutVideoSessionInput = {
@@ -77215,6 +78919,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutManagedVideoSessionsInput = {
@@ -77301,6 +79006,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutManagedVideoSessionsInput = {
@@ -77402,6 +79108,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVideoSessionInput = {
@@ -77488,6 +79195,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutManagedVideoSessionsInput = {
@@ -77584,6 +79292,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutManagedVideoSessionsInput = {
@@ -77670,6 +79379,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSentMatchesInput = {
@@ -77755,6 +79465,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSentMatchesInput = {
@@ -77841,6 +79552,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSentMatchesInput = {
@@ -77931,6 +79643,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReceivedMatchesInput = {
@@ -78017,6 +79730,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReceivedMatchesInput = {
@@ -78259,6 +79973,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentMatchesInput = {
@@ -78345,6 +80060,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutReceivedMatchesInput = {
@@ -78441,6 +80157,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReceivedMatchesInput = {
@@ -78527,6 +80244,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type GiftUpsertWithoutMatchesInput = {
@@ -78752,6 +80470,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutChatRoomsAsOneInput = {
@@ -78838,6 +80557,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutChatRoomsAsOneInput = {
@@ -78928,6 +80648,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutChatRoomsAsTwoInput = {
@@ -79014,6 +80735,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutChatRoomsAsTwoInput = {
@@ -79184,6 +80906,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatRoomsAsOneInput = {
@@ -79270,6 +80993,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutChatRoomsAsTwoInput = {
@@ -79366,6 +81090,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatRoomsAsTwoInput = {
@@ -79452,6 +81177,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type MatchUpsertWithoutChatRoomInput = {
@@ -79661,6 +81387,7 @@ export namespace Prisma {
     chatRoomsAsTwo?: ChatRoomCreateNestedManyWithoutParticipantTwoInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSentMessagesInput = {
@@ -79747,6 +81474,7 @@ export namespace Prisma {
     chatRoomsAsTwo?: ChatRoomUncheckedCreateNestedManyWithoutParticipantTwoInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSentMessagesInput = {
@@ -79837,6 +81565,7 @@ export namespace Prisma {
     chatRoomsAsTwo?: ChatRoomCreateNestedManyWithoutParticipantTwoInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReceivedMessagesInput = {
@@ -79923,6 +81652,7 @@ export namespace Prisma {
     chatRoomsAsTwo?: ChatRoomUncheckedCreateNestedManyWithoutParticipantTwoInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReceivedMessagesInput = {
@@ -80104,6 +81834,7 @@ export namespace Prisma {
     chatRoomsAsTwo?: ChatRoomUpdateManyWithoutParticipantTwoNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentMessagesInput = {
@@ -80190,6 +81921,7 @@ export namespace Prisma {
     chatRoomsAsTwo?: ChatRoomUncheckedUpdateManyWithoutParticipantTwoNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutReceivedMessagesInput = {
@@ -80286,6 +82018,7 @@ export namespace Prisma {
     chatRoomsAsTwo?: ChatRoomUpdateManyWithoutParticipantTwoNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
@@ -80372,6 +82105,7 @@ export namespace Prisma {
     chatRoomsAsTwo?: ChatRoomUncheckedUpdateManyWithoutParticipantTwoNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSentNotificationsInput = {
@@ -80457,6 +82191,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSentNotificationsInput = {
@@ -80543,6 +82278,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSentNotificationsInput = {
@@ -80633,6 +82369,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReceivedNotificationsInput = {
@@ -80719,6 +82456,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReceivedNotificationsInput = {
@@ -80820,6 +82558,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentNotificationsInput = {
@@ -80906,6 +82645,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutReceivedNotificationsInput = {
@@ -81002,6 +82742,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReceivedNotificationsInput = {
@@ -81088,6 +82829,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CompanyCreateWithoutGiftsInput = {
@@ -81239,6 +82981,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPreferredGiftInput = {
@@ -81325,6 +83068,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPreferredGiftInput = {
@@ -81828,6 +83572,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutGiftPurposeInput = {
@@ -81914,6 +83659,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutGiftPurposeInput = {
@@ -82009,6 +83755,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTargetedAnnoncesInput = {
@@ -82095,6 +83842,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTargetedAnnoncesInput = {
@@ -82713,6 +84461,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCoffretReservationsInput = {
@@ -82799,6 +84548,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCoffretReservationsInput = {
@@ -82942,6 +84692,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCoffretReservationsInput = {
@@ -83028,6 +84779,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AnnonceCreateWithoutPurchasesInput = {
@@ -83215,6 +84967,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSentPurchasesInput = {
@@ -83301,6 +85054,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSentPurchasesInput = {
@@ -83391,6 +85145,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReceivedPurchasesInput = {
@@ -83477,6 +85232,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReceivedPurchasesInput = {
@@ -83731,6 +85487,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentPurchasesInput = {
@@ -83817,6 +85574,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutReceivedPurchasesInput = {
@@ -83913,6 +85671,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReceivedPurchasesInput = {
@@ -83999,6 +85758,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type MatchUpsertWithWhereUniqueWithoutPurchaseInput = {
@@ -84100,6 +85860,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReservationsInput = {
@@ -84186,6 +85947,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReservationsInput = {
@@ -84276,6 +86038,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReceivedReservationsInput = {
@@ -84362,6 +86125,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReceivedReservationsInput = {
@@ -84527,6 +86291,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReservationsInput = {
@@ -84613,6 +86378,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutReceivedReservationsInput = {
@@ -84709,6 +86475,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReceivedReservationsInput = {
@@ -84795,6 +86562,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AnnonceUpsertWithoutReservationsInput = {
@@ -84950,6 +86718,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAnnonceLikesInput = {
@@ -85036,6 +86805,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAnnonceLikesInput = {
@@ -85201,6 +86971,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAnnonceLikesInput = {
@@ -85287,6 +87058,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AnnonceUpsertWithoutLikesInput = {
@@ -85442,6 +87214,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserDmListInput = {
@@ -85528,6 +87301,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserDmListInput = {
@@ -85693,6 +87467,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserDmListInput = {
@@ -85779,6 +87554,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AnnonceUpsertWithoutDmListInput = {
@@ -85934,6 +87710,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSocketMappingInput = {
@@ -86020,6 +87797,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSocketMappingInput = {
@@ -86121,6 +87899,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSocketMappingInput = {
@@ -86207,6 +87986,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutInitiatedLocksInput = {
@@ -86292,6 +88072,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutInitiatedLocksInput = {
@@ -86378,6 +88159,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutInitiatedLocksInput = {
@@ -86468,6 +88250,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReceivedLocksInput = {
@@ -86554,6 +88337,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReceivedLocksInput = {
@@ -86655,6 +88439,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutInitiatedLocksInput = {
@@ -86741,6 +88526,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutReceivedLocksInput = {
@@ -86837,6 +88623,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReceivedLocksInput = {
@@ -86923,6 +88710,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PodiumStarCreateWithoutPodiumInput = {
@@ -87077,6 +88865,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPodiumStarsLedInput = {
@@ -87163,6 +88952,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPodiumStarsLedInput = {
@@ -87311,6 +89101,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPodiumStarsLedInput = {
@@ -87397,6 +89188,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PodiumSpectatorUpsertWithWhereUniqueWithoutPodiumStarInput = {
@@ -87526,6 +89318,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPodiumViewsInput = {
@@ -87612,6 +89405,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPodiumViewsInput = {
@@ -87747,6 +89541,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPodiumViewsInput = {
@@ -87833,6 +89628,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutPodiumTransactionsInput = {
@@ -87918,6 +89714,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPodiumTransactionsInput = {
@@ -88004,6 +89801,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPodiumTransactionsInput = {
@@ -88105,6 +89903,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPodiumTransactionsInput = {
@@ -88191,6 +89990,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutDayStarInput = {
@@ -88276,6 +90076,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutDayStarInput = {
@@ -88362,6 +90163,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutDayStarInput = {
@@ -88463,6 +90265,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDayStarInput = {
@@ -88549,6 +90352,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutMonthStarInput = {
@@ -88634,6 +90438,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMonthStarInput = {
@@ -88720,6 +90525,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMonthStarInput = {
@@ -88821,6 +90627,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMonthStarInput = {
@@ -88907,6 +90714,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutYearStarInput = {
@@ -88992,6 +90800,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutYearStarInput = {
@@ -89078,6 +90887,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutYearStarInput = {
@@ -89179,6 +90989,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutYearStarInput = {
@@ -89265,6 +91076,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CompanySubscriptionCreateWithoutSubscriptionInput = {
@@ -89776,6 +91588,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserCompaniesInput = {
@@ -89862,6 +91675,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserCompaniesInput = {
@@ -90029,6 +91843,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserCompaniesInput = {
@@ -90115,6 +91930,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CompanyUpsertWithoutUserCompaniesInput = {
@@ -90602,6 +92418,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBlockedUsersInput = {
@@ -90688,6 +92505,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBlockedUsersInput = {
@@ -90778,6 +92596,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBlockedByUsersInput = {
@@ -90864,6 +92683,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBlockedByUsersInput = {
@@ -90965,6 +92785,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBlockedUsersInput = {
@@ -91051,6 +92872,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutBlockedByUsersInput = {
@@ -91147,6 +92969,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBlockedByUsersInput = {
@@ -91233,6 +93056,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutReportsMadeInput = {
@@ -91318,6 +93142,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReportsMadeInput = {
@@ -91404,6 +93229,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReportsMadeInput = {
@@ -91494,6 +93320,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReportsReceivedInput = {
@@ -91580,6 +93407,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReportsReceivedInput = {
@@ -91681,6 +93509,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReportsMadeInput = {
@@ -91767,6 +93596,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutReportsReceivedInput = {
@@ -91863,6 +93693,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReportsReceivedInput = {
@@ -91949,6 +93780,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutWalletTranchesInput = {
@@ -92034,6 +93866,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWalletTranchesInput = {
@@ -92120,6 +93953,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWalletTranchesInput = {
@@ -92221,6 +94055,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWalletTranchesInput = {
@@ -92307,6 +94142,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutStarpointsInput = {
@@ -92392,6 +94228,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutStarpointsInput = {
@@ -92478,6 +94315,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
     envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutStarpointsInput = {
@@ -92579,6 +94417,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStarpointsInput = {
@@ -92665,6 +94504,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type EnvelopeWinnerCreateWithoutEnvelopeWheelInput = {
@@ -92709,20 +94549,24 @@ export namespace Prisma {
   }
 
   export type EnvelopeWheelCreateWithoutWinnersInput = {
-    type: $Enums.EnvelopeType
+    type?: $Enums.EnvelopeType
     prizeAmount: number
     country: string
     isActive?: boolean
+    hourStart: Date | string
+    cahAmount?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type EnvelopeWheelUncheckedCreateWithoutWinnersInput = {
     id?: number
-    type: $Enums.EnvelopeType
+    type?: $Enums.EnvelopeType
     prizeAmount: number
     country: string
     isActive?: boolean
+    hourStart: Date | string
+    cahAmount?: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -92815,6 +94659,7 @@ export namespace Prisma {
     chatRoomsAsTwo?: ChatRoomCreateNestedManyWithoutParticipantTwoInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
+    userEnvelopeMetrics?: UserEnvelopeMetricCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutEnvelopeWinnersInput = {
@@ -92901,6 +94746,7 @@ export namespace Prisma {
     chatRoomsAsTwo?: ChatRoomUncheckedCreateNestedManyWithoutParticipantTwoInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutEnvelopeWinnersInput = {
@@ -92924,6 +94770,8 @@ export namespace Prisma {
     prizeAmount?: FloatFieldUpdateOperationsInput | number
     country?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    hourStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    cahAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -92934,6 +94782,8 @@ export namespace Prisma {
     prizeAmount?: FloatFieldUpdateOperationsInput | number
     country?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    hourStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    cahAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -93032,6 +94882,7 @@ export namespace Prisma {
     chatRoomsAsTwo?: ChatRoomUpdateManyWithoutParticipantTwoNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutEnvelopeWinnersInput = {
@@ -93118,6 +94969,369 @@ export namespace Prisma {
     chatRoomsAsTwo?: ChatRoomUncheckedUpdateManyWithoutParticipantTwoNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutUserEnvelopeMetricsInput = {
+    phoneNumber: string
+    passCode?: string | null
+    fullname: string
+    username?: string | null
+    email?: string | null
+    profilePhoto?: string | null
+    firstOtherPhoto?: string | null
+    secondOtherPhoto?: string | null
+    thirdOtherPhoto?: string | null
+    birthday?: Date | string | null
+    gender?: $Enums.Gender | null
+    biography?: string | null
+    vision?: string | null
+    passion?: string | null
+    religion?: string | null
+    horoscope?: string | null
+    languages?: NullableJsonNullValueInput | InputJsonValue
+    preferences?: NullableJsonNullValueInput | InputJsonValue
+    country?: string | null
+    city?: string | null
+    latitude?: Decimal | DecimalJsLike | number | string | null
+    longitude?: Decimal | DecimalJsLike | number | string | null
+    coins?: Decimal | DecimalJsLike | number | string
+    dmScore?: Decimal | DecimalJsLike | number | string
+    isCertified?: boolean
+    isCompleted?: boolean
+    isFakeAccount?: boolean
+    isOnline?: boolean
+    isBanned?: boolean
+    isPhoneVerified?: boolean
+    isIdentityVerified?: boolean
+    isVideoEnabled?: boolean
+    isLockEnabled?: boolean
+    onboardingStep?: string
+    deviceToken?: string | null
+    lastProfileUpdated?: Date | string | null
+    lastPhotoUpdated?: Date | string | null
+    role?: $Enums.Role
+    podiumOccurenceCount?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    assignedAgent?: UserCreateNestedOneWithoutAssignedUsersInput
+    assignedUsers?: UserCreateNestedManyWithoutAssignedAgentInput
+    walletTranches?: WalletTrancheCreateNestedManyWithoutUserInput
+    starpoints?: StarpointWalletCreateNestedOneWithoutUserInput
+    permissions?: PermissionCreateNestedManyWithoutUsersInput
+    preferredGift?: GiftCreateNestedOneWithoutPreferredByUsersInput
+    giftPurpose?: AnnonceCreateNestedOneWithoutGiftPurposesInput
+    videoSession?: VideoSessionCreateNestedOneWithoutUserInput
+    managedVideoSessions?: VideoSessionCreateNestedManyWithoutAgentInput
+    sentMatches?: MatchCreateNestedManyWithoutFromInput
+    receivedMatches?: MatchCreateNestedManyWithoutToInput
+    sentNotifications?: NotificationCreateNestedManyWithoutFromInput
+    receivedNotifications?: NotificationCreateNestedManyWithoutToInput
+    socketMapping?: SocketMappingCreateNestedOneWithoutUserInput
+    initiatedLocks?: LockedConversationCreateNestedManyWithoutInitiatorInput
+    receivedLocks?: LockedConversationCreateNestedManyWithoutReceiverInput
+    podiumStarsLed?: PodiumStarCreateNestedManyWithoutUserInput
+    podiumViews?: PodiumSpectatorCreateNestedManyWithoutUserInput
+    podiumTransactions?: PodiumTransactionCreateNestedManyWithoutUserInput
+    dayStar?: StarOfTheDayCreateNestedManyWithoutUserInput
+    monthStar?: StarOfTheMonthCreateNestedManyWithoutUserInput
+    yearStar?: StarOfTheYearCreateNestedManyWithoutUserInput
+    annonceLikes?: LikedAnnonceCreateNestedManyWithoutUserInput
+    reservations?: ReservationCreateNestedManyWithoutUserInput
+    receivedReservations?: ReservationCreateNestedManyWithoutReceiverInput
+    sentPurchases?: PurchaseCreateNestedManyWithoutSenderInput
+    receivedPurchases?: PurchaseCreateNestedManyWithoutReceiverInput
+    userCompanies?: UserCompanyCreateNestedManyWithoutUserInput
+    userDmList?: DmListCreateNestedManyWithoutUserInput
+    sessions?: UserSessionCreateNestedManyWithoutUserInput
+    blockedUsers?: UserBlockCreateNestedManyWithoutBlockerInput
+    blockedByUsers?: UserBlockCreateNestedManyWithoutBlockedInput
+    reportsMade?: UserReportCreateNestedManyWithoutReporterInput
+    reportsReceived?: UserReportCreateNestedManyWithoutReportedInput
+    targetedAnnonces?: AnnonceCreateNestedManyWithoutTargetUsersInput
+    coffretReservations?: CoffretReservationCreateNestedManyWithoutUserInput
+    chatRoomsAsOne?: ChatRoomCreateNestedManyWithoutParticipantOneInput
+    chatRoomsAsTwo?: ChatRoomCreateNestedManyWithoutParticipantTwoInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    receivedMessages?: MessageCreateNestedManyWithoutRecipientInput
+    envelopeWinners?: EnvelopeWinnerCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutUserEnvelopeMetricsInput = {
+    id?: number
+    phoneNumber: string
+    passCode?: string | null
+    fullname: string
+    username?: string | null
+    email?: string | null
+    profilePhoto?: string | null
+    firstOtherPhoto?: string | null
+    secondOtherPhoto?: string | null
+    thirdOtherPhoto?: string | null
+    birthday?: Date | string | null
+    gender?: $Enums.Gender | null
+    biography?: string | null
+    vision?: string | null
+    passion?: string | null
+    religion?: string | null
+    horoscope?: string | null
+    languages?: NullableJsonNullValueInput | InputJsonValue
+    preferences?: NullableJsonNullValueInput | InputJsonValue
+    country?: string | null
+    city?: string | null
+    latitude?: Decimal | DecimalJsLike | number | string | null
+    longitude?: Decimal | DecimalJsLike | number | string | null
+    coins?: Decimal | DecimalJsLike | number | string
+    dmScore?: Decimal | DecimalJsLike | number | string
+    isCertified?: boolean
+    isCompleted?: boolean
+    isFakeAccount?: boolean
+    isOnline?: boolean
+    isBanned?: boolean
+    isPhoneVerified?: boolean
+    isIdentityVerified?: boolean
+    isVideoEnabled?: boolean
+    isLockEnabled?: boolean
+    onboardingStep?: string
+    deviceToken?: string | null
+    lastProfileUpdated?: Date | string | null
+    lastPhotoUpdated?: Date | string | null
+    role?: $Enums.Role
+    assignedAgentId?: number | null
+    podiumOccurenceCount?: number
+    preferredGiftId?: number | null
+    giftPurposeId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    assignedUsers?: UserUncheckedCreateNestedManyWithoutAssignedAgentInput
+    walletTranches?: WalletTrancheUncheckedCreateNestedManyWithoutUserInput
+    starpoints?: StarpointWalletUncheckedCreateNestedOneWithoutUserInput
+    permissions?: PermissionUncheckedCreateNestedManyWithoutUsersInput
+    videoSession?: VideoSessionUncheckedCreateNestedOneWithoutUserInput
+    managedVideoSessions?: VideoSessionUncheckedCreateNestedManyWithoutAgentInput
+    sentMatches?: MatchUncheckedCreateNestedManyWithoutFromInput
+    receivedMatches?: MatchUncheckedCreateNestedManyWithoutToInput
+    sentNotifications?: NotificationUncheckedCreateNestedManyWithoutFromInput
+    receivedNotifications?: NotificationUncheckedCreateNestedManyWithoutToInput
+    socketMapping?: SocketMappingUncheckedCreateNestedOneWithoutUserInput
+    initiatedLocks?: LockedConversationUncheckedCreateNestedManyWithoutInitiatorInput
+    receivedLocks?: LockedConversationUncheckedCreateNestedManyWithoutReceiverInput
+    podiumStarsLed?: PodiumStarUncheckedCreateNestedManyWithoutUserInput
+    podiumViews?: PodiumSpectatorUncheckedCreateNestedManyWithoutUserInput
+    podiumTransactions?: PodiumTransactionUncheckedCreateNestedManyWithoutUserInput
+    dayStar?: StarOfTheDayUncheckedCreateNestedManyWithoutUserInput
+    monthStar?: StarOfTheMonthUncheckedCreateNestedManyWithoutUserInput
+    yearStar?: StarOfTheYearUncheckedCreateNestedManyWithoutUserInput
+    annonceLikes?: LikedAnnonceUncheckedCreateNestedManyWithoutUserInput
+    reservations?: ReservationUncheckedCreateNestedManyWithoutUserInput
+    receivedReservations?: ReservationUncheckedCreateNestedManyWithoutReceiverInput
+    sentPurchases?: PurchaseUncheckedCreateNestedManyWithoutSenderInput
+    receivedPurchases?: PurchaseUncheckedCreateNestedManyWithoutReceiverInput
+    userCompanies?: UserCompanyUncheckedCreateNestedManyWithoutUserInput
+    userDmList?: DmListUncheckedCreateNestedManyWithoutUserInput
+    sessions?: UserSessionUncheckedCreateNestedManyWithoutUserInput
+    blockedUsers?: UserBlockUncheckedCreateNestedManyWithoutBlockerInput
+    blockedByUsers?: UserBlockUncheckedCreateNestedManyWithoutBlockedInput
+    reportsMade?: UserReportUncheckedCreateNestedManyWithoutReporterInput
+    reportsReceived?: UserReportUncheckedCreateNestedManyWithoutReportedInput
+    targetedAnnonces?: AnnonceUncheckedCreateNestedManyWithoutTargetUsersInput
+    coffretReservations?: CoffretReservationUncheckedCreateNestedManyWithoutUserInput
+    chatRoomsAsOne?: ChatRoomUncheckedCreateNestedManyWithoutParticipantOneInput
+    chatRoomsAsTwo?: ChatRoomUncheckedCreateNestedManyWithoutParticipantTwoInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    receivedMessages?: MessageUncheckedCreateNestedManyWithoutRecipientInput
+    envelopeWinners?: EnvelopeWinnerUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutUserEnvelopeMetricsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUserEnvelopeMetricsInput, UserUncheckedCreateWithoutUserEnvelopeMetricsInput>
+  }
+
+  export type UserUpsertWithoutUserEnvelopeMetricsInput = {
+    update: XOR<UserUpdateWithoutUserEnvelopeMetricsInput, UserUncheckedUpdateWithoutUserEnvelopeMetricsInput>
+    create: XOR<UserCreateWithoutUserEnvelopeMetricsInput, UserUncheckedCreateWithoutUserEnvelopeMetricsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUserEnvelopeMetricsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUserEnvelopeMetricsInput, UserUncheckedUpdateWithoutUserEnvelopeMetricsInput>
+  }
+
+  export type UserUpdateWithoutUserEnvelopeMetricsInput = {
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fullname?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    firstOtherPhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    secondOtherPhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    thirdOtherPhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    biography?: NullableStringFieldUpdateOperationsInput | string | null
+    vision?: NullableStringFieldUpdateOperationsInput | string | null
+    passion?: NullableStringFieldUpdateOperationsInput | string | null
+    religion?: NullableStringFieldUpdateOperationsInput | string | null
+    horoscope?: NullableStringFieldUpdateOperationsInput | string | null
+    languages?: NullableJsonNullValueInput | InputJsonValue
+    preferences?: NullableJsonNullValueInput | InputJsonValue
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    coins?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    dmScore?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    isCertified?: BoolFieldUpdateOperationsInput | boolean
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    isFakeAccount?: BoolFieldUpdateOperationsInput | boolean
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    isIdentityVerified?: BoolFieldUpdateOperationsInput | boolean
+    isVideoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    isLockEnabled?: BoolFieldUpdateOperationsInput | boolean
+    onboardingStep?: StringFieldUpdateOperationsInput | string
+    deviceToken?: NullableStringFieldUpdateOperationsInput | string | null
+    lastProfileUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastPhotoUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    podiumOccurenceCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assignedAgent?: UserUpdateOneWithoutAssignedUsersNestedInput
+    assignedUsers?: UserUpdateManyWithoutAssignedAgentNestedInput
+    walletTranches?: WalletTrancheUpdateManyWithoutUserNestedInput
+    starpoints?: StarpointWalletUpdateOneWithoutUserNestedInput
+    permissions?: PermissionUpdateManyWithoutUsersNestedInput
+    preferredGift?: GiftUpdateOneWithoutPreferredByUsersNestedInput
+    giftPurpose?: AnnonceUpdateOneWithoutGiftPurposesNestedInput
+    videoSession?: VideoSessionUpdateOneWithoutUserNestedInput
+    managedVideoSessions?: VideoSessionUpdateManyWithoutAgentNestedInput
+    sentMatches?: MatchUpdateManyWithoutFromNestedInput
+    receivedMatches?: MatchUpdateManyWithoutToNestedInput
+    sentNotifications?: NotificationUpdateManyWithoutFromNestedInput
+    receivedNotifications?: NotificationUpdateManyWithoutToNestedInput
+    socketMapping?: SocketMappingUpdateOneWithoutUserNestedInput
+    initiatedLocks?: LockedConversationUpdateManyWithoutInitiatorNestedInput
+    receivedLocks?: LockedConversationUpdateManyWithoutReceiverNestedInput
+    podiumStarsLed?: PodiumStarUpdateManyWithoutUserNestedInput
+    podiumViews?: PodiumSpectatorUpdateManyWithoutUserNestedInput
+    podiumTransactions?: PodiumTransactionUpdateManyWithoutUserNestedInput
+    dayStar?: StarOfTheDayUpdateManyWithoutUserNestedInput
+    monthStar?: StarOfTheMonthUpdateManyWithoutUserNestedInput
+    yearStar?: StarOfTheYearUpdateManyWithoutUserNestedInput
+    annonceLikes?: LikedAnnonceUpdateManyWithoutUserNestedInput
+    reservations?: ReservationUpdateManyWithoutUserNestedInput
+    receivedReservations?: ReservationUpdateManyWithoutReceiverNestedInput
+    sentPurchases?: PurchaseUpdateManyWithoutSenderNestedInput
+    receivedPurchases?: PurchaseUpdateManyWithoutReceiverNestedInput
+    userCompanies?: UserCompanyUpdateManyWithoutUserNestedInput
+    userDmList?: DmListUpdateManyWithoutUserNestedInput
+    sessions?: UserSessionUpdateManyWithoutUserNestedInput
+    blockedUsers?: UserBlockUpdateManyWithoutBlockerNestedInput
+    blockedByUsers?: UserBlockUpdateManyWithoutBlockedNestedInput
+    reportsMade?: UserReportUpdateManyWithoutReporterNestedInput
+    reportsReceived?: UserReportUpdateManyWithoutReportedNestedInput
+    targetedAnnonces?: AnnonceUpdateManyWithoutTargetUsersNestedInput
+    coffretReservations?: CoffretReservationUpdateManyWithoutUserNestedInput
+    chatRoomsAsOne?: ChatRoomUpdateManyWithoutParticipantOneNestedInput
+    chatRoomsAsTwo?: ChatRoomUpdateManyWithoutParticipantTwoNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
+    envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUserEnvelopeMetricsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    phoneNumber?: StringFieldUpdateOperationsInput | string
+    passCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fullname?: StringFieldUpdateOperationsInput | string
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    profilePhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    firstOtherPhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    secondOtherPhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    thirdOtherPhoto?: NullableStringFieldUpdateOperationsInput | string | null
+    birthday?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+    biography?: NullableStringFieldUpdateOperationsInput | string | null
+    vision?: NullableStringFieldUpdateOperationsInput | string | null
+    passion?: NullableStringFieldUpdateOperationsInput | string | null
+    religion?: NullableStringFieldUpdateOperationsInput | string | null
+    horoscope?: NullableStringFieldUpdateOperationsInput | string | null
+    languages?: NullableJsonNullValueInput | InputJsonValue
+    preferences?: NullableJsonNullValueInput | InputJsonValue
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    coins?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    dmScore?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    isCertified?: BoolFieldUpdateOperationsInput | boolean
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    isFakeAccount?: BoolFieldUpdateOperationsInput | boolean
+    isOnline?: BoolFieldUpdateOperationsInput | boolean
+    isBanned?: BoolFieldUpdateOperationsInput | boolean
+    isPhoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    isIdentityVerified?: BoolFieldUpdateOperationsInput | boolean
+    isVideoEnabled?: BoolFieldUpdateOperationsInput | boolean
+    isLockEnabled?: BoolFieldUpdateOperationsInput | boolean
+    onboardingStep?: StringFieldUpdateOperationsInput | string
+    deviceToken?: NullableStringFieldUpdateOperationsInput | string | null
+    lastProfileUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastPhotoUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    assignedAgentId?: NullableIntFieldUpdateOperationsInput | number | null
+    podiumOccurenceCount?: IntFieldUpdateOperationsInput | number
+    preferredGiftId?: NullableIntFieldUpdateOperationsInput | number | null
+    giftPurposeId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assignedUsers?: UserUncheckedUpdateManyWithoutAssignedAgentNestedInput
+    walletTranches?: WalletTrancheUncheckedUpdateManyWithoutUserNestedInput
+    starpoints?: StarpointWalletUncheckedUpdateOneWithoutUserNestedInput
+    permissions?: PermissionUncheckedUpdateManyWithoutUsersNestedInput
+    videoSession?: VideoSessionUncheckedUpdateOneWithoutUserNestedInput
+    managedVideoSessions?: VideoSessionUncheckedUpdateManyWithoutAgentNestedInput
+    sentMatches?: MatchUncheckedUpdateManyWithoutFromNestedInput
+    receivedMatches?: MatchUncheckedUpdateManyWithoutToNestedInput
+    sentNotifications?: NotificationUncheckedUpdateManyWithoutFromNestedInput
+    receivedNotifications?: NotificationUncheckedUpdateManyWithoutToNestedInput
+    socketMapping?: SocketMappingUncheckedUpdateOneWithoutUserNestedInput
+    initiatedLocks?: LockedConversationUncheckedUpdateManyWithoutInitiatorNestedInput
+    receivedLocks?: LockedConversationUncheckedUpdateManyWithoutReceiverNestedInput
+    podiumStarsLed?: PodiumStarUncheckedUpdateManyWithoutUserNestedInput
+    podiumViews?: PodiumSpectatorUncheckedUpdateManyWithoutUserNestedInput
+    podiumTransactions?: PodiumTransactionUncheckedUpdateManyWithoutUserNestedInput
+    dayStar?: StarOfTheDayUncheckedUpdateManyWithoutUserNestedInput
+    monthStar?: StarOfTheMonthUncheckedUpdateManyWithoutUserNestedInput
+    yearStar?: StarOfTheYearUncheckedUpdateManyWithoutUserNestedInput
+    annonceLikes?: LikedAnnonceUncheckedUpdateManyWithoutUserNestedInput
+    reservations?: ReservationUncheckedUpdateManyWithoutUserNestedInput
+    receivedReservations?: ReservationUncheckedUpdateManyWithoutReceiverNestedInput
+    sentPurchases?: PurchaseUncheckedUpdateManyWithoutSenderNestedInput
+    receivedPurchases?: PurchaseUncheckedUpdateManyWithoutReceiverNestedInput
+    userCompanies?: UserCompanyUncheckedUpdateManyWithoutUserNestedInput
+    userDmList?: DmListUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: UserSessionUncheckedUpdateManyWithoutUserNestedInput
+    blockedUsers?: UserBlockUncheckedUpdateManyWithoutBlockerNestedInput
+    blockedByUsers?: UserBlockUncheckedUpdateManyWithoutBlockedNestedInput
+    reportsMade?: UserReportUncheckedUpdateManyWithoutReporterNestedInput
+    reportsReceived?: UserReportUncheckedUpdateManyWithoutReportedNestedInput
+    targetedAnnonces?: AnnonceUncheckedUpdateManyWithoutTargetUsersNestedInput
+    coffretReservations?: CoffretReservationUncheckedUpdateManyWithoutUserNestedInput
+    chatRoomsAsOne?: ChatRoomUncheckedUpdateManyWithoutParticipantOneNestedInput
+    chatRoomsAsTwo?: ChatRoomUncheckedUpdateManyWithoutParticipantTwoNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
+    envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyAssignedAgentInput = {
@@ -93510,6 +95724,16 @@ export namespace Prisma {
     city?: string | null
   }
 
+  export type UserEnvelopeMetricCreateManyUserInput = {
+    id?: number
+    country: string
+    hourStart: Date | string
+    activeSeconds?: number
+    spentAmount?: Decimal | DecimalJsLike | number | string
+    hasSpun?: boolean
+    lastHeartbeatAt?: Date | string
+  }
+
   export type UserUpdateWithoutAssignedAgentInput = {
     phoneNumber?: StringFieldUpdateOperationsInput | string
     passCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -93593,6 +95817,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedAgentInput = {
@@ -93679,6 +95904,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutAssignedAgentInput = {
@@ -94854,6 +97080,35 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type UserEnvelopeMetricUpdateWithoutUserInput = {
+    country?: StringFieldUpdateOperationsInput | string
+    hourStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeSeconds?: IntFieldUpdateOperationsInput | number
+    spentAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    hasSpun?: BoolFieldUpdateOperationsInput | boolean
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserEnvelopeMetricUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    country?: StringFieldUpdateOperationsInput | string
+    hourStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeSeconds?: IntFieldUpdateOperationsInput | number
+    spentAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    hasSpun?: BoolFieldUpdateOperationsInput | boolean
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserEnvelopeMetricUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    country?: StringFieldUpdateOperationsInput | string
+    hourStart?: DateTimeFieldUpdateOperationsInput | Date | string
+    activeSeconds?: IntFieldUpdateOperationsInput | number
+    spentAmount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    hasSpun?: BoolFieldUpdateOperationsInput | boolean
+    lastHeartbeatAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserUpdateWithoutPermissionsInput = {
     phoneNumber?: StringFieldUpdateOperationsInput | string
     passCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -94937,6 +97192,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPermissionsInput = {
@@ -95023,6 +97279,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutPermissionsInput = {
@@ -95334,6 +97591,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPreferredGiftInput = {
@@ -95420,6 +97678,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutPreferredGiftInput = {
@@ -95896,6 +98155,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutGiftPurposeInput = {
@@ -95982,6 +98242,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutGiftPurposeInput = {
@@ -96115,6 +98376,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTargetedAnnoncesInput = {
@@ -96201,6 +98463,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     receivedMessages?: MessageUncheckedUpdateManyWithoutRecipientNestedInput
     envelopeWinners?: EnvelopeWinnerUncheckedUpdateManyWithoutUserNestedInput
+    userEnvelopeMetrics?: UserEnvelopeMetricUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutTargetedAnnoncesInput = {

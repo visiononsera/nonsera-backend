@@ -615,6 +615,8 @@ exports.Prisma.EnvelopeWheelScalarFieldEnum = {
   prizeAmount: 'prizeAmount',
   country: 'country',
   isActive: 'isActive',
+  hourStart: 'hourStart',
+  cahAmount: 'cahAmount',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -626,6 +628,17 @@ exports.Prisma.EnvelopeWinnerScalarFieldEnum = {
   amountWon: 'amountWon',
   drawnAt: 'drawnAt',
   city: 'city'
+};
+
+exports.Prisma.UserEnvelopeMetricScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  country: 'country',
+  hourStart: 'hourStart',
+  activeSeconds: 'activeSeconds',
+  spentAmount: 'spentAmount',
+  hasSpun: 'hasSpun',
+  lastHeartbeatAt: 'lastHeartbeatAt'
 };
 
 exports.Prisma.CountryProfitabilityScalarFieldEnum = {
@@ -887,6 +900,7 @@ exports.Prisma.ModelName = {
   StarpointWallet: 'StarpointWallet',
   EnvelopeWheel: 'EnvelopeWheel',
   EnvelopeWinner: 'EnvelopeWinner',
+  UserEnvelopeMetric: 'UserEnvelopeMetric',
   CountryProfitability: 'CountryProfitability'
 };
 
