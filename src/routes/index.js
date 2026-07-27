@@ -14,6 +14,7 @@ import coffretsRoutes from "./coffrets.routes.js";
 import moreauRoutes from "./moreau.routes.js";
 import chatRoutes from "./chat.routes.js";
 import enveloppeRoutes from "./enveloppe.routes.js";
+import dashboardStatsRoutes from "./dashboardStats.routes.js";
 
 const apiRouter = Router();
 
@@ -32,5 +33,6 @@ apiRouter.use(coffretsRoutes);
 apiRouter.use(moreauRoutes);
 apiRouter.use(chatRoutes);
 apiRouter.use(enveloppeRoutes);
+apiRouter.use(dashboardStatsRoutes);
 
 export default apiRouter;
