@@ -461,18 +461,75 @@ async function seedPermissions() {
 async function seedStaff(permissions) {
   const hashedStaffPin = await hashPin(DEFAULT_STAFF_PIN);
 
-  const allPermissionsConnect = permissions.map((p) => ({ id: p.id }));
-  console.log(`✔ ${permissions.length} permissions injectées.`);
-
   const getPermissionObject = (code) => {
     const target = permissions.find((p) => p.code === code);
-    if (!target)
+    if (!target) {
       throw new Error(`Permission critique introuvable au seed : ${code}`);
+    }
     return { id: target.id };
   };
 
+  const allPermissionsConnect = permissions.map((p) => ({ id: p.id }));
+
+  // ------------------------------------------------------
+  // 1. ISOLATION DES PERMISSIONS PAR DIVISION AGENT
+  // ------------------------------------------------------
+
+  // Division 1 : KYC & Vidéo uniquement
+  const agentKycPermissions = [
+    getPermissionObject("CLIENTS_LIST"),
+    getPermissionObject("CLIENTS_VIEW"),
+    getPermissionObject("CLIENTS_MODERATE"),
+    getPermissionObject("KYC_CALL_VALIDATION"),
+    getPermissionObject("KYC_DOCUMENTS_VERIFY"),
+  ];
+
+  // Division 2 : Finance & Partenaires uniquement
+  const agentFinancePermissions = [
+    getPermissionObject("CLIENTS_LIST"),
+    getPermissionObject("CLIENTS_VIEW"),
+    getPermissionObject("COMPANY_MANAGE"),
+    getPermissionObject("VALIDATE_COMPANY"),
+    getPermissionObject("TRANSACTIONS_VIEW_ALL"),
+    getPermissionObject("WALLET_OVERRIDE"),
+    getPermissionObject("RECONCILIATION_EXECUTE"),
+  ];
+
+  // Division 3 : Support & Litiges uniquement
+  const agentSupportPermissions = [
+    getPermissionObject("CLIENTS_LIST"),
+    getPermissionObject("CLIENTS_VIEW"),
+    getPermissionObject("DISPUTES_ARBITRATE"),
+    getPermissionObject("CUSTOMER_SERVICE"),
+  ];
+
+  // Division 4 : Annonces & Modération uniquement
+  const agentAnnouncePermissions = [
+    getPermissionObject("CLIENTS_LIST"),
+    getPermissionObject("CLIENTS_VIEW"),
+    getPermissionObject("ANNUNCES_MANAGE"),
+    getPermissionObject("ANNUNCES_TOGGLE"),
+  ];
+
+  // Permissions Manager : Agrégation de toutes les divisions + Gestion du Personnel
+  const rawManagerPermissions = [
+    ...agentKycPermissions,
+    ...agentFinancePermissions,
+    ...agentSupportPermissions,
+    ...agentAnnouncePermissions,
+    getPermissionObject("STAFF_MANAGE"),
+  ];
+
+  // Déduplication par ID pour la relation Prisma
+  const managerPermissions = Array.from(
+    new Map(rawManagerPermissions.map((p) => [p.id, p])).values()
+  );
+
+  // ------------------------------------------------------
+  // 2. INJECTION DES COMPTES STAFF
+  // ------------------------------------------------------
   await safeTransaction(async (tx) => {
-    // --- ADMIN ---
+    // --- ADMIN (Accès Total) ---
     console.log("Configuration du profil ADMIN...");
     await tx.user.upsert({
       where: { phoneNumber: "+2290197001089" },
@@ -509,7 +566,37 @@ async function seedStaff(permissions) {
       },
     });
 
-    // --- IT ---
+    // --- MANAGER (Supervision Multi-Divisions) ---
+    console.log("Configuration du profil MANAGER...");
+    await tx.user.upsert({
+      where: { phoneNumber: "+2290111110000" },
+      update: {
+        role: "MANAGER",
+        passCode: hashedStaffPin,
+        permissions: { set: managerPermissions },
+      },
+      create: {
+        phoneNumber: "+2290111110000",
+        fullname: "Directeur des Opérations MANAGER",
+        username: "manager_ops",
+        email: "manager@nonsera.com",
+        passCode: hashedStaffPin,
+        role: "MANAGER",
+        gender: "MALE",
+        country: "Benin",
+        city: "Cotonou",
+        latitude: cotonouCoordinates.latitude,
+        longitude: cotonouCoordinates.longitude,
+        profilePhoto: STAFF_PHOTOS.MANAGER,
+        onboardingStep: "COMPLETED",
+        isCompleted: true,
+        isPhoneVerified: true,
+        isIdentityVerified: true,
+        permissions: { connect: managerPermissions },
+      },
+    });
+
+    // --- IT TECH ---
     console.log("Configuration du profil IT Tech...");
     const itPermissions = [
       getPermissionObject("STAFF_MANAGE"),
@@ -550,15 +637,8 @@ async function seedStaff(permissions) {
       },
     });
 
-    // --- AGENTS ---
-    console.log("Déploiement des agents de succursale...");
-    const agentKycPermissions = [
-      getPermissionObject("CLIENTS_LIST"),
-      getPermissionObject("CLIENTS_VIEW"),
-      getPermissionObject("CLIENTS_MODERATE"),
-      getPermissionObject("KYC_CALL_VALIDATION"),
-      getPermissionObject("KYC_DOCUMENTS_VERIFY"),
-    ];
+    // --- AGENT 1 : DIVISION KYC ---
+    console.log("Déploiement de l'Agent KYC...");
     await tx.user.upsert({
       where: { phoneNumber: "+2290111110001" },
       update: { permissions: { set: agentKycPermissions } },
@@ -582,15 +662,8 @@ async function seedStaff(permissions) {
       },
     });
 
-    const agentFinancePermissions = [
-      getPermissionObject("CLIENTS_LIST"),
-      getPermissionObject("CLIENTS_VIEW"),
-      getPermissionObject("COMPANY_MANAGE"),
-      getPermissionObject("VALIDATE_COMPANY"),
-      getPermissionObject("TRANSACTIONS_VIEW_ALL"),
-      getPermissionObject("WALLET_OVERRIDE"),
-      getPermissionObject("RECONCILIATION_EXECUTE"),
-    ];
+    // --- AGENT 2 : DIVISION FINANCE ---
+    console.log("Déploiement de l'Agent Finance...");
     await tx.user.upsert({
       where: { phoneNumber: "+2290111110002" },
       update: { permissions: { set: agentFinancePermissions } },
@@ -614,14 +687,8 @@ async function seedStaff(permissions) {
       },
     });
 
-    const agentSupportPermissions = [
-      getPermissionObject("CLIENTS_LIST"),
-      getPermissionObject("CLIENTS_VIEW"),
-      getPermissionObject("ANNUNCES_MANAGE"),
-      getPermissionObject("ANNUNCES_TOGGLE"),
-      getPermissionObject("DISPUTES_ARBITRATE"),
-      getPermissionObject("CUSTOMER_SERVICE"),
-    ];
+    // --- AGENT 3 : DIVISION SUPPORT ---
+    console.log("Déploiement de l'Agent Support...");
     await tx.user.upsert({
       where: { phoneNumber: "+2290111110003" },
       update: { permissions: { set: agentSupportPermissions } },
@@ -644,9 +711,35 @@ async function seedStaff(permissions) {
         permissions: { connect: agentSupportPermissions },
       },
     });
-  });
-}
 
+    // --- AGENT 4 : DIVISION ANNONCES ---
+    console.log("Déploiement de l'Agent Annonces...");
+    await tx.user.upsert({
+      where: { phoneNumber: "+2290111110004" },
+      update: { permissions: { set: agentAnnouncePermissions } },
+      create: {
+        phoneNumber: "+2290111110004",
+        fullname: "Rodrique Dossou AGENT ANNONCES",
+        username: "rodrique_announce",
+        email: "annonces.rodrique@nonsera.com",
+        passCode: hashedStaffPin,
+        role: "AGENT",
+        gender: "MALE",
+        country: "Benin",
+        city: "Cotonou",
+        latitude: cotonouCoordinates.latitude,
+        longitude: cotonouCoordinates.longitude,
+        profilePhoto: STAFF_PHOTOS.ANNOUNCE,
+        onboardingStep: "COMPLETED",
+        isCompleted: true,
+        isPhoneVerified: true,
+        permissions: { connect: agentAnnouncePermissions },
+      },
+    });
+  });
+
+  console.log("✔ Déploiement du personnel avec cloisonnement strict terminé.");
+}
 // ======================================================
 // SEED CLIENTS
 // ======================================================
